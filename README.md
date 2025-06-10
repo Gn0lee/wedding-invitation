@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 결혼 모바일 청첩장
 
-## Getting Started
+이 프로젝트는 Next.js 기반의 결혼 모바일 청첩장입니다. 다양한 최신 프론트엔드/백엔드 스택을 활용하여, 모바일 환경에 최적화된 청첩장 서비스를 제공합니다.
 
-First, run the development server:
+## 주요 기술 스택
+
+- **프레임워크**: [Next.js](https://nextjs.org)
+- **상태관리**: [TanStack Query](https://tanstack.com/query/latest), [Jotai](https://jotai.org)
+- **스타일/UI**: [Tailwind CSS](https://tailwindcss.com), [shadcn/ui](https://ui.shadcn.com)
+- **API 호출**: fetch API
+- **인증**: [Supabase](https://supabase.com) Kakao OAuth
+- **DB/스토리지**: Supabase
+- **배포**: Github Actions, [Vercel](https://vercel.com) (Next.js API Route 활용)
+
+## 개발 시작하기
+
+1. 패키지 설치
+
+```bash
+npm install
+```
+
+2. 개발 서버 실행
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. 브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 폴더 구조
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/` : 주요 소스 코드
+- `public/` : 정적 파일(이미지 등)
+- `pages/` 또는 `app/` : Next.js 라우트
 
-## Learn More
+## 배포
 
-To learn more about Next.js, take a look at the following resources:
+- Github Actions를 통한 CI/CD
+- Vercel을 통한 프론트/백엔드(Next.js API Route) 통합 배포
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 인증 및 데이터베이스
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Supabase를 통한 Kakao OAuth 인증
+- Supabase DB 및 Storage 활용
 
-## Deploy on Vercel
+## 커뮤니티 & 문의
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Pull Request 및 Issue 환영
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+본 프로젝트는 신랑/신부의 결혼을 축하해주시는 모든 분들께 편리한 모바일 청첩장 경험을 제공하기 위해 제작되었습니다.
