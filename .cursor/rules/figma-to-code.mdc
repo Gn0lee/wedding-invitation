@@ -1,0 +1,48 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Figma → 코드 변환 규칙 (Figma MCP)
+
+본 규칙은 [Figma-Context-MCP](mdc:https:/github.com/GLips/Figma-Context-MCP?tab=readme-ov-file) 및 [Cursor Talk To Figma MCP](mdc:https:/github.com/sonnylazuardi/cursor-talk-to-figma-mcp)를 활용해 Figma 디자인을 Next.js + Tailwind CSS + shadcn/ui 기반 코드로 변환할 때 반드시 지켜야 할 원칙을 정의합니다.
+
+## 1. 컴포넌트/레이어 매핑
+- Figma의 각 프레임/컴포넌트/그룹은 React 컴포넌트로 1:1 매핑합니다.
+- 반복되는 UI는 별도 컴포넌트로 분리하여 재사용성을 높입니다.
+- Figma 네이밍을 그대로 컴포넌트/클래스/props명에 반영합니다.
+
+## 2. Tailwind 토큰 변환
+- Figma의 컬러/타이포그래피/spacing 등 스타일은 Tailwind CSS 토큰으로 변환합니다.
+- Figma 스타일 네이밍이 tailwind 토큰과 다를 경우, tailwind 기준으로 맞춥니다.
+- 필요시 tailwind.config 확장(커스텀 토큰)도 활용합니다.
+
+## 3. shadcn/ui 컴포넌트 활용
+- 버튼, 입력창 등은 shadcn/ui 컴포넌트로 대체/확장하여 사용합니다.
+- shadcn/ui의 props, slot, variant 등은 디자인 의도에 맞게 커스터마이즈합니다.
+
+## 4. 반응형(적응형) 코드
+- 모바일/데스크탑 두 가지 레이아웃을 Tailwind의 break point(`lg`) 기준으로 구현합니다.
+- Figma에서 분리된 프레임은 코드에서 조건부 렌더링 또는 tailwind의 반응형 유틸리티로 구현합니다.
+
+## 5. 접근성/사용성
+- 텍스트 크기, 버튼 크기, 컬러 대비 등 접근성 기준을 반드시 준수합니다.
+- aria-* 속성, semantic 태그, 키보드 네비게이션 등 웹 접근성 표준을 적용합니다.
+- 20대 후반~60대 성인 남녀가 쉽게 사용할 수 있도록 충분한 크기와 명확한 UI를 유지합니다.
+
+## 6. 불필요한 스타일/레이어 제거
+- Figma에서 코드로 변환 시 불필요한 효과(그림자, 블러 등)와 중첩 구조는 제거합니다.
+- tailwind로 표현 불가한 스타일은 최대한 대체하거나 생략합니다.
+
+## 7. 코드 구조 및 파일 관리
+- 기능/도메인 단위로 폴더를 구성합니다. (예: `src/domains/청첩장`, `src/domains/방명록` 등)
+- 공통 컴포넌트는 `src/components/`, 공통 훅은 `src/hooks/`에 위치시킵니다.
+- 각 컴포넌트는 props, 타입, 스타일을 명확히 분리하여 작성합니다.
+
+## 8. 기타
+- 코드 변환 후 실제 서비스에서 사용될 예시 데이터로 UI를 채웁니다.
+- 디자인 변경이 코드에 미치는 영향이 크면 반드시 주석/문서로 기록합니다.
+
+---
+
+본 규칙은 Figma MCP 기반의 효율적이고 일관된 디자인-코드 연계를 위해 제정되었습니다.
