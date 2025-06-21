@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 # Figma → 코드 변환 규칙 (Figma MCP)
 
-본 규칙은 [Figma-Context-MCP](mdc:https:/github.com/GLips/Figma-Context-MCP?tab=readme-ov-file) 및 [Cursor Talk To Figma MCP](mdc:https:/github.com/sonnylazuardi/cursor-talk-to-figma-mcp)를 활용해 Figma 디자인을 Next.js + Tailwind CSS + shadcn/ui 기반 코드로 변환할 때 반드시 지켜야 할 원칙을 정의합니다.
+본 규칙은 Framelink Figma MCP를 활용해 Figma 디자인을 Next.js + Tailwind CSS + shadcn/ui 기반 코드로 변환할 때 반드시 지켜야 할 원칙을 정의합니다.
 
 ## 1. 컴포넌트/레이어 매핑
 - Figma의 각 프레임/컴포넌트/그룹은 React 컴포넌트로 1:1 매핑합니다.
