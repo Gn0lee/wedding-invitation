@@ -17,6 +17,10 @@ const compat = new FlatCompat({
     'package-lock.json',
     'yarn.lock',
     'pnpm-lock.yaml',
+    'next.config.ts',
+    'postcss.config.js',
+    'tailwind.config.js',
+    'eslint.config.mjs',
   ],
 });
 
