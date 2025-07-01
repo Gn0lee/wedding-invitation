@@ -15,7 +15,7 @@ export function Section({
   return (
     <section
       className={clsx(
-        'flex h-full snap-start items-center justify-center pt-[48px] md:pt-[64px] lg:pt-[80px]',
+        'flex h-full snap-start items-center justify-center pt-[72px] md:pt-[88px] lg:pt-[104px]',
         className,
       )}
       {...props}

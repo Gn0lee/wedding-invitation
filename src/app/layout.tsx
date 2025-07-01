@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
@@ -30,7 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bmJua.className} ${nanumRound.className} antialiased`}>{children}</body>
+      <body className={clsx(bmJua.variable, nanumRound.variable, 'antialiased', 'font-nanumRound')}>
+        {children}
+      </body>
     </html>
   );
 }
