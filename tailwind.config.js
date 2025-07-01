@@ -10,6 +10,10 @@ module.exports = {
   prefix: '',
   theme: {
     extend: {
+      fontFamily: {
+        bmJua: ['var(--font-bmjua)'],
+        nanumRound: ['var(--font-nanum-round)'],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

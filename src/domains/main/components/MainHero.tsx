@@ -3,7 +3,7 @@ import { Section } from '@/domains/main/components/Section';
 
 export function MainHero() {
   return (
-    <Section className="text-white">
+    <Section className="bg-blue-100 text-white">
       <div className="container m-auto flex h-full flex-col items-center justify-center px-4 lg:flex-row lg:justify-around">
         {/* Text Content */}
         <div className="flex w-full flex-1 flex-col items-center justify-center text-center md:text-left">
