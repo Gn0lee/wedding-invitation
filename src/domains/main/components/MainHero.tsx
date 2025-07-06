@@ -3,8 +3,11 @@ import { Section } from '@/domains/main/components/Section';
 
 export function MainHero() {
   return (
-    <Section className="bg-green-800 text-white">
-      <div className="container m-auto flex h-full flex-col px-4 pt-6 lg:flex-row lg:justify-around">
+    <Section className="relative text-gray-50 ">
+      <div className="absolute inset-0 z-0">
+        <Image src="/images/main/DSCF0438.jpg" alt="Main Hero" fill />
+      </div>
+      <div className="container z-10 m-auto flex h-full flex-col px-4 pt-6 lg:flex-row lg:justify-around">
         {/* Text Content */}
         <div className="flex w-full shrink flex-col text-left">
           <h2 className="font-bmJua text-4xl font-medium leading-snug">
@@ -18,14 +21,6 @@ export function MainHero() {
             <p>2026년 1월 26일</p>
             <p>오후 4시</p>
             <p>로얄파크 컨벤션 파크홀</p>
-          </div>
-        </div>
-        {/* Image Content */}
-        <div className="flex w-full flex-1 items-end pt-4">
-          <div className="relative size-full">
-            <div className="absolute bottom-4 right-4 aspect-[2028/3120] h-3/4">
-              <Image src="/images/main/DSCF0464.jpg" alt="어서오세요" fill />
-            </div>
           </div>
         </div>
       </div>
