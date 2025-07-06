@@ -6,7 +6,7 @@ interface SectionProps {
   className?: string;
 }
 
-export function Section({
+export function HeroSection({
   children,
   className,
 
@@ -15,7 +15,7 @@ export function Section({
   return (
     <section
       className={clsx(
-        'flex h-full snap-start items-center justify-center pt-[72px] md:pt-[88px] lg:pt-[104px]',
+        'flex w-full snap-start items-center justify-center pt-[72px] text-gray-50 md:pt-[88px] lg:pt-[104px]',
         className,
       )}
       {...props}
