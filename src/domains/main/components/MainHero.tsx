@@ -12,16 +12,16 @@ export function MainHero() {
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>
-            태운이와 진호의
+            태운과 진호의
             <br />
-            설레는 첫 시작에
+            첫 번째 약속에
             <br />
-            여러분을 초대합니다
+            함깨해 주세요
           </HeroTitle>
           <HeroDescription>
-            <p>2026년 1월 26일</p>
-            <p>오후 4시</p>
-            <p>로얄파크 컨벤션 파크홀</p>
+            <p>평생을 함께할 동반자로</p>
+            <p>첫걸음을 내딛는 이 순간</p>
+            <p>여러분과 함께하고 싶습니다</p>
           </HeroDescription>
         </HeroTextColumn>
       </HeroContainer>

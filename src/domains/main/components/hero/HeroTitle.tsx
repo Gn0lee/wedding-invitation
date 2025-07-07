@@ -7,7 +7,10 @@ interface HeroTitleProps extends React.ComponentProps<'h2'> {
 
 export function HeroTitle({ children, className, ...props }: HeroTitleProps) {
   return (
-    <h2 className={clsx('font-bmJua text-4xl font-medium leading-snug', className)} {...props}>
+    <h2
+      className={clsx('font-bmJua text-5xl font-medium leading-tight tracking-wide', className)}
+      {...props}
+    >
       {children}
     </h2>
   );

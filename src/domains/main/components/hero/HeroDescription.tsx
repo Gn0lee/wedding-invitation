@@ -7,7 +7,10 @@ interface HeroDescriptionProps extends React.ComponentProps<'div'> {
 
 export function HeroDescription({ children, className, ...props }: HeroDescriptionProps) {
   return (
-    <div className={clsx('mt-4 space-y-1 text-sm md:text-base', className)} {...props}>
+    <div
+      className={clsx('mt-8 space-y-1 text-sm font-light leading-snug tracking-wide', className)}
+      {...props}
+    >
       {children}
     </div>
   );
