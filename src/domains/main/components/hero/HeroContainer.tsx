@@ -9,7 +9,7 @@ export function HeroContainer({ children, className, ...props }: HeroContainerPr
   return (
     <div
       className={clsx(
-        'container z-10 m-auto flex flex-col px-4 pt-6 lg:flex-row lg:justify-around',
+        'z-10 flex size-full flex-col px-4 py-6 lg:flex-row lg:justify-around',
         className,
       )}
       {...props}

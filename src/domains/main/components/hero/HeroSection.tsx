@@ -15,7 +15,7 @@ export function HeroSection({
   return (
     <section
       className={clsx(
-        'flex w-full snap-start items-center justify-center pt-[72px] text-gray-50 md:pt-[88px] lg:pt-[104px]',
+        'flex size-full snap-start pt-[72px] text-gray-50 md:pt-[88px] lg:pt-[104px]',
         className,
       )}
       {...props}
