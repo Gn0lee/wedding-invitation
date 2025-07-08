@@ -1,14 +1,14 @@
 import { Header } from '@/domains/main/components/Header';
 import { MainHero } from '@/domains/main/components/MainHero';
+import { RemainTimeHero } from '@/domains/main/components/RemainTimeHero';
 
 export default function Home() {
   return (
-    <div className="relative flex size-full snap-y snap-mandatory  items-center justify-center overflow-y-auto shadow-2xl">
-      <div className="relative aspect-[375/667] h-full max-w-full">
+    <div className="size-full snap-y snap-mandatory overflow-y-auto">
+      <div className="relative mx-auto w-fit">
         <Header />
-        <div className="h-full">
-          <MainHero />
-        </div>
+        <MainHero />
+        <RemainTimeHero />
       </div>
     </div>
   );
