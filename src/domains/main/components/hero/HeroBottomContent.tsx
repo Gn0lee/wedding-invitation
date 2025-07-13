@@ -7,7 +7,7 @@ interface HeroBottomContentProps extends React.ComponentProps<'div'> {
 
 export function HeroBottomContent({ children, className, ...props }: HeroBottomContentProps) {
   return (
-    <div className={clsx('flex w-full flex-1 items-end pt-4', className)} {...props}>
+    <div className={clsx('w-full flex-1 items-end pt-4', className)} {...props}>
       {children}
     </div>
   );
