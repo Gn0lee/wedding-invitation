@@ -15,7 +15,7 @@ export function HeroSection({
   return (
     <section
       className={clsx(
-        'relative mx-auto flex aspect-[375/667] h-screen max-w-full snap-start pt-[72px] text-gray-50 md:pt-[88px] lg:pt-[104px]',
+        'relative mx-auto flex aspect-[375/667] h-screen max-w-[100vw] snap-start pt-[72px] text-gray-50 md:pt-[88px] lg:pt-[104px]',
         className,
       )}
       {...props}
