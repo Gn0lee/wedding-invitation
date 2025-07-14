@@ -8,7 +8,13 @@ import { HeroTitle } from '@/domains/main/components/hero/HeroTitle';
 export function MainHero() {
   return (
     <HeroSection>
-      <HeroBackground src="/images/main/DSCF0464.jpg" alt="Main Hero" />
+      <HeroBackground
+        image={{
+          src: '/images/main/DSCF0464.jpg',
+          alt: 'Main Hero',
+          fill: true,
+        }}
+      />
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>

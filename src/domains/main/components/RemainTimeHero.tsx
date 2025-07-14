@@ -9,7 +9,13 @@ import { RemainTimeDescription } from '@/domains/main/components/RemainTimeDescr
 export function RemainTimeHero() {
   return (
     <HeroSection>
-      <HeroBackground src="/images/main/DSCF0748.jpg" alt="남은 시간 배경" />
+      <HeroBackground
+        image={{
+          src: '/images/main/DSCF0748.jpg',
+          alt: '남은 시간 배경',
+          fill: true,
+        }}
+      />
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>

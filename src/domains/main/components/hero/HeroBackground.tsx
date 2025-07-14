@@ -1,17 +1,24 @@
-import Image from 'next/image';
 import clsx from 'clsx';
+import Image, { ImageProps } from 'next/image';
 import React from 'react';
 
-interface HeroBackgroundProps extends React.ComponentProps<'div'> {
-  src: string;
-  alt: string;
+type RequiredImageProps = Pick<ImageProps, 'src' | 'alt'> &
+  Partial<Omit<ImageProps, 'src' | 'alt'>>;
+
+interface HeroBackgroundProps {
+  image: RequiredImageProps; // src, alt는 필수, 나머지는 선택
+  container?: React.HTMLAttributes<HTMLDivElement>;
   children?: React.ReactNode;
 }
 
-export function HeroBackground({ src, alt, className, children, ...props }: HeroBackgroundProps) {
+export function HeroBackground({
+  image: { src, alt, ...rest },
+  container,
+  children,
+}: HeroBackgroundProps) {
   return (
-    <div className={clsx('absolute inset-0 z-0', className)} {...props}>
-      <Image src={src} alt={alt} fill />
+    <div {...container} className={clsx('absolute inset-0 z-0', container?.className)}>
+      <Image src={src} alt={alt} {...rest} />
       {children}
     </div>
   );

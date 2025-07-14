@@ -1,3 +1,4 @@
+import { GalleryHero } from '@/domains/main/components/GalleryHero';
 import { Header } from '@/domains/main/components/Header';
 import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';
@@ -11,6 +12,7 @@ export default function Home() {
         <MainHero />
         <RemainTimeHero />
         <LocationHero />
+        <GalleryHero />
       </div>
     </div>
   );

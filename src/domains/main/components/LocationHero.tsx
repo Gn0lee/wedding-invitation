@@ -16,7 +16,13 @@ import { HeroTitle } from '@/domains/main/components/hero/HeroTitle';
 export function LocationHero() {
   return (
     <HeroSection>
-      <HeroBackground src="/images/main/040A4059.jpg" alt="위치 배경" />
+      <HeroBackground
+        image={{
+          src: '/images/main/040A4059.jpg',
+          alt: '위치 배경',
+          fill: true,
+        }}
+      />
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>
