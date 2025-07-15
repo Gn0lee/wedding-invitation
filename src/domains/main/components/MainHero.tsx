@@ -1,4 +1,5 @@
 import { HeroBackground } from '@/domains/main/components/hero/HeroBackground';
+import { HeroBottomContent } from '@/domains/main/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/domains/main/components/hero/HeroContainer';
 import { HeroDescription } from '@/domains/main/components/hero/HeroDescription';
 import { HeroSection } from '@/domains/main/components/hero/HeroSection';
@@ -30,6 +31,18 @@ export function MainHero() {
             <p>여러분과 함께하고 싶습니다</p>
           </HeroDescription>
         </HeroTextColumn>
+        <HeroBottomContent>
+          <p className="leading-loose">
+            <span>이진구 · 이선배</span>
+            <span className="align-baseline text-xs"> 의 차남 </span>
+            <span className="text-2xl font-extrabold drop-shadow">진호</span>
+          </p>
+          <p className="leading-loose">
+            <span>김종현 · 임종현</span>
+            <span className="align-baseline text-xs"> 의 장녀 </span>
+            <span className="text-2xl font-extrabold drop-shadow">태운</span>
+          </p>
+        </HeroBottomContent>
       </HeroContainer>
     </HeroSection>
   );
