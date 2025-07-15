@@ -38,7 +38,7 @@ export function MainHero() {
             <span className="text-2xl font-extrabold drop-shadow">진호</span>
           </p>
           <p className="leading-loose">
-            <span>김종현 · 임종현</span>
+            <span>김종현 · 임송미</span>
             <span className="align-baseline text-xs"> 의 장녀 </span>
             <span className="text-2xl font-extrabold drop-shadow">태운</span>
           </p>
