@@ -3,6 +3,7 @@ import { Header } from '@/domains/main/components/Header';
 import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';
 import { RemainTimeHero } from '@/domains/main/components/RemainTimeHero';
+import { RSVPSection } from '@/domains/main/components/RSVPSection';
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         <RemainTimeHero />
         <LocationHero />
         <GalleryHero />
+        <RSVPSection />
       </div>
     </div>
   );
