@@ -1,5 +1,6 @@
 'use client';
 
+import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, Info } from 'lucide-react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -107,157 +108,172 @@ export function Form() {
           </div>
 
           {/* 식사 여부 - 참석할 때만 표시 */}
-          {showMealSection && (
-            <div>
-              <div className="mb-3 text-sm font-semibold text-gray-50">식사 여부</div>
-              <Controller
-                name="meal"
-                control={control}
-                rules={{ required: '필수 선택 항목입니다.' }}
-                render={({ field }) => (
-                  <ToggleGroup
-                    type="single"
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    className="w-full"
-                    size="lg"
-                    variant="outline"
-                  >
-                    <ToggleGroupItem value="yes">식사</ToggleGroupItem>
-                    <ToggleGroupItem value="no">식사 안함</ToggleGroupItem>
-                  </ToggleGroup>
+          <AnimatePresence>
+            {showMealSection && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, y: -20 }}
+                animate={{ opacity: 1, height: 'auto', y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <div className="mb-3 text-sm font-semibold text-gray-50">식사 여부</div>
+                <Controller
+                  name="meal"
+                  control={control}
+                  rules={{ required: '필수 선택 항목입니다.' }}
+                  render={({ field }) => (
+                    <ToggleGroup
+                      type="single"
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      className="w-full"
+                      size="lg"
+                      variant="outline"
+                    >
+                      <ToggleGroupItem value="yes">식사</ToggleGroupItem>
+                      <ToggleGroupItem value="no">식사 안함</ToggleGroupItem>
+                    </ToggleGroup>
+                  )}
+                />
+                {errors.meal && (
+                  <p className="mt-1 text-xs text-red-500">{errors.meal.message as string}</p>
                 )}
-              />
-              {errors.meal && (
-                <p className="mt-1 text-xs text-red-500">{errors.meal.message as string}</p>
-              )}
-            </div>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* 대인/소인 - 참석하고 식사할 때만 표시 */}
-          {showPersonnelSection && (
-            <div className="flex justify-evenly">
-              <div>
-                <Label className="mb-2 text-sm text-gray-50" htmlFor="adult">
-                  대인
-                </Label>
-                <Controller
-                  name="adult"
-                  control={control}
-                  rules={{
-                    required: '대인 인원을 입력해 주세요.',
-                    min: { value: 0, message: '0명 이상 입력해 주세요.' },
-                  }}
-                  render={({ field }) => (
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          const next = Math.max(Number(field.value) - 1, 0);
-                          field.onChange(String(next));
-                        }}
-                        aria-label="대인 인원 감소"
-                      >
-                        <Minus />
-                      </Button>
-                      <Input
-                        id="adult"
-                        type="number"
-                        min={0}
-                        value={field.value}
-                        onChange={field.onChange}
-                        className="w-12 text-center text-sm"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          const next = Number(field.value) + 1;
-                          field.onChange(String(next));
-                        }}
-                        aria-label="대인 인원 증가"
-                      >
-                        <Plus />
-                      </Button>
-                    </div>
-                  )}
-                />
-                {errors.adult && (
-                  <p className="mt-1 text-xs text-red-500">{errors.adult.message as string}</p>
-                )}
-              </div>
-              {/* 소인 */}
-              <div>
-                <div className="mb-2 flex items-center gap-1">
-                  <Label className="text-sm text-gray-50" htmlFor="child">
-                    소인
+          <AnimatePresence>
+            {showPersonnelSection && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, y: -20 }}
+                animate={{ opacity: 1, height: 'auto', y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="flex justify-evenly"
+              >
+                <div>
+                  <Label className="mb-2 text-sm text-gray-50" htmlFor="adult">
+                    대인
                   </Label>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <span
-                          tabIndex={0}
-                          className="ml-1 cursor-pointer align-middle text-gray-50"
+                  <Controller
+                    name="adult"
+                    control={control}
+                    rules={{
+                      required: '대인 인원을 입력해 주세요.',
+                      min: { value: 0, message: '0명 이상 입력해 주세요.' },
+                    }}
+                    render={({ field }) => (
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            const next = Math.max(Number(field.value) - 1, 0);
+                            field.onChange(String(next));
+                          }}
+                          aria-label="대인 인원 감소"
                         >
-                          <Info size={14} />
-                        </span>
-                      </TooltipTrigger>
-                      <TooltipContent side="top">만 7세 ~ 12세 (초등학생)</TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-                <Controller
-                  name="child"
-                  control={control}
-                  rules={{
-                    min: { value: 0, message: '0명 이상 입력해 주세요.' },
-                  }}
-                  render={({ field }) => (
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          const next = Math.max(Number(field.value) - 1, 0);
-                          field.onChange(String(next));
-                        }}
-                        aria-label="소인 인원 감소"
-                      >
-                        <Minus />
-                      </Button>
-                      <Input
-                        id="child"
-                        type="number"
-                        min={0}
-                        value={field.value}
-                        onChange={field.onChange}
-                        className="w-12 text-center text-sm"
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => {
-                          const next = Number(field.value) + 1;
-                          field.onChange(String(next));
-                        }}
-                        aria-label="소인 인원 증가"
-                      >
-                        <Plus />
-                      </Button>
-                    </div>
+                          <Minus />
+                        </Button>
+                        <Input
+                          id="adult"
+                          type="number"
+                          min={0}
+                          value={field.value}
+                          onChange={field.onChange}
+                          className="w-12 text-center text-sm"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            const next = Number(field.value) + 1;
+                            field.onChange(String(next));
+                          }}
+                          aria-label="대인 인원 증가"
+                        >
+                          <Plus />
+                        </Button>
+                      </div>
+                    )}
+                  />
+                  {errors.adult && (
+                    <p className="mt-1 text-xs text-red-500">{errors.adult.message as string}</p>
                   )}
-                />
-                {errors.child && (
-                  <p className="mt-1 text-xs text-red-500">{errors.child.message as string}</p>
-                )}
-              </div>
-            </div>
-          )}
+                </div>
+                {/* 소인 */}
+                <div>
+                  <div className="mb-2 flex items-center gap-1">
+                    <Label className="text-sm text-gray-50" htmlFor="child">
+                      소인
+                    </Label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <span
+                            tabIndex={0}
+                            className="ml-1 cursor-pointer align-middle text-gray-50"
+                          >
+                            <Info size={14} />
+                          </span>
+                        </TooltipTrigger>
+                        <TooltipContent side="top">만 7세 ~ 12세 (초등학생)</TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <Controller
+                    name="child"
+                    control={control}
+                    rules={{
+                      min: { value: 0, message: '0명 이상 입력해 주세요.' },
+                    }}
+                    render={({ field }) => (
+                      <div className="flex items-center gap-2">
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            const next = Math.max(Number(field.value) - 1, 0);
+                            field.onChange(String(next));
+                          }}
+                          aria-label="소인 인원 감소"
+                        >
+                          <Minus />
+                        </Button>
+                        <Input
+                          id="child"
+                          type="number"
+                          min={0}
+                          value={field.value}
+                          onChange={field.onChange}
+                          className="w-12 text-center text-sm"
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => {
+                            const next = Number(field.value) + 1;
+                            field.onChange(String(next));
+                          }}
+                          aria-label="소인 인원 증가"
+                        >
+                          <Plus />
+                        </Button>
+                      </div>
+                    )}
+                  />
+                  {errors.child && (
+                    <p className="mt-1 text-xs text-red-500">{errors.child.message as string}</p>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="mt-6 flex min-h-0 flex-col gap-2">
