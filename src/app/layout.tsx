@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { Toaster } from '@/components/ui/sonner';
 
 const bmJua = localFont({
   src: '../../public/fonts/BMJUA.woff2',
@@ -33,6 +34,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={clsx(bmJua.variable, nanumRound.variable, 'antialiased', 'font-nanumRound')}>
         {children}
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
