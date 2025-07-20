@@ -27,7 +27,7 @@ export function RSVPSection() {
             <p>부담없이 알려주신다면 정성을 다해 준비하겠습니다.</p>
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="pt-8">
+        <HeroBottomContent className="min-h-0 pt-8">
           <Form />
         </HeroBottomContent>
       </HeroContainer>
