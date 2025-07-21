@@ -8,7 +8,7 @@ import { RemainTimeDescription } from '@/domains/main/components/RemainTimeDescr
 
 export function RemainTimeHero() {
   return (
-    <HeroSection>
+    <HeroSection id="remain-time">
       <HeroBackground
         image={{
           src: '/images/main/DSCF0748.jpg',

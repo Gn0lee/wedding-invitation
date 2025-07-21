@@ -26,7 +26,7 @@ export function InformationSection({ data }: InformationSectionProps) {
   const finalData = data || defaultInformationData;
 
   return (
-    <HeroSection>
+    <HeroSection id="information">
       <HeroBackground
         image={{
           src: '/images/main/DSCF0079.JPG',

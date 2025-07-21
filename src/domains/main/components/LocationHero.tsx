@@ -15,7 +15,7 @@ import { HeroTitle } from '@/domains/main/components/hero/HeroTitle';
 
 export function LocationHero() {
   return (
-    <HeroSection>
+    <HeroSection id="location">
       <HeroBackground
         image={{
           src: '/images/main/040A4059.jpg',

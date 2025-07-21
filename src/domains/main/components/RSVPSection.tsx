@@ -9,7 +9,7 @@ import { Form } from '@/domains/main/components/rsvp/Form';
 
 export function RSVPSection() {
   return (
-    <HeroSection>
+    <HeroSection id="rsvp">
       <HeroBackground
         image={{
           src: '/images/main/040A5133.jpg',

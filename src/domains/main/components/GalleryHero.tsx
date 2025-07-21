@@ -12,7 +12,7 @@ import { HeroTitle } from '@/domains/main/components/hero/HeroTitle';
 
 export function GalleryHero() {
   return (
-    <HeroSection>
+    <HeroSection id="gallery">
       <HeroBackground
         image={{
           src: '/images/main/IMG_6479.jpg',

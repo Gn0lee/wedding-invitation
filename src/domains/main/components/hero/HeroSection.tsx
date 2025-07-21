@@ -1,17 +1,11 @@
 import clsx from 'clsx';
 import { ReactNode } from 'react';
 
-interface SectionProps {
+interface HeroSectionProps extends React.HTMLAttributes<HTMLElement> {
   children: ReactNode;
-  className?: string;
 }
 
-export function HeroSection({
-  children,
-  className,
-
-  ...props
-}: SectionProps) {
+export function HeroSection({ children, className, ...props }: HeroSectionProps) {
   return (
     <section
       className={clsx(

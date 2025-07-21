@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { NavigationButton } from './NavigationButton';
 
 const socialLinks = [
   { name: 'Facebook', href: '#', icon: '/images/main/facebook.png' },
@@ -12,9 +12,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-10  size-full h-[72px] px-6 py-4 md:h-[88px] md:px-12 lg:h-[104px] lg:px-16">
       <div className="container m-auto flex h-full items-center justify-between">
-        <Link href="/" className="font-bmJua text-2xl">
-          👩‍❤️‍👨
-        </Link>
+        <NavigationButton />
         <div className="flex items-center space-x-4">
           <ul className="flex items-center space-x-4">
             {socialLinks.map((item) => (
