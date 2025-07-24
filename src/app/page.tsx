@@ -1,5 +1,5 @@
 import { GalleryHero } from '@/domains/main/components/GalleryHero';
-import { Header } from '@/domains/main/components/Header';
+import { Header } from '@/components/Header';
 import { InformationSection } from '@/domains/main/components/InformationSection';
 import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';
