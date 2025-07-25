@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { allItems, TOTAL_ITEMS } from '@/domains/gallery/services/galleryDataService';
+import {
+  allItems,
+  TOTAL_ITEMS,
+  sortGalleryItems,
+} from '@/domains/gallery/services/galleryDataService';
 import { GalleryResponse, SortBy, SortOrder } from '@/domains/gallery/types';
 
 export async function GET(request: NextRequest) {
@@ -26,24 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     // 데이터 정렬
-    const sortedItems = [...allItems].sort((a, b) => {
-      let aValue: string | number;
-      let bValue: string | number;
-
-      if (sortBy === 'createdAt') {
-        aValue = new Date(a.createdAt).getTime();
-        bValue = new Date(b.createdAt).getTime();
-      } else {
-        aValue = a.likes;
-        bValue = b.likes;
-      }
-
-      if (sortOrder === 'asc') {
-        return aValue > bValue ? 1 : -1;
-      } else {
-        return aValue < bValue ? 1 : -1;
-      }
-    });
+    const sortedItems = sortGalleryItems(allItems, sortBy, sortOrder);
 
     // 페이지네이션
     const startIndex = (page - 1) * limit;

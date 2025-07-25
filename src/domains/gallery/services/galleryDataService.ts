@@ -30,6 +30,36 @@ export function generateGalleryItems(count: number): GalleryItem[] {
   return Array.from({ length: count }, () => generateGalleryItem());
 }
 
+import { SortBy, SortOrder } from '@/domains/gallery/types';
+
+// 정렬 함수
+export function sortGalleryItems(
+  items: GalleryItem[],
+  sortBy: SortBy,
+  sortOrder: SortOrder,
+): GalleryItem[] {
+  const sortedItems = [...items];
+
+  return sortedItems.sort((a, b) => {
+    let aValue: string | number;
+    let bValue: string | number;
+
+    if (sortBy === 'createdAt') {
+      aValue = new Date(a.createdAt).getTime();
+      bValue = new Date(b.createdAt).getTime();
+    } else {
+      aValue = a.likes;
+      bValue = b.likes;
+    }
+
+    if (sortOrder === 'asc') {
+      return aValue > bValue ? 1 : -1;
+    } else {
+      return aValue < bValue ? 1 : -1;
+    }
+  });
+}
+
 // 전체 데이터 (실제로는 DB에서 가져올 예정)
 export const TOTAL_ITEMS = 90;
 export const allItems = generateGalleryItems(TOTAL_ITEMS);
