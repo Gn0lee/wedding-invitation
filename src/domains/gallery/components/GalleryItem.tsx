@@ -1,11 +1,12 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, X } from 'lucide-react';
+import { Heart, X, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
 
@@ -16,6 +17,7 @@ interface GalleryItemProps {
 export function GalleryItem({ item }: GalleryItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isCommentsExpanded, setIsCommentsExpanded] = useState(false);
 
   const handleClick = () => {
     setIsExpanded(true);
@@ -32,6 +34,8 @@ export function GalleryItem({ item }: GalleryItemProps) {
   const handleImageError = () => {
     setImageLoaded(true); // 에러가 나도 스켈레톤은 사라지게
   };
+
+  const hasComments = item.brideComment || item.groomComment;
 
   return (
     <>
@@ -72,7 +76,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
             onClick={handleClose}
           >
             <motion.div
-              className="relative max-h-[90vh] max-w-4xl overflow-hidden rounded-lg bg-white"
+              className="relative mx-auto flex aspect-[375/667] h-[80vh] max-w-[100vw] overflow-hidden rounded-lg "
               layoutId={`gallery-item-${item.id}`}
               onClick={(e) => e.stopPropagation()}
             >
@@ -84,55 +88,81 @@ export function GalleryItem({ item }: GalleryItemProps) {
                 <X size={20} />
               </button>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2">
-                {/* 이미지 영역 */}
-                <div className="relative">
-                  <Image
-                    src={item.src}
-                    alt={item.name}
-                    width={item.width}
-                    height={item.height}
-                    className="w-full object-cover"
-                    priority
-                  />
+              {/* 이미지 영역 */}
+              <div className="relative size-full">
+                <Image
+                  src={item.src}
+                  alt={item.name}
+                  width={item.width}
+                  height={item.height}
+                  className="size-full object-cover"
+                  priority
+                />
+
+                {/* 우하단 좋아요 버튼 */}
+                <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-black/50 px-3 py-2 text-white backdrop-blur-sm">
+                  <Heart size={20} className="text-red-500" fill="currentColor" />
+                  <span className="text-sm font-medium">{item.likes}</span>
                 </div>
 
-                {/* 세부정보 영역 */}
-                <div className="flex flex-col justify-between p-6">
-                  <div className="space-y-4">
-                    {/* 제목 */}
-                    <h3 className="text-2xl font-bold text-gray-900">{item.name}</h3>
-
-                    {/* 좋아요 */}
-                    <div className="flex items-center gap-2">
-                      <Heart size={20} className="text-red-500" fill="currentColor" />
-                      <span className="text-gray-600">{item.likes}개</span>
-                    </div>
-
-                    {/* 코멘트 */}
-                    {(item.brideComment || item.groomComment) && (
-                      <div className="space-y-3">
-                        {item.brideComment && (
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">신부 코멘트</p>
-                            <p className="text-gray-700">{item.brideComment}</p>
+                {/* 하단 코멘트 영역 */}
+                {hasComments && (
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                    <Collapsible open={isCommentsExpanded} onOpenChange={setIsCommentsExpanded}>
+                      <div className="space-y-2">
+                        {/* 접힌 상태: 코멘트들을 한 줄로 표시 */}
+                        {!isCommentsExpanded && (
+                          <div className="line-clamp-1 text-white">
+                            {item.brideComment && (
+                              <span>
+                                <span className="mr-1">👰🏻‍♀️</span>
+                                {item.brideComment}
+                              </span>
+                            )}
+                            {item.brideComment && item.groomComment && (
+                              <span className="mx-2">•</span>
+                            )}
+                            {item.groomComment && (
+                              <span>
+                                <span className="mr-1">🤵🏻</span>
+                                {item.groomComment}
+                              </span>
+                            )}
                           </div>
                         )}
-                        {item.groomComment && (
-                          <div>
-                            <p className="text-sm font-medium text-gray-500">신랑 코멘트</p>
-                            <p className="text-gray-700">{item.groomComment}</p>
-                          </div>
+
+                        {/* 펼쳐진 상태: 각각 별도 줄로 표시 */}
+                        {isCommentsExpanded && (
+                          <>
+                            {item.brideComment && (
+                              <div className="text-white">
+                                <span className="mr-2">👰🏻‍♀️</span>
+                                <span>{item.brideComment}</span>
+                              </div>
+                            )}
+                            {item.groomComment && (
+                              <div className="text-white">
+                                <span className="mr-2">🤵🏻</span>
+                                <span>{item.groomComment}</span>
+                              </div>
+                            )}
+                          </>
                         )}
+
+                        {/* 더보기 버튼 */}
+                        <CollapsibleTrigger asChild>
+                          <button className="text-sm text-gray-300 hover:text-white">
+                            {isCommentsExpanded ? (
+                              <ChevronUp size={16} />
+                            ) : (
+                              <ChevronDown size={16} />
+                            )}
+                          </button>
+                        </CollapsibleTrigger>
                       </div>
-                    )}
-
-                    {/* 날짜 */}
-                    <div className="text-sm text-gray-500">
-                      {new Date(item.createdAt).toLocaleDateString('ko-KR')}
-                    </div>
+                    </Collapsible>
                   </div>
-                </div>
+                )}
               </div>
             </motion.div>
           </motion.div>
