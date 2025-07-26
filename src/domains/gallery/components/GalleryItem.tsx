@@ -5,8 +5,9 @@ import { Heart, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
-import { GallerySkeleton } from './GallerySkeleton';
 
 interface GalleryItemProps {
   item: GalleryItemType;
@@ -34,25 +35,30 @@ export function GalleryItem({ item }: GalleryItemProps) {
 
   return (
     <>
-      {/* 그리드 아이템 */}
+      {/* Masonry 아이템 */}
       <motion.div
-        className="cursor-pointer overflow-hidden rounded-lg"
+        className="w-full cursor-pointer overflow-hidden rounded-lg"
         onClick={handleClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         layoutId={`gallery-item-${item.id}`}
       >
-        {!imageLoaded && <GallerySkeleton />}
-        <Image
-          src={item.src}
-          alt={item.name}
-          width={item.width}
-          height={item.height}
-          className={`w-full object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          priority={false}
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-        />
+        <AspectRatio ratio={item.width / item.height} className="relative w-full">
+          {!imageLoaded && (
+            <div className="absolute inset-0">
+              <GallerySkeleton />
+            </div>
+          )}
+          <Image
+            src={item.src}
+            alt={item.name}
+            width={item.width}
+            height={item.height}
+            priority={false}
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+          />
+        </AspectRatio>
       </motion.div>
 
       {/* 확대된 모달 */}

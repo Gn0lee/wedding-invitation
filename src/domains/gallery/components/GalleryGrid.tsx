@@ -1,9 +1,9 @@
 'use client';
 
+import { Loader2 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import Masonry from 'react-masonry-css';
+import Masonry from 'react-responsive-masonry';
 import { GalleryItem } from '@/domains/gallery/components/GalleryItem';
-import { GalleryGridSkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { useGalleryItems } from '@/domains/gallery/hooks/useGalleryItems';
 
 export function GalleryGrid() {
@@ -28,35 +28,27 @@ export function GalleryGrid() {
     return () => observer.disconnect();
   }, [hasMore, isValidating, loadMore]);
 
-  // 초기 로딩 시 스켈레톤
   if (isLoading) {
-    return <GalleryGridSkeleton count={12} />;
+    return (
+      <div className="flex size-full items-center justify-center">
+        <Loader2 className="size-12 animate-spin text-gray-500" />
+      </div>
+    );
   }
 
   return (
-    <div className="space-y-8">
-      {/* 갤러리 그리드 - Masonry 사용 */}
-      <Masonry
-        breakpointCols={2}
-        className="-ml-4 flex w-auto"
-        columnClassName="pl-4 bg-clip-padding"
-      >
+    <div>
+      {/* React Responsive Masonry 레이아웃 */}
+      <Masonry columnsCount={3} gutter="16px">
         {items.map((item) => (
-          <div key={item.id} className="mb-4">
-            <GalleryItem item={item} />
-          </div>
+          <GalleryItem key={item.id} item={item} />
         ))}
       </Masonry>
 
-      {/* 무한스크롤 로딩 */}
-      {isValidating && (
-        <div className="flex justify-center">
-          <GalleryGridSkeleton count={6} />
-        </div>
-      )}
-
       {/* 무한스크롤 감지 요소 */}
-      <div ref={observerRef} className="h-4" />
+      <div ref={observerRef} className="mt-4 h-4">
+        {hasMore && <Loader2 className="size-full animate-spin text-gray-500" />}
+      </div>
     </div>
   );
 }

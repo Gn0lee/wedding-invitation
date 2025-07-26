@@ -2,7 +2,8 @@ import clsx from 'clsx';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import { SWRConfig } from 'swr';
+
+import { SWRProvider } from '@/components/swr-provider';
 import { Toaster } from '@/components/ui/sonner';
 
 const bmJua = localFont({
@@ -34,14 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(bmJua.variable, nanumRound.variable, 'antialiased', 'font-nanumRound')}>
-        <SWRConfig
-          value={{
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-          }}
-        >
-          {children}
-        </SWRConfig>
+        <SWRProvider>{children}</SWRProvider>
         <Toaster position="top-center" richColors />
       </body>
     </html>
