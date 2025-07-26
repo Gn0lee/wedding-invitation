@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
+import { GallerySkeleton } from './GallerySkeleton';
 
 interface GalleryItemProps {
   item: GalleryItemType;
@@ -13,6 +14,7 @@ interface GalleryItemProps {
 
 export function GalleryItem({ item }: GalleryItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleClick = () => {
     setIsExpanded(true);
@@ -20,6 +22,10 @@ export function GalleryItem({ item }: GalleryItemProps) {
 
   const handleClose = () => {
     setIsExpanded(false);
+  };
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
   };
 
   return (
@@ -32,13 +38,15 @@ export function GalleryItem({ item }: GalleryItemProps) {
         whileTap={{ scale: 0.98 }}
         layoutId={`gallery-item-${item.id}`}
       >
+        {!imageLoaded && <GallerySkeleton />}
         <Image
           src={item.src}
           alt={item.name}
           width={300}
           height={375}
-          className="aspect-[4/5] w-full object-cover"
+          className={`aspect-[4/5] w-full object-cover ${imageLoaded ? 'block' : 'hidden'}`}
           priority={false}
+          onLoad={handleImageLoad}
         />
       </motion.div>
 
