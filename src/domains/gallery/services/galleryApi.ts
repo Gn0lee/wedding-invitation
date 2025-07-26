@@ -1,8 +1,9 @@
+import ky from 'ky';
 import { GalleryResponse, GalleryQueryParams } from '@/domains/gallery/types';
 
 // 실제 API 호출 함수
 export async function fetchGalleryItems(params: GalleryQueryParams): Promise<GalleryResponse> {
-  // undefined 값들을 필터링하고 문자열로 변환
+  // undefined 값들을 필터링
   const queryParams = Object.entries(params)
     .filter(([, value]) => value !== undefined)
     .reduce(
@@ -13,14 +14,7 @@ export async function fetchGalleryItems(params: GalleryQueryParams): Promise<Gal
       {} as Record<string, string>,
     );
 
-  const queryString = new URLSearchParams(queryParams).toString();
-  const response = await fetch(`/api/gallery?${queryString}`);
-
-  if (!response.ok) {
-    throw new Error('갤러리 데이터를 불러오는데 실패했습니다.');
-  }
-
-  return response.json();
+  return ky.get('/api/gallery', { searchParams: queryParams }).json();
 }
 
 // 기본 파라미터
