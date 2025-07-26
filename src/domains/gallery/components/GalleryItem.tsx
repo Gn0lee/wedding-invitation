@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
@@ -81,12 +82,14 @@ export function GalleryItem({ item }: GalleryItemProps) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* 닫기 버튼 */}
-              <button
+              <Button
                 onClick={handleClose}
-                className="absolute right-4 top-4 z-10 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 top-4 z-10 rounded-full bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
               >
                 <X size={20} />
-              </button>
+              </Button>
 
               {/* 이미지 영역 */}
               <div className="relative size-full">
@@ -100,7 +103,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
                 />
 
                 {/* 우하단 좋아요 버튼 */}
-                <div className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-black/50 px-3 py-2 text-white backdrop-blur-sm">
+                <div className="absolute bottom-24 right-4 flex flex-col items-center gap-1 rounded-full bg-black/50 px-3 py-2 text-white backdrop-blur-sm">
                   <Heart size={20} className="text-red-500" fill="currentColor" />
                   <span className="text-sm font-medium">{item.likes}</span>
                 </div>
@@ -136,13 +139,13 @@ export function GalleryItem({ item }: GalleryItemProps) {
                           <>
                             {item.brideComment && (
                               <div className="text-white">
-                                <span className="mr-2">👰🏻‍♀️</span>
+                                <span className="mr-1">👰🏻‍♀️</span>
                                 <span>{item.brideComment}</span>
                               </div>
                             )}
                             {item.groomComment && (
                               <div className="text-white">
-                                <span className="mr-2">🤵🏻</span>
+                                <span className="mr-1">🤵🏻</span>
                                 <span>{item.groomComment}</span>
                               </div>
                             )}
