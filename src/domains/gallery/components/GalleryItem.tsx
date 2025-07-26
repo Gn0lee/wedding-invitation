@@ -28,6 +28,10 @@ export function GalleryItem({ item }: GalleryItemProps) {
     setImageLoaded(true);
   };
 
+  const handleImageError = () => {
+    setImageLoaded(true); // 에러가 나도 스켈레톤은 사라지게
+  };
+
   return (
     <>
       {/* 그리드 아이템 */}
@@ -47,6 +51,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
           className={`aspect-[4/5] w-full object-cover ${imageLoaded ? 'block' : 'hidden'}`}
           priority={false}
           onLoad={handleImageLoad}
+          onError={handleImageError}
         />
       </motion.div>
 

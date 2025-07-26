@@ -15,7 +15,7 @@ function generateKoreanComment(): string | null {
 export function generateGalleryItem(): GalleryItem {
   return {
     id: faker.string.uuid(),
-    src: faker.image.urlLoremFlickr({ category: 'people' }),
+    src: faker.image.personPortrait(),
     likes: faker.number.int({ min: 0, max: 100 }),
     createdAt: faker.date.recent({ days: 30 }).toISOString(),
     modifiedAt: faker.date.recent({ days: 7 }).toISOString(),
