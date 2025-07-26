@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
-import { ArrowUpDown, Calendar, Heart } from 'lucide-react';
+import { Calendar, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { gallerySortByAtom, gallerySortOrderAtom } from '@/stores/gallery';
 

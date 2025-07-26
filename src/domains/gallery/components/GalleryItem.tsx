@@ -48,7 +48,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
           alt={item.name}
           width={300}
           height={375}
-          className={`aspect-[4/5] w-full object-cover ${imageLoaded ? 'block' : 'hidden'}`}
+          className={`aspect-[4/5] w-full object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           priority={false}
           onLoad={handleImageLoad}
           onError={handleImageError}

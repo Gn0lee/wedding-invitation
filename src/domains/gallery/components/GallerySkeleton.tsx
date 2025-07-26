@@ -11,9 +11,11 @@ export function GallerySkeleton({ className }: GallerySkeletonProps) {
 // 갤러리 그리드용 스켈레톤 (여러 개)
 export function GalleryGridSkeleton({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="columns-3 gap-4 space-y-4">
       {Array.from({ length: count }).map((_, index) => (
-        <GallerySkeleton key={index} />
+        <div key={index} className="mb-4 break-inside-avoid">
+          <GallerySkeleton />
+        </div>
       ))}
     </div>
   );

@@ -34,10 +34,12 @@ export function GalleryGrid() {
 
   return (
     <div className="space-y-8">
-      {/* 갤러리 그리드 */}
-      <div className="grid grid-cols-3 gap-4">
+      {/* 갤러리 그리드 - CSS columns 사용 */}
+      <div className="columns-3 gap-4 space-y-4">
         {items.map((item) => (
-          <GalleryItem key={item.id} item={item} />
+          <div key={item.id} className="mb-4 break-inside-avoid">
+            <GalleryItem item={item} />
+          </div>
         ))}
       </div>
 

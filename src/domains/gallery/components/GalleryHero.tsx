@@ -12,7 +12,10 @@ export function GalleryHero() {
     <HeroSection id="gallery" className="bg-[#082D00]">
       <HeroContainer>
         <HeroTextColumn>
-          <HeroTitle>우리의 소중한 순간들</HeroTitle>
+          <HeroTitle>
+            우리의 <br />
+            소중한 순간들
+          </HeroTitle>
           <GallerySort />
         </HeroTextColumn>
         <HeroBottomContent className="min-h-0 overflow-y-auto">
