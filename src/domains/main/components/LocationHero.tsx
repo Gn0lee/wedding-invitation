@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { Map } from 'lucide-react';
 import Link from 'next/link';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -12,6 +10,8 @@ import { HeroDescription } from '@/components/hero/HeroDescription';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 
 export function LocationHero() {
   return (

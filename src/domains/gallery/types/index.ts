@@ -1,6 +1,8 @@
 export interface GalleryItem {
   id: string;
   src: string;
+  width: number;
+  height: number;
   likes: number;
   createdAt: string;
   modifiedAt: string;

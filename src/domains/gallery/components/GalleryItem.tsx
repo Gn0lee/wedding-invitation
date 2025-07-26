@@ -46,9 +46,9 @@ export function GalleryItem({ item }: GalleryItemProps) {
         <Image
           src={item.src}
           alt={item.name}
-          width={300}
-          height={375}
-          className={`aspect-[4/5] w-full object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          width={item.width}
+          height={item.height}
+          className={`w-full object-cover ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           priority={false}
           onLoad={handleImageLoad}
           onError={handleImageError}
@@ -84,9 +84,9 @@ export function GalleryItem({ item }: GalleryItemProps) {
                   <Image
                     src={item.src}
                     alt={item.name}
-                    width={600}
-                    height={750}
-                    className="aspect-[4/5] w-full object-cover"
+                    width={item.width}
+                    height={item.height}
+                    className="w-full object-cover"
                     priority
                   />
                 </div>

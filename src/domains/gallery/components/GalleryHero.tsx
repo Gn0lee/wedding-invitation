@@ -3,7 +3,6 @@ import { HeroContainer } from '@/components/hero/HeroContainer';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
-
 import { GalleryGrid } from '@/domains/gallery/components/GalleryGrid';
 import { GallerySort } from '@/domains/gallery/components/GallerySort';
 

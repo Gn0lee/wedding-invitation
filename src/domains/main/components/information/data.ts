@@ -73,7 +73,7 @@ export async function fetchInformationData(): Promise<InformationData> {
   // TODO: 실제 API 호출로 교체
   // const response = await fetch('/api/information');
   // return response.json();
-  
+
   // 현재는 정적 데이터 반환
   return defaultInformationData;
-} 
+}

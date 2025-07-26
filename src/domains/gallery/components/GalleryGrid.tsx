@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Masonry from 'react-masonry-css';
 import { GalleryItem } from '@/domains/gallery/components/GalleryItem';
 import { GalleryGridSkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { useGalleryItems } from '@/domains/gallery/hooks/useGalleryItems';
@@ -34,14 +35,18 @@ export function GalleryGrid() {
 
   return (
     <div className="space-y-8">
-      {/* 갤러리 그리드 - CSS columns 사용 */}
-      <div className="columns-3 gap-4 space-y-4">
+      {/* 갤러리 그리드 - Masonry 사용 */}
+      <Masonry
+        breakpointCols={2}
+        className="-ml-4 flex w-auto"
+        columnClassName="pl-4 bg-clip-padding"
+      >
         {items.map((item) => (
-          <div key={item.id} className="mb-4 break-inside-avoid">
+          <div key={item.id} className="mb-4">
             <GalleryItem item={item} />
           </div>
         ))}
-      </div>
+      </Masonry>
 
       {/* 무한스크롤 로딩 */}
       {isValidating && (
