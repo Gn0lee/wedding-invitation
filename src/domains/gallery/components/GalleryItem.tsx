@@ -9,10 +9,9 @@ import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
 
 interface GalleryItemProps {
   item: GalleryItemType;
-  className?: string;
 }
 
-export function GalleryItem({ item, className }: GalleryItemProps) {
+export function GalleryItem({ item }: GalleryItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClick = () => {
@@ -27,7 +26,7 @@ export function GalleryItem({ item, className }: GalleryItemProps) {
     <>
       {/* 그리드 아이템 */}
       <motion.div
-        className={`cursor-pointer overflow-hidden rounded-lg ${className}`}
+        className="cursor-pointer overflow-hidden rounded-lg"
         onClick={handleClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
