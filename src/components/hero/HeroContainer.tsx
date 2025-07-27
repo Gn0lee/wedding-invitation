@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface HeroContainerProps extends React.ComponentProps<'div'> {
   children?: React.ReactNode;
@@ -7,7 +7,7 @@ interface HeroContainerProps extends React.ComponentProps<'div'> {
 
 export function HeroContainer({ children, className, ...props }: HeroContainerProps) {
   return (
-    <div className={clsx('z-10 flex size-full flex-col px-4 py-6', className)} {...props}>
+    <div className={cn('z-10 flex size-full flex-col px-4 py-6', className)} {...props}>
       {children}
     </div>
   );

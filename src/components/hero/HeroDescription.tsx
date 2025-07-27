@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface HeroDescriptionProps extends React.ComponentProps<'div'> {
   children?: React.ReactNode;
@@ -8,7 +8,7 @@ interface HeroDescriptionProps extends React.ComponentProps<'div'> {
 export function HeroDescription({ children, className, ...props }: HeroDescriptionProps) {
   return (
     <div
-      className={clsx('mt-8 space-y-1 text-sm font-light leading-snug tracking-wide', className)}
+      className={cn('mt-8 space-y-1 text-sm font-light leading-snug tracking-wide', className)}
       {...props}
     >
       {children}

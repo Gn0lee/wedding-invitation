@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface HeroTextColumnProps extends React.ComponentProps<'div'> {
   children?: React.ReactNode;
@@ -7,7 +7,7 @@ interface HeroTextColumnProps extends React.ComponentProps<'div'> {
 
 export function HeroTextColumn({ children, className, ...props }: HeroTextColumnProps) {
   return (
-    <div className={clsx('flex w-full shrink flex-col text-left', className)} {...props}>
+    <div className={cn('flex w-full shrink flex-col text-left', className)} {...props}>
       {children}
     </div>
   );

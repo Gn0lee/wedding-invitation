@@ -17,7 +17,7 @@ export function GalleryHero() {
           </HeroTitle>
           <GallerySort />
         </HeroTextColumn>
-        <HeroBottomContent className="min-h-0 overflow-y-auto">
+        <HeroBottomContent className="min-h-0 overflow-y-auto pt-0">
           <GalleryGrid />
         </HeroBottomContent>
       </HeroContainer>

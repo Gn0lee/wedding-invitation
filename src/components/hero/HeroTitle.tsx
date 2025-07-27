@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 interface HeroTitleProps extends React.ComponentProps<'h2'> {
   children?: React.ReactNode;
@@ -8,7 +8,7 @@ interface HeroTitleProps extends React.ComponentProps<'h2'> {
 export function HeroTitle({ children, className, ...props }: HeroTitleProps) {
   return (
     <h2
-      className={clsx('font-bmJua text-5xl font-medium leading-tight tracking-wide', className)}
+      className={cn('font-bmJua text-5xl font-medium leading-tight tracking-wide', className)}
       {...props}
     >
       {children}

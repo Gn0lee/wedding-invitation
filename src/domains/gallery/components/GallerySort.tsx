@@ -26,7 +26,7 @@ export function GallerySort() {
   };
 
   return (
-    <div className="flex items-center gap-2 rounded-lg bg-white/10 p-2 backdrop-blur-sm">
+    <div className="mb-4 mt-2 flex items-center gap-2 rounded-lg bg-white/10 p-2 backdrop-blur-sm">
       <span className="text-sm font-medium text-white">정렬:</span>
 
       <Button

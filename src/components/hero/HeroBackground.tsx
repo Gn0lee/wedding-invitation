@@ -1,6 +1,6 @@
-import clsx from 'clsx';
 import Image, { ImageProps } from 'next/image';
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 type RequiredImageProps = Pick<ImageProps, 'src' | 'alt'> &
   Partial<Omit<ImageProps, 'src' | 'alt'>>;
@@ -17,7 +17,7 @@ export function HeroBackground({
   children,
 }: HeroBackgroundProps) {
   return (
-    <div {...container} className={clsx('absolute inset-0 z-0', container?.className)}>
+    <div {...container} className={cn('absolute inset-0 z-0', container?.className)}>
       <Image src={src} alt={alt} {...rest} />
       {children}
     </div>
