@@ -86,7 +86,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
                 onClick={handleClose}
                 variant="ghost"
                 size="icon"
-                className="absolute right-4 top-4 z-10 rounded-full bg-black/50 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+                className="absolute right-4 top-4 z-10 rounded-full bg-white/10 text-gray-50 shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30"
               >
                 <X size={20} />
               </Button>
@@ -103,58 +103,55 @@ export function GalleryItem({ item }: GalleryItemProps) {
                 />
 
                 {/* 우하단 좋아요 버튼 */}
-                <div className="absolute bottom-24 right-4 flex flex-col items-center gap-1 rounded-full bg-black/50 px-3 py-2 text-white backdrop-blur-sm">
-                  <Heart size={20} className="text-red-500" fill="currentColor" />
-                  <span className="text-sm font-medium">{item.likes}</span>
+                <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-white/10 p-2 text-gray-50 shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30">
+                  <Heart size={16} className="text-red-500" fill="currentColor" />
+                  <span className="text-xs font-medium">{item.likes}</span>
                 </div>
 
                 {/* 하단 코멘트 영역 */}
                 {hasComments && (
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                  <div className="absolute bottom-0 left-0 right-10 p-4">
                     <Collapsible open={isCommentsExpanded} onOpenChange={setIsCommentsExpanded}>
-                      <div className="space-y-2">
-                        {/* 접힌 상태: 코멘트들을 한 줄로 표시 */}
+                      <div className="relative pr-4">
+                        {/* 접힌 상태: 높이 제한으로 표시 */}
                         {!isCommentsExpanded && (
-                          <div className="line-clamp-1 text-white">
+                          <div className="max-h-6 overflow-hidden text-white">
                             {item.brideComment && (
-                              <span>
-                                <span className="mr-1">👰🏻‍♀️</span>
+                              <span className="line-clamp-1">
+                                <span className="mr-1">👰🏻‍♀️ :</span>
                                 {item.brideComment}
                               </span>
                             )}
-                            {item.brideComment && item.groomComment && (
-                              <span className="mx-2">•</span>
-                            )}
                             {item.groomComment && (
-                              <span>
-                                <span className="mr-1">🤵🏻</span>
+                              <span className="line-clamp-1">
+                                <span className="mr-1">🤵🏻 :</span>
                                 {item.groomComment}
                               </span>
                             )}
                           </div>
                         )}
 
-                        {/* 펼쳐진 상태: 각각 별도 줄로 표시 */}
+                        {/* 펼쳐진 상태: 높이 자동 조정 */}
                         {isCommentsExpanded && (
-                          <>
+                          <div className="text-white">
                             {item.brideComment && (
-                              <div className="text-white">
-                                <span className="mr-1">👰🏻‍♀️</span>
+                              <div className="mb-2">
+                                <span className="mr-1">👰🏻‍♀️ :</span>
                                 <span>{item.brideComment}</span>
                               </div>
                             )}
                             {item.groomComment && (
-                              <div className="text-white">
-                                <span className="mr-1">🤵🏻</span>
+                              <div>
+                                <span className="mr-1">🤵🏻 :</span>
                                 <span>{item.groomComment}</span>
                               </div>
                             )}
-                          </>
+                          </div>
                         )}
 
                         {/* 더보기 버튼 */}
                         <CollapsibleTrigger asChild>
-                          <button className="text-sm text-gray-300 hover:text-white">
+                          <button className="absolute bottom-1 right-0 text-sm text-gray-300 hover:text-white">
                             {isCommentsExpanded ? (
                               <ChevronUp size={16} />
                             ) : (
