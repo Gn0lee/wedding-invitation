@@ -77,7 +77,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
             onClick={handleClose}
           >
             <motion.div
-              className="relative mx-auto flex aspect-[375/667] h-[80vh] max-w-[100vw] overflow-hidden rounded-lg "
+              className="relative mx-auto flex aspect-[375/667] h-[90vh] max-w-[100vw] overflow-hidden rounded-lg "
               layoutId={`gallery-item-${item.id}`}
               onClick={(e) => e.stopPropagation()}
             >
@@ -86,7 +86,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
                 onClick={handleClose}
                 variant="ghost"
                 size="icon"
-                className="absolute right-4 top-4 z-10 rounded-full bg-white/10 text-gray-50 shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30"
+                className="absolute right-4 top-4 z-10 rounded-full bg-gray-700/20 text-gray-50 backdrop-blur-sm transition-colors hover:bg-gray-700/70 hover:text-gray-50"
               >
                 <X size={20} />
               </Button>
@@ -103,19 +103,19 @@ export function GalleryItem({ item }: GalleryItemProps) {
                 />
 
                 {/* 우하단 좋아요 버튼 */}
-                <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-white/10 p-2 text-gray-50 shadow-lg backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30">
+                <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
                   <Heart size={16} className="text-red-500" fill="currentColor" />
                   <span className="text-xs font-medium">{item.likes}</span>
                 </div>
 
                 {/* 하단 코멘트 영역 */}
                 {hasComments && (
-                  <div className="absolute bottom-0 left-0 right-10 p-4">
+                  <div className="absolute bottom-0 left-0 right-16 mb-3 ml-3 rounded-md bg-gray-700/20 p-1 text-sm text-gray-50">
                     <Collapsible open={isCommentsExpanded} onOpenChange={setIsCommentsExpanded}>
-                      <div className="relative pr-4">
+                      <div className="relative pr-5">
                         {/* 접힌 상태: 높이 제한으로 표시 */}
                         {!isCommentsExpanded && (
-                          <div className="max-h-6 overflow-hidden text-white">
+                          <div className="max-h-5 overflow-hidden">
                             {item.brideComment && (
                               <span className="line-clamp-1">
                                 <span className="mr-1">👰🏻‍♀️ :</span>
@@ -133,9 +133,9 @@ export function GalleryItem({ item }: GalleryItemProps) {
 
                         {/* 펼쳐진 상태: 높이 자동 조정 */}
                         {isCommentsExpanded && (
-                          <div className="text-white">
+                          <div>
                             {item.brideComment && (
-                              <div className="mb-2">
+                              <div>
                                 <span className="mr-1">👰🏻‍♀️ :</span>
                                 <span>{item.brideComment}</span>
                               </div>
@@ -151,7 +151,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
 
                         {/* 더보기 버튼 */}
                         <CollapsibleTrigger asChild>
-                          <button className="absolute bottom-1 right-0 text-sm text-gray-300 hover:text-white">
+                          <button className="absolute bottom-1 right-0 text-sm text-gray-50">
                             {isCommentsExpanded ? (
                               <ChevronUp size={16} />
                             ) : (
