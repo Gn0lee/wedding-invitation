@@ -23,6 +23,7 @@ export function Form() {
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<RSVPFormValues>({
     defaultValues: {
@@ -44,6 +45,33 @@ export function Form() {
 
   // 참석하고 식사할 때만 인원 입력 표시
   const showPersonnelSection = attendValue === 'yes' && mealValue === 'yes';
+
+  // 조건 변경 시 하위 값들 자동 초기화
+  const handleAttendChange = (value: 'yes' | 'no' | '') => {
+    if (value === 'no') {
+      // 불참으로 변경 시 식사여부, 대인, 소인 초기화
+      setValue('meal', '');
+      setValue('adult', '0');
+      setValue('child', '0');
+    } else if (value === 'yes') {
+      // 참석으로 변경 시 식사여부 초기화, 대인은 1로 설정
+      setValue('meal', '');
+      setValue('adult', '1');
+      setValue('child', '0');
+    }
+  };
+
+  const handleMealChange = (value: 'yes' | 'no' | '') => {
+    if (value === 'no') {
+      // 식사 안함으로 변경 시 대인, 소인 모두 0으로 설정
+      setValue('adult', '0');
+      setValue('child', '0');
+    } else if (value === 'yes') {
+      // 식사로 변경 시 대인은 1로 설정
+      setValue('adult', '1');
+      setValue('child', '0');
+    }
+  };
 
   const onSubmit = (data: RSVPFormValues) => {
     console.log('Form submitted:', data);
@@ -92,7 +120,10 @@ export function Form() {
                 <ToggleGroup
                   type="single"
                   value={field.value}
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    handleAttendChange(value as 'yes' | 'no' | '');
+                  }}
                   className="w-full"
                   size="lg"
                   variant="outline"
@@ -125,7 +156,10 @@ export function Form() {
                     <ToggleGroup
                       type="single"
                       value={field.value}
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        handleMealChange(value as 'yes' | 'no' | '');
+                      }}
                       className="w-full"
                       size="lg"
                       variant="outline"
