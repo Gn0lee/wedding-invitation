@@ -19,6 +19,7 @@ export function GalleryItem({ item }: GalleryItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isCommentsExpanded, setIsCommentsExpanded] = useState(false);
+  const [showLineClamp, setShowLineClamp] = useState(true); // 초기에는 접힌 상태이므로 true
 
   const handleClick = () => {
     setIsExpanded(true);
@@ -34,6 +35,20 @@ export function GalleryItem({ item }: GalleryItemProps) {
 
   const handleImageError = () => {
     setImageLoaded(true); // 에러가 나도 스켈레톤은 사라지게
+  };
+
+  const handleTransitionStart = () => {
+    // 펼쳐질 때는 즉시 line-clamp 제거, 접힐 때는 유지
+    if (isCommentsExpanded) {
+      setShowLineClamp(false);
+    }
+  };
+
+  const handleTransitionEnd = () => {
+    // 접힐 때 애니메이션 완료 후 line-clamp 적용
+    if (!isCommentsExpanded) {
+      setShowLineClamp(true);
+    }
   };
 
   const hasComments = item.brideComment || item.groomComment;
@@ -113,45 +128,44 @@ export function GalleryItem({ item }: GalleryItemProps) {
                   <div className="absolute bottom-0 left-0 right-16 mb-3 ml-3 rounded-md bg-gray-700/20 p-1 text-sm text-gray-50">
                     <Collapsible open={isCommentsExpanded} onOpenChange={setIsCommentsExpanded}>
                       <div className="relative pr-5">
-                        {/* 접힌 상태: 높이 제한으로 표시 */}
-                        {!isCommentsExpanded && (
-                          <div className="max-h-5 overflow-hidden">
+                        <div
+                          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                            isCommentsExpanded ? 'max-h-32' : 'max-h-5'
+                          }`}
+                          onTransitionStart={handleTransitionStart}
+                          onTransitionEnd={handleTransitionEnd}
+                        >
+                          <div
+                            className={`transition-all duration-300 ${
+                              isCommentsExpanded ? 'opacity-100' : 'opacity-90'
+                            }`}
+                          >
                             {item.brideComment && (
-                              <span className="line-clamp-1">
-                                <span className="mr-1">👰🏻‍♀️ :</span>
-                                {item.brideComment}
-                              </span>
-                            )}
-                            {item.groomComment && (
-                              <span className="line-clamp-1">
-                                <span className="mr-1">🤵🏻 :</span>
-                                {item.groomComment}
-                              </span>
-                            )}
-                          </div>
-                        )}
-
-                        {/* 펼쳐진 상태: 높이 자동 조정 */}
-                        {isCommentsExpanded && (
-                          <div>
-                            {item.brideComment && (
-                              <div>
+                              <div
+                                className={`transition-all duration-300 ${
+                                  isCommentsExpanded || !showLineClamp ? '' : 'line-clamp-1'
+                                }`}
+                              >
                                 <span className="mr-1">👰🏻‍♀️ :</span>
                                 <span>{item.brideComment}</span>
                               </div>
                             )}
                             {item.groomComment && (
-                              <div>
+                              <div
+                                className={`transition-all duration-300 ${
+                                  isCommentsExpanded || !showLineClamp ? '' : 'line-clamp-1'
+                                }`}
+                              >
                                 <span className="mr-1">🤵🏻 :</span>
                                 <span>{item.groomComment}</span>
                               </div>
                             )}
                           </div>
-                        )}
+                        </div>
 
                         {/* 더보기 버튼 */}
                         <CollapsibleTrigger asChild>
-                          <button className="absolute bottom-1 right-0 text-sm text-gray-50">
+                          <button className="absolute bottom-1 right-0 text-sm text-gray-50 transition-transform duration-100 hover:scale-110 active:scale-90">
                             {isCommentsExpanded ? (
                               <ChevronUp size={16} />
                             ) : (
