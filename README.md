@@ -20,13 +20,28 @@
 npm install
 ```
 
-2. 개발 서버 실행
+2. 환경 변수 설정
+
+프로젝트 루트에 `.env.local` 파일을 생성하고 다음 내용을 추가하세요:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+3. Supabase 설정
+
+- [Supabase](https://supabase.com)에서 새 프로젝트를 생성하세요
+- Authentication > Providers에서 Kakao OAuth를 활성화하세요
+- Kakao Developer Console에서 OAuth 앱을 등록하고 리다이렉트 URI를 설정하세요
+
+4. 개발 서버 실행
 
 ```bash
 npm run dev
 ```
 
-3. 브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
+5. 브라우저에서 [http://localhost:3000](http://localhost:3000) 접속
 
 ## 폴더 구조
 
