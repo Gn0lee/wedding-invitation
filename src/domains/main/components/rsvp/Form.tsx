@@ -1,9 +1,8 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus, Info } from 'lucide-react';
+import { Plus, Minus, Info, Loader2 } from 'lucide-react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
-import { FormContainer } from '@/components/FormContainer';
 import { KakaoLoginButton } from '@/components/KakaoLoginButton';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -11,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
+import { FormContainer } from '@/domains/main/components/rsvp/FormContainer';
 import { useAuth } from '@/hooks/useAuth';
 
 interface RSVPFormValues {
@@ -86,7 +86,7 @@ export function Form() {
     return (
       <FormContainer>
         <div className="flex h-full items-center justify-center">
-          <p className="text-center text-gray-50">로딩 중...</p>
+          <Loader2 className="size-12 animate-spin text-gray-500" />
         </div>
       </FormContainer>
     );
@@ -95,7 +95,7 @@ export function Form() {
   if (!user) {
     return (
       <FormContainer>
-        <div className="flex flex-col items-center justify-center gap-4 p-8">
+        <div className="flex h-full flex-col items-center justify-center gap-4 p-8">
           <p className="text-center text-gray-50">참석 여부를 전달하려면 로그인이 필요합니다.</p>
           <KakaoLoginButton />
         </div>

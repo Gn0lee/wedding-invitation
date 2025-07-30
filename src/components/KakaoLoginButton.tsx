@@ -1,5 +1,6 @@
 'use client';
 
+import { KakaoIcon } from '@/components/icons/kakao-icon';
 import { Button } from '@/components/ui/button';
 import { createClient } from '@/lib/supabase/client';
 
@@ -22,8 +23,9 @@ export function KakaoLoginButton() {
   return (
     <Button
       onClick={signInWithKakao}
-      className="w-full bg-yellow-400 text-black hover:bg-yellow-500"
+      className="w-full max-w-sm bg-yellow-400 text-black hover:bg-yellow-500"
     >
+      <KakaoIcon className="size-4" />
       카카오로 로그인
     </Button>
   );
