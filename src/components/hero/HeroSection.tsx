@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/tw';
 
 interface HeroSectionProps extends React.HTMLAttributes<HTMLElement> {
   children: ReactNode;

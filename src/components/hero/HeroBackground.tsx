@@ -1,6 +1,6 @@
 import Image, { ImageProps } from 'next/image';
 import React from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/tw';
 
 type RequiredImageProps = Pick<ImageProps, 'src' | 'alt'> &
   Partial<Omit<ImageProps, 'src' | 'alt'>>;

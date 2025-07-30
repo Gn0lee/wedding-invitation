@@ -1,10 +1,12 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 export function KakaoLoginButton() {
   const signInWithKakao = async () => {
+    const supabase = createClient();
+
     await supabase.auth.signInWithOAuth({
       provider: 'kakao',
       options: {

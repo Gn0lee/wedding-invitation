@@ -2,11 +2,13 @@
 
 import type { User } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const supabase = createClient();
 
   useEffect(() => {
     // 현재 세션 가져오기
