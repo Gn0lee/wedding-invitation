@@ -2,6 +2,7 @@
 
 import { KakaoIcon } from '@/components/icons/kakao-icon';
 import { Button } from '@/components/ui/button';
+import { getKakaoLoginQueryParams } from '@/lib/kakao';
 import { createClient } from '@/lib/supabase/client';
 
 export function KakaoLoginButton() {
@@ -12,10 +13,9 @@ export function KakaoLoginButton() {
       provider: 'kakao',
       options: {
         redirectTo: `${window.location.origin}/api/auth/callback/kakao`,
-        queryParams: {
-          prompt: 'login',
+        queryParams: getKakaoLoginQueryParams({
           next: '/#rsvp',
-        },
+        }),
       },
     });
   };
