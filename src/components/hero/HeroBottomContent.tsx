@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/tw';
+import { cn } from '@/lib/utils';
 
 interface HeroBottomContentProps extends React.ComponentProps<'div'> {
   children?: React.ReactNode;

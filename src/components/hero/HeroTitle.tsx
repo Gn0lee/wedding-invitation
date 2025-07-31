@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/tw';
+import { cn } from '@/lib/utils';
 
 interface HeroTitleProps extends React.ComponentProps<'h2'> {
   children?: React.ReactNode;

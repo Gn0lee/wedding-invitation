@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/tw';
+import { cn } from '@/lib/utils';
 
 interface GallerySkeletonProps {
   className?: string;

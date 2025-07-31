@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-import { cn } from '@/lib/tw';
+import { cn } from '@/lib/utils';
 
 export function KakaoIcon({ className, ...props }: ComponentPropsWithoutRef<'svg'>) {
   return (
