@@ -9,7 +9,7 @@ alwaysApply: true
 - **Next.js**의 App Router 구조를 따릅니다.
 - **기능/도메인 단위**로 폴더를 구성합니다. (예: `src/domains/청첩장`, `src/domains/방명록` 등)
 - **공통 컴포넌트**는 `src/components/`에, 공통 훅은 `src/hooks/`에 위치시킵니다.
-- **상태관리**는 Jotai(로컬), TanStack Query(서버 상태)로 구분하여 사용합니다.
+- **상태관리**는 Jotai(로컬), SWR(서버 상태)로 구분하여 사용합니다.
 
 ## 2. 스타일 가이드
 - **Tailwind CSS**를 기본 스타일링 도구로 사용합니다.
@@ -19,7 +19,7 @@ alwaysApply: true
 
 ## 3. API 및 데이터
 - **fetch API**로 데이터 요청을 수행합니다.
-- 서버 데이터는 **TanStack Query**로 관리합니다.
+- 서버 데이터는 **SWR**로 관리합니다.
 - 인증/DB/Storage는 **Supabase**를 사용하며, 인증은 Kakao OAuth를 기본으로 합니다.
 
 ## 4. 배포 및 CI/CD
