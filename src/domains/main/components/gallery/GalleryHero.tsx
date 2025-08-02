@@ -31,7 +31,7 @@ export function GalleryHero() {
             <p>지금 만나보세요</p>
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent>
+        <HeroBottomContent className="pt-0">
           <GalleryCarousel />
         </HeroBottomContent>
       </HeroContainer>

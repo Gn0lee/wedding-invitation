@@ -2,7 +2,13 @@
 
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+} from '@/components/ui/drawer';
 import { navigationDrawerOpenAtom } from '@/stores/navigation';
 
 const SECTIONS = [
@@ -52,6 +58,7 @@ export function NavigationDrawerContent() {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle className="font-bmJua text-xl">메뉴</DrawerTitle>
+          <DrawerDescription>원하시는 섹션을 클릭하면 바로 이동합니다.</DrawerDescription>
         </DrawerHeader>
         <nav className="px-4 pb-4">
           <ul className="space-y-4">
