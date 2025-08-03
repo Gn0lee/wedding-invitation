@@ -29,55 +29,29 @@ export function useRSVP() {
 /**
  * RSVP 응답 제출 (새로운 응답)
  */
-export async function submitRSVP(
-  formData: RSVPRequest,
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const response = await fetch('/api/rsvp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+export async function submitRSVP(formData: RSVPRequest): Promise<RSVPAPIResponse> {
+  const response = await fetch('/api/rsvp', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
 
-    const result = await response.json();
-
-    if (!response.ok) {
-      return { success: false, error: result.error || '제출 중 오류가 발생했습니다.' };
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('RSVP 제출 오류:', error);
-    return { success: false, error: '네트워크 오류가 발생했습니다.' };
-  }
+  return response.json();
 }
 
 /**
  * RSVP 응답 수정
  */
-export async function updateRSVP(
-  formData: RSVPRequest,
-): Promise<{ success: boolean; error?: string }> {
-  try {
-    const response = await fetch('/api/rsvp', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+export async function updateRSVP(formData: RSVPRequest): Promise<RSVPAPIResponse> {
+  const response = await fetch('/api/rsvp', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
 
-    const result = await response.json();
-
-    if (!response.ok) {
-      return { success: false, error: result.error || '수정 중 오류가 발생했습니다.' };
-    }
-
-    return { success: true };
-  } catch (error) {
-    console.error('RSVP 수정 오류:', error);
-    return { success: false, error: '네트워크 오류가 발생했습니다.' };
-  }
+  return response.json();
 }

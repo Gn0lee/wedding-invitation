@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, Info, Loader2 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 
 import { KakaoLoginButton } from '@/components/KakaoLoginButton';
@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import { FormContainer } from '@/domains/main/components/rsvp/FormContainer';
+import { SuccessDialog } from '@/domains/main/components/rsvp/SuccessDialog';
 import { useAuth } from '@/hooks/useAuth';
 import { useRSVP, submitRSVP, updateRSVP } from '@/hooks/useRSVP';
 import { formToAPIRequest } from '@/lib/rsvp';
@@ -20,7 +21,10 @@ import { RSVPFormValues } from '@/types/rsvp';
 
 export function Form() {
   const { user, loading } = useAuth();
-  const { rsvpData, mutate } = useRSVP();
+  const { rsvpData, mutate, isLoading: rsvpLoading } = useRSVP();
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const {
     handleSubmit,
     control,
@@ -89,27 +93,36 @@ export function Form() {
 
   const onSubmit = async (data: RSVPFormValues) => {
     try {
+      setIsSubmitting(true);
       const apiData = formToAPIRequest(data);
 
-      let result;
-      if (rsvpData) {
-        // 기존 응답이 있으면 수정
-        result = await updateRSVP(apiData);
-      } else {
-        // 기존 응답이 없으면 새로 제출
-        result = await submitRSVP(apiData);
-      }
+      // SWR mutate를 사용하여 optimistic update
+      await mutate(
+        async () => {
+          if (rsvpData) {
+            return await updateRSVP(apiData);
+          }
 
-      if (result.success) {
-        alert(rsvpData ? '수정 완료!' : '제출 완료!');
-        // SWR 캐시 갱신
-        mutate();
-      } else {
-        alert(`오류: ${result.error}`);
-      }
+          return await submitRSVP(apiData);
+        },
+        {
+          revalidate: false, // 즉시 캐시 갱신
+        },
+      );
+
+      // 성공 메시지 표시
+      const userName = user?.user_metadata?.name || user?.email?.split('@')[0] || '고객';
+      const message = rsvpData
+        ? `${userName}님의 참석여부가 수정되었습니다.\n 참여에 진심으로 감사드립니다.`
+        : `${userName}님의 참석여부가 전달되었습니다.\n 참여에 진심으로 감사드립니다.`;
+
+      setSuccessMessage(message);
+      setShowSuccessDialog(true);
     } catch (error) {
       console.error('RSVP 제출 오류:', error);
       alert('제출 중 오류가 발생했습니다.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -406,12 +419,20 @@ export function Form() {
         {/* 제출 버튼 */}
         <Button
           type="submit"
-          className="mt-4 w-full bg-white/70 text-sm text-gray-50 hover:bg-white/90"
+          disabled={isSubmitting || rsvpLoading}
+          className="mt-4 w-full bg-gray-50 text-sm text-gray-900 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
           variant="outline"
         >
-          {rsvpData ? '수정하기' : '제출하기'}
+          {isSubmitting ? '처리 중...' : rsvpData ? '수정하기' : '제출하기'}
         </Button>
       </form>
+
+      {/* 성공 다이얼로그 */}
+      <SuccessDialog
+        open={showSuccessDialog}
+        onOpenChange={setShowSuccessDialog}
+        message={successMessage}
+      />
     </FormContainer>
   );
 }
