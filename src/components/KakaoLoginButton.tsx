@@ -31,7 +31,7 @@ export function KakaoLoginButton({
   return (
     <Button
       onClick={signInWithKakao}
-      className="w-full max-w-sm bg-yellow-400 text-black hover:bg-yellow-500"
+      className="w-full max-w-sm bg-kakao text-kakao-text hover:bg-kakao/80"
       {...buttonProps}
     >
       <KakaoIcon className="size-4" />

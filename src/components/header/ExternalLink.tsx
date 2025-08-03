@@ -3,6 +3,7 @@
 import { Link } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { DialogClose } from '@/components/ui/dialog';
 
 export function ExternalLink() {
   const handleCopyLink = async () => {
@@ -17,14 +18,16 @@ export function ExternalLink() {
   };
 
   return (
-    <Button
-      onClick={handleCopyLink}
-      variant="ghost"
-      size="icon"
-      className="size-9 text-gray-50 hover:bg-white/10 hover:text-white [&_svg]:!size-6"
-      aria-label="링크 복사"
-    >
-      <Link />
-    </Button>
+    <DialogClose asChild>
+      <Button
+        onClick={handleCopyLink}
+        variant="outline"
+        className="w-full justify-center gap-3"
+        aria-label="링크 복사"
+      >
+        <Link className="size-5" />
+        링크 복사하기
+      </Button>
+    </DialogClose>
   );
 }
