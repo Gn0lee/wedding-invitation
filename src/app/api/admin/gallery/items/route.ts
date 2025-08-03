@@ -2,6 +2,100 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAdminPermission } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
 
+export async function GET(request: NextRequest) {
+  try {
+    // Admin 권한 확인
+    await requireAdminPermission();
+
+    // 쿼리 파라미터 파싱
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const search = searchParams.get('search') || '';
+    const sortBy = searchParams.get('sortBy') || 'createdAt';
+    const sortOrder = searchParams.get('sortOrder') || 'desc';
+
+    // Supabase 클라이언트 생성
+    const supabase = await createClient();
+
+    // 검색 조건 구성
+    let query = supabase.from('gallery_images').select('*', { count: 'exact' });
+
+    // 검색 필터 적용
+    if (search) {
+      query = query.or(
+        `name.ilike.%${search}%,bride_comment.ilike.%${search}%,groom_comment.ilike.%${search}%`,
+      );
+    }
+
+    // 정렬 적용
+    const orderBy =
+      sortBy === 'takenAt' ? 'taken_at' : sortBy === 'likes' ? 'likes_count' : 'created_at';
+
+    query = query.order(orderBy, { ascending: sortOrder === 'asc' });
+
+    // 페이지네이션 적용
+    const offset = (page - 1) * limit;
+    query = query.range(offset, offset + limit - 1);
+
+    const { data: items, error, count } = await query;
+
+    if (error) {
+      console.error('Gallery items fetch error:', error);
+      return NextResponse.json(
+        { success: false, error: '갤러리 아이템 조회에 실패했습니다.' },
+        { status: 500 },
+      );
+    }
+
+    const total = count || 0;
+    const totalPages = Math.ceil(total / limit);
+
+    return NextResponse.json({
+      success: true,
+      data: {
+        items:
+          items?.map((item) => ({
+            id: item.id,
+            src: item.src,
+            width: item.width,
+            height: item.height,
+            name: item.name,
+            brideComment: item.bride_comment,
+            groomComment: item.groom_comment,
+            likes: item.likes_count,
+            takenAt: item.taken_at,
+            createdAt: item.created_at,
+            updatedAt: item.updated_at,
+            isLikedByUser: false,
+          })) || [],
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages,
+          hasNext: page < totalPages,
+          hasPrev: page > 1,
+        },
+      },
+    });
+  } catch (error) {
+    console.error('Gallery items fetch error:', error);
+
+    if (error instanceof Error && error.message === 'Admin permission required') {
+      return NextResponse.json(
+        { success: false, error: '관리자 권한이 필요합니다.' },
+        { status: 403 },
+      );
+    }
+
+    return NextResponse.json(
+      { success: false, error: '서버 오류가 발생했습니다.' },
+      { status: 500 },
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Admin 권한 확인
@@ -31,40 +125,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 기존 압축 API 호출
-    const compressFormData = new FormData();
-    compressFormData.append('file', file);
-
-    const compressResponse = await fetch(`${request.nextUrl.origin}/api/admin/gallery/compress`, {
-      method: 'POST',
-      body: compressFormData,
-    });
-
-    if (!compressResponse.ok) {
-      const errorData = await compressResponse.json();
-      return NextResponse.json(
-        { success: false, error: errorData.error || '이미지 압축에 실패했습니다.' },
-        { status: compressResponse.status },
-      );
-    }
-
-    const compressResult = await compressResponse.json();
-
     // Supabase 클라이언트 생성
     const supabase = await createClient();
 
-    // base64 데이터를 Buffer로 변환
-    const base64Data = compressResult.compressedImage.replace('data:image/webp;base64,', '');
-    const buffer = Buffer.from(base64Data, 'base64');
+    // 파일을 ArrayBuffer로 변환
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
     // 파일명 생성 (고유한 이름)
-    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.webp`;
+    const fileExtension = file.name.split('.').pop() || 'jpg';
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExtension}`;
 
     // Supabase Storage에 업로드
     const { error: uploadError } = await supabase.storage
       .from('gallery-images')
       .upload(fileName, buffer, {
-        contentType: 'image/webp',
+        contentType: file.type,
         cacheControl: '3600',
       });
 
@@ -84,8 +160,8 @@ export async function POST(request: NextRequest) {
       .from('gallery_images')
       .insert({
         src: urlData.publicUrl,
-        width: compressResult.compressedDimensions.width,
-        height: compressResult.compressedDimensions.height,
+        width: 0, // 클라이언트에서 압축 후 전송할 예정
+        height: 0, // 클라이언트에서 압축 후 전송할 예정
         name,
         bride_comment: brideComment || null,
         groom_comment: groomComment || null,

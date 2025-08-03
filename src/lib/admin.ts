@@ -23,7 +23,7 @@ export async function checkAdminPermission(): Promise<{ isAdmin: boolean; userId
   }
 
   return {
-    isAdmin: profile.role === 'admin',
+    isAdmin: profile.role.includes('admin'),
     userId: user.id,
   };
 }

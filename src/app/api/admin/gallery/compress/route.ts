@@ -1,33 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
-import { createClient } from '@/lib/supabase/server';
+import { requireAdminPermission } from '@/lib/admin';
 
 const MAX_COMPRESSED_SIZE = 3 * 1024 * 1024; // 3MB
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
-
-    // 현재 사용자 세션 확인
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // 사용자 프로필 조회하여 admin 권한 확인
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
-
-    if (profileError || !profile || (profile.role !== 'admin' && profile.role !== 'super_admin')) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
+    // Admin 권한 확인
+    await requireAdminPermission();
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
