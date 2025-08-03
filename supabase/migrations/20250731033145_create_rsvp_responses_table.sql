@@ -76,13 +76,4 @@ SELECT
   SUM(child_count) as total_children
 FROM public.rsvp_responses
 GROUP BY side, attend, meal
-ORDER BY side, attend, meal;
-
--- 7. RLS 정책 (통계 뷰는 관리자만 접근)
-CREATE POLICY "Admins can view rsvp statistics" ON public.rsvp_statistics
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
-    )
-  ); 
+ORDER BY side, attend, meal; 

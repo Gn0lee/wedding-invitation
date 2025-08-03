@@ -2,7 +2,9 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, Info, Loader2 } from 'lucide-react';
+import { useEffect } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
+
 import { KakaoLoginButton } from '@/components/KakaoLoginButton';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -12,10 +14,13 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import { FormContainer } from '@/domains/main/components/rsvp/FormContainer';
 import { useAuth } from '@/hooks/useAuth';
+import { useRSVP, submitRSVP, updateRSVP } from '@/hooks/useRSVP';
+import { formToAPIRequest } from '@/lib/rsvp';
 import { RSVPFormValues } from '@/types/rsvp';
 
 export function Form() {
   const { user, loading } = useAuth();
+  const { rsvpData, mutate } = useRSVP();
   const {
     handleSubmit,
     control,
@@ -31,6 +36,19 @@ export function Form() {
       agree: false,
     },
   });
+
+  // 기존 RSVP 데이터가 있으면 폼 초기화
+  useEffect(() => {
+    if (rsvpData) {
+      setValue('side', rsvpData.side);
+      setValue('attend', rsvpData.attend);
+      setValue('meal', rsvpData.meal || '');
+      setValue('adult', String(rsvpData.adult_count));
+      setValue('child', String(rsvpData.child_count));
+      // 개인정보 동의는 매번 새로 선택
+      setValue('agree', false);
+    }
+  }, [rsvpData, setValue]);
 
   // 현재 폼 상태 감지
   const attendValue = useWatch({ control, name: 'attend' });
@@ -69,9 +87,30 @@ export function Form() {
     }
   };
 
-  const onSubmit = (data: RSVPFormValues) => {
-    console.log('Form submitted:', data);
-    alert('제출 완료!');
+  const onSubmit = async (data: RSVPFormValues) => {
+    try {
+      const apiData = formToAPIRequest(data);
+
+      let result;
+      if (rsvpData) {
+        // 기존 응답이 있으면 수정
+        result = await updateRSVP(apiData);
+      } else {
+        // 기존 응답이 없으면 새로 제출
+        result = await submitRSVP(apiData);
+      }
+
+      if (result.success) {
+        alert(rsvpData ? '수정 완료!' : '제출 완료!');
+        // SWR 캐시 갱신
+        mutate();
+      } else {
+        alert(`오류: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('RSVP 제출 오류:', error);
+      alert('제출 중 오류가 발생했습니다.');
+    }
   };
 
   if (loading) {
@@ -370,7 +409,7 @@ export function Form() {
           className="mt-4 w-full bg-white/70 text-sm text-gray-50 hover:bg-white/90"
           variant="outline"
         >
-          제출하기
+          {rsvpData ? '수정하기' : '제출하기'}
         </Button>
       </form>
     </FormContainer>
