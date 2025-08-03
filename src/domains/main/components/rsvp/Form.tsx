@@ -12,15 +12,7 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import { FormContainer } from '@/domains/main/components/rsvp/FormContainer';
 import { useAuth } from '@/hooks/useAuth';
-
-interface RSVPFormValues {
-  side: 'groom' | 'bride' | '';
-  attend: 'yes' | 'no' | '';
-  adult: string;
-  child: string;
-  meal: 'yes' | 'no' | '';
-  agree: boolean;
-}
+import { RSVPFormValues } from '@/types/rsvp';
 
 export function Form() {
   const { user, loading } = useAuth();
