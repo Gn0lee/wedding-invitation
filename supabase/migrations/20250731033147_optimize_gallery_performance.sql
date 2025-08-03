@@ -3,8 +3,9 @@
 -- =====================================================
 
 -- 1. 페이지네이션을 위한 복합 인덱스 추가
+CREATE INDEX idx_gallery_images_taken_at_likes_count ON gallery_images(taken_at DESC, likes_count DESC);
 CREATE INDEX idx_gallery_images_created_at_likes_count ON gallery_images(created_at DESC, likes_count DESC);
-CREATE INDEX idx_gallery_images_likes_count_created_at ON gallery_images(likes_count DESC, created_at DESC);
+CREATE INDEX idx_gallery_images_likes_count_taken_at ON gallery_images(likes_count DESC, taken_at DESC);
 
 -- 2. 좋아요 수 집계를 위한 인덱스 추가
 CREATE INDEX idx_gallery_image_likes_image_created ON gallery_image_likes(image_id, created_at);
@@ -20,6 +21,7 @@ SELECT
   gi.bride_comment,
   gi.groom_comment,
   gi.likes_count,
+  gi.taken_at,
   gi.created_at,
   gi.updated_at,
   CASE WHEN gil.user_id IS NOT NULL THEN true ELSE false END as is_liked_by_user

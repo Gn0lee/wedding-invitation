@@ -8,6 +8,7 @@ CREATE TABLE gallery_images (
   bride_comment TEXT,
   groom_comment TEXT,
   likes_count INTEGER DEFAULT 0,
+  taken_at TIMESTAMP WITH TIME ZONE NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -22,6 +23,7 @@ CREATE TABLE gallery_image_likes (
 );
 
 -- 3. 인덱스 생성
+CREATE INDEX idx_gallery_images_taken_at ON gallery_images(taken_at);
 CREATE INDEX idx_gallery_images_created_at ON gallery_images(created_at);
 CREATE INDEX idx_gallery_images_likes_count ON gallery_images(likes_count);
 CREATE INDEX idx_gallery_image_likes_image_user ON gallery_image_likes(image_id, user_id);
