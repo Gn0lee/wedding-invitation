@@ -141,7 +141,7 @@ export function Form() {
       <FormContainer>
         <div className="flex h-full flex-col items-center justify-center gap-4 p-8">
           <p className="text-center text-gray-50">참석 여부를 전달하려면 로그인이 필요합니다.</p>
-          <KakaoLoginButton baseParams={{ next: '/#rsvp' }} />
+          <KakaoLoginButton next="/#rsvp" />
         </div>
       </FormContainer>
     );

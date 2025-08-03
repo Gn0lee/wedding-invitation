@@ -92,7 +92,7 @@ export function GalleryCarousel() {
           </CarouselItem>
           <CarouselItem>
             <div className="p-2" ref={kakaoLoginButtonRef}>
-              <div className="flex aspect-square items-center justify-center">
+              <div className="flex aspect-square items-baseline justify-center pt-6">
                 {user ? (
                   <Button
                     asChild
@@ -106,10 +106,7 @@ export function GalleryCarousel() {
                     </Link>
                   </Button>
                 ) : (
-                  <KakaoLoginButton
-                    baseParams={{ next: '/gallery' }}
-                    innerText="카카오로 로그인하고 갤러리 보기"
-                  />
+                  <KakaoLoginButton next="/gallery" innerText="카카오 로그인하고 갤러리 보기" />
                 )}
               </div>
             </div>
