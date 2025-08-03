@@ -47,6 +47,7 @@ export function generateGalleryItem(): GalleryItem {
     name: generatePhotoName(),
     brideComment: generateKoreanComment(),
     groomComment: generateKoreanComment(),
+    isLikedByUser: faker.datatype.boolean(),
   };
 }
 

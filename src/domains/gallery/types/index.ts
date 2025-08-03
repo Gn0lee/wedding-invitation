@@ -9,6 +9,7 @@ export interface GalleryItem {
   name: string;
   brideComment: string | null;
   groomComment: string | null;
+  isLikedByUser: boolean;
 }
 
 export interface GalleryResponse {

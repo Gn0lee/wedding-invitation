@@ -119,7 +119,14 @@ export function GalleryItem({ item }: GalleryItemProps) {
 
                 {/* 우하단 좋아요 버튼 */}
                 <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
-                  <Heart size={16} className="text-red-500" fill="currentColor" />
+                  <Heart
+                    size={16}
+                    className={`${
+                      item.isLikedByUser
+                        ? 'fill-red-500 text-red-500'
+                        : 'fill-transparent stroke-white'
+                    } cursor-pointer`}
+                  />
                   <span className="text-xs font-medium">{item.likes}</span>
                 </div>
 
