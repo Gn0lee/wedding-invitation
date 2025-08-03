@@ -60,7 +60,7 @@ export function ImageCompressor() {
       const formData = new FormData();
       formData.append('file', fileItem.file);
 
-      const response = await fetch('/api/admin/compress', {
+      const response = await fetch('/api/admin/gallery/compress', {
         method: 'POST',
         body: formData,
       });

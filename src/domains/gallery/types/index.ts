@@ -4,8 +4,9 @@ export interface GalleryItem {
   width: number;
   height: number;
   likes: number;
-  createdAt: string;
-  modifiedAt: string;
+  takenAt: string; // 사진 촬영 시간
+  createdAt: string; // DB 레코드 생성 시간
+  updatedAt: string; // DB 레코드 수정 시간
   name: string;
   brideComment: string | null;
   groomComment: string | null;
@@ -24,7 +25,7 @@ export interface GalleryResponse {
   };
 }
 
-export type SortBy = 'createdAt' | 'likes';
+export type SortBy = 'takenAt' | 'createdAt' | 'likes';
 export type SortOrder = 'asc' | 'desc';
 
 export interface GalleryQueryParams {
