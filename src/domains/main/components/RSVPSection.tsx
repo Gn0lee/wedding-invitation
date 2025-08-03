@@ -12,7 +12,7 @@ export function RSVPSection() {
     <HeroSection id="rsvp">
       <HeroBackground
         image={{
-          src: '/images/main/040A5133.jpg',
+          src: '/images/main/040A5133.webp',
           alt: '참석 여부 배경',
           fill: true,
           className: 'brightness-[0.6]',

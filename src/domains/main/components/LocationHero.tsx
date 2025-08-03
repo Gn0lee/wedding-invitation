@@ -18,7 +18,7 @@ export function LocationHero() {
     <HeroSection id="location">
       <HeroBackground
         image={{
-          src: '/images/main/040A4059.jpg',
+          src: '/images/main/040A4059.webp',
           alt: '위치 배경',
           fill: true,
         }}

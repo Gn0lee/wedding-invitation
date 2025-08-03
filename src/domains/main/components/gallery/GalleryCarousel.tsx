@@ -77,17 +77,17 @@ export function GalleryCarousel() {
         <CarouselContent>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
-              <Image src="/images/main/040A1880.JPG" alt="Gallery1" fill priority />
+              <Image src="/images/main/040A1880.webp" alt="Gallery1" fill priority />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image src="/images/main/040A2830.jpg" alt="Gallery2" fill priority />
+              <Image src="/images/main/040A2830.webp" alt="Gallery2" fill priority />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image src="/images/main/040A7880.jpg" alt="Gallery3" fill priority />
+              <Image src="/images/main/040A7880.webp" alt="Gallery3" fill priority />
             </div>
           </CarouselItem>
           <CarouselItem>

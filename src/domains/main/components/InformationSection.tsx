@@ -29,7 +29,7 @@ export function InformationSection({ data }: InformationSectionProps) {
     <HeroSection id="information">
       <HeroBackground
         image={{
-          src: '/images/main/DSCF0079.JPG',
+          src: '/images/main/DSCF0079.webp',
           alt: '안내사항 배경',
           fill: true,
           className: 'brightness-[0.5]',

@@ -19,7 +19,7 @@ export function MapHero() {
     <HeroSection>
       <HeroBackground
         image={{
-          src: '/images/location/040A5895.jpg',
+          src: '/images/location/040A5895.webp',
           alt: '찾아오시는 길 배경',
           fill: true,
           className: 'brightness-[0.7]',

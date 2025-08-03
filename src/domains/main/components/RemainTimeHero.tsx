@@ -11,7 +11,7 @@ export function RemainTimeHero() {
     <HeroSection id="remain-time">
       <HeroBackground
         image={{
-          src: '/images/main/DSCF0748.jpg',
+          src: '/images/main/DSCF0748.webp',
           alt: '남은 시간 배경',
           fill: true,
         }}

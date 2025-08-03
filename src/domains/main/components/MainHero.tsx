@@ -11,7 +11,7 @@ export function MainHero() {
     <HeroSection id="main">
       <HeroBackground
         image={{
-          src: '/images/main/DSCF0464.jpg',
+          src: '/images/main/DSCF0464.webp',
           alt: 'Main Hero',
           fill: true,
         }}
