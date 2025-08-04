@@ -12,8 +12,8 @@ import { RSVPSection } from '@/domains/main/components/RSVPSection';
 export default function Home() {
   return (
     <>
+      <Header leftChildren={<NavigationButton />} />
       <PageStyleWrapper>
-        <Header leftChildren={<NavigationButton />} />
         <MainHero />
         <RemainTimeHero />
         <LocationHero />

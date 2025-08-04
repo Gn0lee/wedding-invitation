@@ -5,9 +5,11 @@ import { MapHero } from '@/domains/location/components/MapHero';
 
 export default function RoughMap() {
   return (
-    <PageStyleWrapper>
+    <>
       <Header leftChildren={<HomeLink />} />
-      <MapHero />
-    </PageStyleWrapper>
+      <PageStyleWrapper>
+        <MapHero />
+      </PageStyleWrapper>
+    </>
   );
 }

@@ -5,9 +5,11 @@ import { GalleryHero } from '@/domains/gallery/components/GalleryHero';
 
 export default function GalleryPage() {
   return (
-    <PageStyleWrapper>
+    <>
       <Header leftChildren={<HomeLink />} />
-      <GalleryHero />
-    </PageStyleWrapper>
+      <PageStyleWrapper>
+        <GalleryHero />
+      </PageStyleWrapper>
+    </>
   );
 }
