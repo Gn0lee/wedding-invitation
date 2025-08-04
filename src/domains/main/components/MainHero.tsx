@@ -14,6 +14,7 @@ export function MainHero() {
           src: '/images/main/DSCF0464.webp',
           alt: 'Main Hero',
           fill: true,
+          priority: true,
         }}
       />
       <HeroContainer>

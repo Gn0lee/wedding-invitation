@@ -16,6 +16,7 @@ export function GalleryHero() {
           alt: '갤러리 배경',
           fill: true,
           className: 'brightness-[0.4]',
+          priority: true,
         }}
       />
       <HeroContainer>

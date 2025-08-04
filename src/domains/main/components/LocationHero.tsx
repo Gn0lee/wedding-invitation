@@ -21,6 +21,7 @@ export function LocationHero() {
           src: '/images/main/040A4059.webp',
           alt: '위치 배경',
           fill: true,
+          priority: true,
         }}
       />
       <HeroContainer>

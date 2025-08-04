@@ -23,6 +23,7 @@ export function MapHero() {
           alt: '찾아오시는 길 배경',
           fill: true,
           className: 'brightness-[0.7]',
+          priority: true,
         }}
       />
       <HeroContainer>

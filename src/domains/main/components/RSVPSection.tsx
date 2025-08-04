@@ -16,6 +16,7 @@ export function RSVPSection() {
           alt: '참석 여부 배경',
           fill: true,
           className: 'brightness-[0.6]',
+          priority: true,
         }}
       />
       <HeroContainer>
