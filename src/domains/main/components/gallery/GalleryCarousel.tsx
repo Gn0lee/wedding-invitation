@@ -6,13 +6,10 @@ import { Images } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
-import { KakaoLoginButton } from '@/components/KakaoLoginButton';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { useAuth } from '@/hooks/useAuth';
 
 export function GalleryCarousel() {
-  const { user } = useAuth();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isKakaoLoginButtonVisible, setIsKakaoLoginButtonVisible] = useState(false);
   const kakaoLoginButtonRef = useRef<HTMLDivElement>(null);
@@ -93,21 +90,17 @@ export function GalleryCarousel() {
           <CarouselItem>
             <div className="p-2" ref={kakaoLoginButtonRef}>
               <div className="flex aspect-square items-baseline justify-center pt-6">
-                {user ? (
-                  <Button
-                    asChild
-                    variant="secondary"
-                    className="w-fit border border-gray-50 bg-transparent text-gray-50 backdrop-blur-[1px] transition-colors hover:border-white hover:bg-white/10 hover:text-white"
-                    size="lg"
-                  >
-                    <Link href="/gallery">
-                      바로 만나러 가기
-                      <Images />
-                    </Link>
-                  </Button>
-                ) : (
-                  <KakaoLoginButton next="/gallery" innerText="카카오 로그인하고 갤러리 보기" />
-                )}
+                <Button
+                  asChild
+                  variant="secondary"
+                  className="w-fit border border-gray-50 bg-transparent text-gray-50 backdrop-blur-[1px] transition-colors hover:border-white hover:bg-white/10 hover:text-white"
+                  size="lg"
+                >
+                  <Link href="/gallery">
+                    바로 만나러 가기
+                    <Images />
+                  </Link>
+                </Button>
               </div>
             </div>
           </CarouselItem>

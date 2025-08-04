@@ -92,9 +92,12 @@ export function GalleryItem({ item }: GalleryItemProps) {
             onClick={handleClose}
           >
             <motion.div
-              className="relative mx-auto flex aspect-[375/667] h-[90vh] max-w-[100vw] overflow-hidden rounded-lg "
+              className="relative mx-auto flex max-w-[80svw] overflow-hidden rounded-lg "
               layoutId={`gallery-item-${item.id}`}
               onClick={(e) => e.stopPropagation()}
+              style={{
+                aspectRatio: item.width / item.height,
+              }}
             >
               {/* 닫기 버튼 */}
               <Button
