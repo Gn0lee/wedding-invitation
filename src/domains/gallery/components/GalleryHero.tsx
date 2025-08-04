@@ -1,3 +1,5 @@
+'use client';
+
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
 import { HeroSection } from '@/components/hero/HeroSection';

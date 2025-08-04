@@ -1,12 +1,19 @@
-import { GalleryManageTable } from '@/components/admin/gallery/GalleryManageTable';
-import { NavigationButton } from '@/components/header/NavigationButton';
+import { Home } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { GalleryManageTable } from '@/domains/admin/gallery/components/GalleryManageTable';
 
 export default function ManageGalleryPage() {
   return (
     <>
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold">갤러리 아이템 관리</h1>
-        <NavigationButton className="text-gray-900 hover:bg-gray-900/10" />
+        <Button asChild variant="outline">
+          <Link href="/">
+            <Home className="mr-2 size-4" />
+            홈으로
+          </Link>
+        </Button>
       </div>
 
       <GalleryManageTable />
