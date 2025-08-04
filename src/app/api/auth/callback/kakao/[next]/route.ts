@@ -24,9 +24,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ next
         return NextResponse.redirect(`${origin}${decodedNext}`);
       }
     } else {
-      console.log(error, 'error');
+      console.log(error, 'error when exchanging code for session');
     }
   }
+
+  console.log('there is no code');
 
   // return the user to an error page with instructions
   return NextResponse.redirect(`${origin}/auth/auth-code-error`);
