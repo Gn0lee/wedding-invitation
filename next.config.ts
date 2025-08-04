@@ -67,7 +67,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://ka-f.fontawesome.com",
               "font-src 'self' https://fonts.gstatic.com https://ka-f.fontawesome.com",
               `img-src 'self' data: blob: https: ${process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.replace('https://', '').replace('http://', '')}` : ''}`,
-              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com",
+              `connect-src 'self' https://www.google-analytics.com https://analytics.google.com ${process.env.NEXT_PUBLIC_SUPABASE_URL ? `https://${process.env.NEXT_PUBLIC_SUPABASE_URL.replace('https://', '').replace('http://', '')}` : ''} https://*.supabase.co`,
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",
