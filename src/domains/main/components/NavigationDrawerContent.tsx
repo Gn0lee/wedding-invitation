@@ -1,6 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
+import Link from 'next/link';
 import { useEffect, useMemo } from 'react';
 import {
   Drawer,
@@ -61,19 +62,8 @@ export function NavigationDrawerContent() {
     }
   }, []); // 빈 의존성 배열로 마운트 시에만 실행
 
-  const handleSectionClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    sectionId: string,
-    href?: string,
-  ) => {
+  const handleScrollSectionClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault(); // 기본 동작 방지
-
-    // admin 섹션인 경우 href로 이동
-    if (href) {
-      window.location.href = href;
-      setOpen(false);
-      return;
-    }
 
     // 1. 해당 섹션으로 스크롤
     const element = document.getElementById(sectionId);
@@ -96,17 +86,29 @@ export function NavigationDrawerContent() {
           <DrawerTitle className="font-bmJua text-xl">메뉴</DrawerTitle>
           <DrawerDescription>원하시는 섹션을 클릭하면 바로 이동합니다.</DrawerDescription>
         </DrawerHeader>
-        <nav className="px-4 pb-4">
+        <nav className="overflow-y-auto px-4 pb-4">
           <ul className="space-y-4">
             {sections.map((section) => (
               <li key={section.id}>
-                <a
-                  href={section.href || `#${section.id}`}
-                  onClick={(e) => handleSectionClick(e, section.id, section.href)}
-                  className="block rounded-lg px-4 py-3 text-lg font-medium transition-colors hover:bg-gray-100 hover:text-gray-900"
-                >
-                  {section.label}
-                </a>
+                {section.href ? (
+                  // href가 있는 경우 Next.js Link 사용
+                  <Link
+                    href={section.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-4 py-3 text-lg font-medium transition-colors hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    {section.label}
+                  </Link>
+                ) : (
+                  // href가 없는 경우 내부 스크롤 처리
+                  <a
+                    href={`#${section.id}`}
+                    onClick={(e) => handleScrollSectionClick(e, section.id)}
+                    className="block rounded-lg px-4 py-3 text-lg font-medium transition-colors hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    {section.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

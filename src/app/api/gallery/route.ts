@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  allItems,
-  TOTAL_ITEMS,
-  sortGalleryItems,
-} from '@/domains/gallery/services/galleryDataService';
 import { GalleryResponse, SortBy, SortOrder } from '@/domains/gallery/types';
+import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,7 +9,7 @@ export async function GET(request: NextRequest) {
     // 쿼리 파라미터 파싱
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '12');
-    const sortBy = (searchParams.get('sortBy') as SortBy) || 'createdAt';
+    const sortBy = (searchParams.get('sortBy') as SortBy) || 'takenAt';
     const sortOrder = (searchParams.get('sortOrder') as SortOrder) || 'desc';
 
     // 유효성 검사
@@ -21,7 +17,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid pagination parameters' }, { status: 400 });
     }
 
-    if (!['createdAt', 'likes'].includes(sortBy)) {
+    if (!['takenAt', 'likes'].includes(sortBy)) {
       return NextResponse.json({ error: 'Invalid sortBy parameter' }, { status: 400 });
     }
 
@@ -29,25 +25,91 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid sortOrder parameter' }, { status: 400 });
     }
 
-    // 데이터 정렬
-    const sortedItems = sortGalleryItems(allItems, sortBy, sortOrder);
+    const supabase = await createClient();
 
-    // 페이지네이션
+    // 정렬 컬럼 매핑
+    const sortColumn = sortBy === 'takenAt' ? 'taken_at' : 'likes_count';
+
+    // 전체 개수 조회
+    const { count } = await supabase
+      .from('gallery_images')
+      .select('*', { count: 'exact', head: true });
+
+    const total = count || 0;
+
+    // 기본 쿼리 구성
+    let query = supabase
+      .from('gallery_images')
+      .select(
+        `
+        id,
+        src,
+        width,
+        height,
+        name,
+        bride_comment,
+        groom_comment,
+        likes_count,
+        taken_at,
+        created_at,
+        updated_at
+      `,
+      )
+      .order(sortColumn, { ascending: sortOrder === 'asc' });
+
+    // 페이지네이션 적용
     const startIndex = (page - 1) * limit;
-    const endIndex = startIndex + limit;
-    const paginatedItems = sortedItems.slice(startIndex, endIndex);
+    query = query.range(startIndex, startIndex + limit - 1);
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Gallery API error:', error);
+      return NextResponse.json({ error: 'Database error' }, { status: 500 });
+    }
+
+    // 사용자별 좋아요 상태 조회 (인증된 사용자인 경우)
+    let likedItems: string[] = [];
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data: likedData } = await supabase
+        .from('gallery_image_likes')
+        .select('image_id')
+        .eq('user_id', user.id);
+
+      likedItems = likedData?.map((item) => item.image_id) || [];
+    }
+
+    // 응답 데이터 변환
+    const items = (data || []).map((item) => ({
+      id: item.id,
+      src: item.src,
+      width: item.width,
+      height: item.height,
+      likes: item.likes_count,
+      takenAt: item.taken_at,
+      createdAt: item.created_at,
+      updatedAt: item.updated_at,
+      name: item.name,
+      brideComment: item.bride_comment,
+      groomComment: item.groom_comment,
+      isLikedByUser: likedItems.includes(item.id),
+    }));
 
     // 페이지네이션 메타데이터 계산
-    const totalPages = Math.ceil(TOTAL_ITEMS / limit);
+    const totalPages = Math.ceil(total / limit);
     const hasNext = page < totalPages;
     const hasPrev = page > 1;
 
     const response: GalleryResponse = {
-      items: paginatedItems,
+      items,
       pagination: {
         page,
         limit,
-        total: TOTAL_ITEMS,
+        total,
         totalPages,
         hasNext,
         hasPrev,

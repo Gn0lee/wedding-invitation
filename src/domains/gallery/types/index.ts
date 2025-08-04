@@ -25,7 +25,7 @@ export interface GalleryResponse {
   };
 }
 
-export type SortBy = 'takenAt' | 'createdAt' | 'likes';
+export type SortBy = 'takenAt' | 'likes';
 export type SortOrder = 'asc' | 'desc';
 
 export interface GalleryQueryParams {
