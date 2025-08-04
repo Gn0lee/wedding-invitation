@@ -32,4 +32,4 @@ jobs:
 
       - name: Build Project Artifacts
         run: |
-          vercel --token=${{ secrets.VERCEL_TOKEN }}
+          vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
