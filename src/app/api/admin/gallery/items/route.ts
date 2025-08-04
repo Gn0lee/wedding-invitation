@@ -108,6 +108,8 @@ export async function POST(request: NextRequest) {
     const brideComment = formData.get('brideComment') as string;
     const groomComment = formData.get('groomComment') as string;
     const takenAt = formData.get('takenAt') as string;
+    const width = formData.get('width') as string;
+    const height = formData.get('height') as string;
 
     // 필수 필드 검증
     if (!file || !name || !takenAt) {
@@ -133,7 +135,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(arrayBuffer);
 
     // 파일명 생성 (고유한 이름)
-    const fileExtension = file.name.split('.').pop() || 'jpg';
+    const fileExtension = file.name.split('.').pop() || 'webp';
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExtension}`;
 
     // Supabase Storage에 업로드
@@ -160,8 +162,8 @@ export async function POST(request: NextRequest) {
       .from('gallery_images')
       .insert({
         src: urlData.publicUrl,
-        width: 0, // 클라이언트에서 압축 후 전송할 예정
-        height: 0, // 클라이언트에서 압축 후 전송할 예정
+        width: parseInt(width),
+        height: parseInt(height),
         name,
         bride_comment: brideComment || null,
         groom_comment: groomComment || null,

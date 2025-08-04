@@ -1,16 +1,13 @@
 'use client';
 
-import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
-import { Trash2, CheckCircle, AlertCircle, ChevronDownIcon } from 'lucide-react';
+import { Trash2, CheckCircle, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Label } from '@/components/ui/label';
 import {
   Table,
   TableBody,
@@ -20,7 +17,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
 
 interface UploadFile {
   file: File;
@@ -28,14 +24,27 @@ interface UploadFile {
   name: string;
   brideComment: string;
   groomComment: string;
-  takenAt: Date | undefined;
-  takenTime: string; // 시간을 별도로 저장
+  takenAt: string; // ISO 문자열로 저장
   status: 'pending' | 'uploading' | 'success' | 'error';
   error?: string;
 }
 
 export function GalleryUploadForm() {
   const [uploadFiles, setUploadFiles] = useState<UploadFile[]>([]);
+
+  // UTC를 한국 시간으로 변환 (datetime-local 입력용)
+  const utcToKoreaTime = (utcString: string) => {
+    const date = new Date(utcString);
+    const koreaTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+    return koreaTime.toISOString().slice(0, 16);
+  };
+
+  // 한국 시간을 UTC로 변환 (저장용)
+  const koreaTimeToUtc = (koreaTimeString: string) => {
+    const koreaDate = new Date(koreaTimeString);
+    const utcDate = new Date(koreaDate.getTime() - 9 * 60 * 60 * 1000); // UTC-9
+    return utcDate.toISOString();
+  };
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -48,8 +57,7 @@ export function GalleryUploadForm() {
         name: file.name.replace(/\.[^/.]+$/, ''), // 확장자 제거
         brideComment: '',
         groomComment: '',
-        takenAt: defaultDate, // 파일 생성일을 기본값으로
-        takenTime: defaultDate.toTimeString().slice(0, 8), // HH:MM:SS 형식
+        takenAt: utcToKoreaTime(defaultDate.toISOString()), // 한국 시간으로 변환
         status: 'pending',
       };
     });
@@ -57,7 +65,7 @@ export function GalleryUploadForm() {
     setUploadFiles((prev) => [...prev, ...newFiles]);
   };
 
-  const updateFile = (id: string, field: keyof UploadFile, value: string | Date | undefined) => {
+  const updateFile = (id: string, field: keyof UploadFile, value: string) => {
     setUploadFiles((prev) =>
       prev.map((file) => (file.id === id ? { ...file, [field]: value } : file)),
     );
@@ -121,14 +129,10 @@ export function GalleryUploadForm() {
       formData.append('name', uploadFile.name);
       formData.append('brideComment', uploadFile.brideComment);
       formData.append('groomComment', uploadFile.groomComment);
-      // 날짜와 시간을 결합하여 ISO 문자열 생성
-      const combinedDateTime = new Date(
-        uploadFile.takenAt.getFullYear(),
-        uploadFile.takenAt.getMonth(),
-        uploadFile.takenAt.getDate(),
-        ...uploadFile.takenTime.split(':').map(Number),
-      );
-      formData.append('takenAt', combinedDateTime.toISOString());
+      // 한국 시간을 UTC로 변환하여 저장
+      formData.append('takenAt', koreaTimeToUtc(uploadFile.takenAt));
+      formData.append('width', compressedResult.width.toString());
+      formData.append('height', compressedResult.height.toString());
 
       // 4. 갤러리 아이템 생성 API 호출
       const response = await fetch('/api/admin/gallery/items', {
@@ -235,10 +239,18 @@ export function GalleryUploadForm() {
               <TableHeader>
                 <TableRow>
                   <TableHead>미리보기</TableHead>
-                  <TableHead>이름</TableHead>
-                  <TableHead>신부 코멘트</TableHead>
-                  <TableHead>신랑 코멘트</TableHead>
-                  <TableHead>촬영일</TableHead>
+                  <TableHead>
+                    <Label htmlFor="upload-name">이름</Label>
+                  </TableHead>
+                  <TableHead>
+                    <Label htmlFor="upload-brideComment">신부 코멘트</Label>
+                  </TableHead>
+                  <TableHead>
+                    <Label htmlFor="upload-groomComment">신랑 코멘트</Label>
+                  </TableHead>
+                  <TableHead>
+                    <Label htmlFor="upload-takenAt">촬영일</Label>
+                  </TableHead>
                   <TableHead>상태</TableHead>
                   <TableHead>작업</TableHead>
                 </TableRow>
@@ -257,6 +269,7 @@ export function GalleryUploadForm() {
                     </TableCell>
                     <TableCell>
                       <Input
+                        id={`upload-name-${uploadFile.id}`}
                         value={uploadFile.name}
                         onChange={(e) => updateFile(uploadFile.id, 'name', e.target.value)}
                         placeholder="이름"
@@ -265,6 +278,7 @@ export function GalleryUploadForm() {
                     </TableCell>
                     <TableCell>
                       <Textarea
+                        id={`upload-brideComment-${uploadFile.id}`}
                         value={uploadFile.brideComment}
                         onChange={(e) => updateFile(uploadFile.id, 'brideComment', e.target.value)}
                         placeholder="신부 코멘트"
@@ -274,6 +288,7 @@ export function GalleryUploadForm() {
                     </TableCell>
                     <TableCell>
                       <Textarea
+                        id={`upload-groomComment-${uploadFile.id}`}
                         value={uploadFile.groomComment}
                         onChange={(e) => updateFile(uploadFile.id, 'groomComment', e.target.value)}
                         placeholder="신랑 코멘트"
@@ -282,42 +297,13 @@ export function GalleryUploadForm() {
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col gap-2">
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Button
-                              variant="outline"
-                              className={cn(
-                                'justify-between font-normal',
-                                !uploadFile.takenAt && 'text-muted-foreground',
-                              )}
-                            >
-                              {uploadFile.takenAt ? (
-                                format(uploadFile.takenAt, 'yyyy-MM-dd', { locale: ko })
-                              ) : (
-                                <span>날짜 선택</span>
-                              )}
-                              <ChevronDownIcon className="size-4" />
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar
-                              mode="single"
-                              selected={uploadFile.takenAt}
-                              onSelect={(date) => updateFile(uploadFile.id, 'takenAt', date)}
-                              initialFocus
-                              locale={ko}
-                            />
-                          </PopoverContent>
-                        </Popover>
-                        <Input
-                          type="time"
-                          step="1"
-                          value={uploadFile.takenTime}
-                          onChange={(e) => updateFile(uploadFile.id, 'takenTime', e.target.value)}
-                          className="w-32"
-                        />
-                      </div>
+                      <Input
+                        id={`upload-takenAt-${uploadFile.id}`}
+                        type="datetime-local"
+                        value={uploadFile.takenAt}
+                        onChange={(e) => updateFile(uploadFile.id, 'takenAt', e.target.value)}
+                        className="w-full"
+                      />
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">

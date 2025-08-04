@@ -3,7 +3,7 @@ import { requireAdminPermission } from '@/lib/admin';
 import { updateGalleryItemSchema } from '@/lib/gallery-schemas';
 import { createClient } from '@/lib/supabase/server';
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Admin 권한 확인
     await requireAdminPermission();
@@ -30,11 +30,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     if (validatedData.groomComment !== undefined)
       updateData.groom_comment = validatedData.groomComment;
 
+    const { id } = await params;
+
     // 갤러리 아이템 수정
     const { data: updatedItem, error } = await supabase
       .from('gallery_images')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
 
@@ -88,7 +90,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     // Admin 권한 확인
     await requireAdminPermission();
@@ -96,13 +101,60 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     // Supabase 클라이언트 생성
     const supabase = await createClient();
 
-    // 갤러리 아이템 삭제
-    const { error } = await supabase.from('gallery_images').delete().eq('id', params.id);
+    const { id } = await params;
 
-    if (error) {
-      console.error('Gallery item deletion error:', error);
+    // 먼저 삭제할 아이템의 정보를 가져와서 Storage 파일 경로 확인
+    const { data: itemToDelete, error: fetchError } = await supabase
+      .from('gallery_images')
+      .select('src')
+      .eq('id', id)
+      .single();
 
-      if (error.code === 'PGRST116') {
+    if (fetchError) {
+      console.error('Gallery item fetch error:', fetchError);
+
+      if (fetchError.code === 'PGRST116') {
+        return NextResponse.json(
+          { success: false, error: '해당 갤러리 아이템을 찾을 수 없습니다.' },
+          { status: 404 },
+        );
+      }
+
+      return NextResponse.json(
+        { success: false, error: '갤러리 아이템 조회에 실패했습니다.' },
+        { status: 500 },
+      );
+    }
+
+    // Storage에서 파일 삭제
+    if (itemToDelete.src) {
+      // src에서 파일 경로 추출
+      // URL 예시: https://xxx.supabase.co/storage/v1/object/public/gallery-images/1754281244728-3jtdc7sh5ib.webp
+      // 추출할 경로: 1754281244728-3jtdc7sh5ib.webp
+      const url = new URL(itemToDelete.src);
+      const pathParts = url.pathname.split('/');
+      const fileName = pathParts[pathParts.length - 1]; // 마지막 부분이 파일명
+
+      console.log('Original src:', itemToDelete.src);
+      console.log('Extracted fileName:', fileName);
+
+      const { error: storageError } = await supabase.storage
+        .from('gallery-images')
+        .remove([fileName]);
+
+      if (storageError) {
+        console.error('Storage file deletion error:', storageError);
+        // Storage 삭제 실패해도 DB 삭제는 진행 (일관성 유지)
+      }
+    }
+
+    // 데이터베이스에서 갤러리 아이템 삭제
+    const { error: deleteError } = await supabase.from('gallery_images').delete().eq('id', id);
+
+    if (deleteError) {
+      console.error('Gallery item deletion error:', deleteError);
+
+      if (deleteError.code === 'PGRST116') {
         return NextResponse.json(
           { success: false, error: '해당 갤러리 아이템을 찾을 수 없습니다.' },
           { status: 404 },

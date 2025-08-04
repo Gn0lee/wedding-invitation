@@ -1,5 +1,6 @@
 import { Home } from 'lucide-react';
 import Link from 'next/link';
+import { GalleryManageTable } from '@/components/admin/gallery/GalleryManageTable';
 import { Button } from '@/components/ui/button';
 
 export default function ManageGalleryPage() {
@@ -14,6 +15,8 @@ export default function ManageGalleryPage() {
           </Link>
         </Button>
       </div>
+
+      <GalleryManageTable />
     </>
   );
 }
