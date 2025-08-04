@@ -17,7 +17,7 @@ export function HeroBackground({
   children,
 }: HeroBackgroundProps) {
   return (
-    <div {...container} className={cn('absolute inset-0 z-0', container?.className)}>
+    <div {...container} className={cn('absolute inset-0 z-0 bg-[#082D00]', container?.className)}>
       <Image src={src} alt={alt} {...rest} />
       {children}
     </div>
