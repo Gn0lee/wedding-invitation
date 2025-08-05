@@ -1,7 +1,54 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+// 좋아요 상태 조회
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const supabase = await createClient();
+    const { id: imageId } = await params;
+
+    // 이미지 존재 확인
+    const { data: image, error: imageError } = await supabase
+      .from('gallery_images')
+      .select('id, likes_count')
+      .eq('id', imageId)
+      .single();
+
+    if (imageError || !image) {
+      return NextResponse.json({ error: 'Image not found' }, { status: 404 });
+    }
+
+    // 인증 상태 확인
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    let isLikedByUser = false;
+
+    // 로그인한 사용자인 경우 좋아요 상태 확인
+    if (user) {
+      const { data: existingLike } = await supabase
+        .from('gallery_image_likes')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('image_id', imageId)
+        .single();
+
+      isLikedByUser = !!existingLike;
+    }
+
+    return NextResponse.json({
+      likes: image.likes_count || 0,
+      isLikedByUser,
+    });
+  } catch (error) {
+    console.error('Gallery like status API error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+// 좋아요 토글
+export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const supabase = await createClient();
 
@@ -15,7 +62,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
     }
 
-    const imageId = params.id;
+    const { id: imageId } = await params;
 
     // 이미지 존재 확인
     const { data: image, error: imageError } = await supabase
