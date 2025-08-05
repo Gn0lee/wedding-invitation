@@ -10,14 +10,6 @@ interface GalleryCommentOverlayProps {
   item: GalleryItemType;
 }
 
-// 줄바꿈을 처리하고 리스트 아이템으로 변환하는 함수
-function formatCommentAsList(comment: string): string[] {
-  return comment
-    .split('\n')
-    .filter((line) => line.trim() !== '') // 빈 줄 제거
-    .map((line) => line.trim());
-}
-
 export function GalleryCommentOverlay({ item }: GalleryCommentOverlayProps) {
   const [isCommentsExpanded, setIsCommentsExpanded] = useState(false);
   const [showLineClamp, setShowLineClamp] = useState(true);
