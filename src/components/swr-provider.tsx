@@ -8,6 +8,7 @@ export function SWRProvider({ children }: { children: React.ReactNode }) {
       value={{
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
+        errorRetryCount: 0,
       }}
     >
       {children}

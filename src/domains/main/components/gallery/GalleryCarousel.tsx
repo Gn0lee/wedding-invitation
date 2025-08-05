@@ -16,7 +16,7 @@ export function GalleryCarousel() {
 
   const autoPlayPlugin = useRef<AutoplayType>(
     Autoplay({
-      delay: 2500,
+      delay: 2000,
       playOnInit: false,
     }),
   );
@@ -69,7 +69,7 @@ export function GalleryCarousel() {
   }, []);
 
   return (
-    <div ref={carouselRef} className="flex size-full items-center justify-center p-4">
+    <div ref={carouselRef} className="flex size-full items-center justify-center p-2">
       <Carousel plugins={[autoPlayPlugin.current, Fade()]} className="w-full max-w-xs">
         <CarouselContent>
           <CarouselItem>
