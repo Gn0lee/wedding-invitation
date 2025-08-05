@@ -32,8 +32,29 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Vercel 환경변수를 사용하여 정확한 production 환경 감지
+  const isProduction =
+    process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+
   return (
     <html lang="en">
+      <head>
+        {isProduction && clarityId && (
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "${clarityId}");
+              `,
+            }}
+          />
+        )}
+      </head>
       <body className={clsx(bmJua.variable, nanumRound.variable, 'antialiased', 'font-nanumRound')}>
         <SWRProvider>{children}</SWRProvider>
         <Toaster position="top-center" richColors />
