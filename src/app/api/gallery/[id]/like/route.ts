@@ -1,0 +1,131 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const supabase = await createClient();
+
+    // 인증 확인
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    }
+
+    const imageId = params.id;
+
+    // 이미지 존재 확인
+    const { data: image, error: imageError } = await supabase
+      .from('gallery_images')
+      .select('id')
+      .eq('id', imageId)
+      .single();
+
+    if (imageError || !image) {
+      return NextResponse.json({ error: 'Image not found' }, { status: 404 });
+    }
+
+    // 현재 좋아요 상태 확인
+    const { data: existingLike } = await supabase
+      .from('gallery_image_likes')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('image_id', imageId)
+      .single();
+
+    let newLikesCount: number;
+
+    if (existingLike) {
+      // 좋아요 제거
+      const { error: deleteError } = await supabase
+        .from('gallery_image_likes')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('image_id', imageId);
+
+      if (deleteError) {
+        console.error('Delete like error:', deleteError);
+        return NextResponse.json({ error: 'Failed to unlike' }, { status: 500 });
+      }
+
+      // 현재 좋아요 개수 조회 후 감소
+      const { data: currentImage, error: fetchError } = await supabase
+        .from('gallery_images')
+        .select('likes_count')
+        .eq('id', imageId)
+        .single();
+
+      if (fetchError) {
+        console.error('Fetch likes count error:', fetchError);
+        return NextResponse.json({ error: 'Failed to fetch likes count' }, { status: 500 });
+      }
+
+      const calculatedLikesCount = Math.max(0, (currentImage.likes_count || 0) - 1);
+
+      const { data: updateResult, error: updateError } = await supabase
+        .from('gallery_images')
+        .update({ likes_count: calculatedLikesCount })
+        .eq('id', imageId)
+        .select('likes_count')
+        .single();
+
+      if (updateError) {
+        console.error('Update likes count error:', updateError);
+        return NextResponse.json({ error: 'Failed to update likes count' }, { status: 500 });
+      }
+
+      newLikesCount = updateResult.likes_count;
+    } else {
+      // 좋아요 추가
+      const { error: insertError } = await supabase.from('gallery_image_likes').insert({
+        user_id: user.id,
+        image_id: imageId,
+      });
+
+      if (insertError) {
+        console.error('Insert like error:', insertError);
+        return NextResponse.json({ error: 'Failed to like' }, { status: 500 });
+      }
+
+      // 현재 좋아요 개수 조회 후 증가
+      const { data: currentImage, error: fetchError } = await supabase
+        .from('gallery_images')
+        .select('likes_count')
+        .eq('id', imageId)
+        .single();
+
+      if (fetchError) {
+        console.error('Fetch likes count error:', fetchError);
+        return NextResponse.json({ error: 'Failed to fetch likes count' }, { status: 500 });
+      }
+
+      const calculatedLikesCount = (currentImage.likes_count || 0) + 1;
+
+      const { data: updateResult, error: updateError } = await supabase
+        .from('gallery_images')
+        .update({ likes_count: calculatedLikesCount })
+        .eq('id', imageId)
+        .select('likes_count')
+        .single();
+
+      if (updateError) {
+        console.error('Update likes count error:', updateError);
+        return NextResponse.json({ error: 'Failed to update likes count' }, { status: 500 });
+      }
+
+      newLikesCount = updateResult.likes_count;
+    }
+
+    return NextResponse.json({
+      success: true,
+      liked: !existingLike, // 토글된 상태
+      likes: newLikesCount,
+    });
+  } catch (error) {
+    console.error('Gallery like API error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
