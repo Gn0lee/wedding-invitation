@@ -2,6 +2,7 @@ import { Header } from '@/components/Header';
 import { HomeLink } from '@/components/HomeLink';
 import { PageStyleWrapper } from '@/components/PageStyleWrapper';
 import { GalleryHero } from '@/domains/gallery/components/GalleryHero';
+import GalleryModalCarousel from '@/domains/gallery/components/GalleryModalCarousel';
 
 export default function GalleryPage() {
   return (
@@ -10,6 +11,7 @@ export default function GalleryPage() {
       <PageStyleWrapper>
         <GalleryHero />
       </PageStyleWrapper>
+      <GalleryModalCarousel />
     </>
   );
 }

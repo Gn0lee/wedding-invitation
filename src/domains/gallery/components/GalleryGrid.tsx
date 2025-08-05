@@ -40,8 +40,8 @@ export function GalleryGrid() {
     <div>
       {/* React Responsive Masonry 레이아웃 */}
       <Masonry columnsCount={2} gutter="16px">
-        {items.map((item) => (
-          <GalleryItem key={item.id} item={item} />
+        {items.map((item, index) => (
+          <GalleryItem key={item.id} item={item} index={index} />
         ))}
       </Masonry>
 
