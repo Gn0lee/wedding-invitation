@@ -17,6 +17,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ next
       const isLocalEnv = process.env.NODE_ENV === 'development';
 
       if (isLocalEnv) {
+        console.log('🔎 kakao callback qs =>', Object.fromEntries(searchParams));
         return NextResponse.redirect(`${origin}${decodedNext}`);
       } else if (forwardedHost) {
         return NextResponse.redirect(`https://${forwardedHost}${decodedNext}`);
@@ -28,7 +29,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ next
     }
   }
 
-  console.log('there is no code');
+  console.log('🔎 kakao callback qs =>', Object.fromEntries(searchParams));
 
   // return the user to an error page with instructions
   return NextResponse.redirect(`${origin}/auth/auth-code-error`);
