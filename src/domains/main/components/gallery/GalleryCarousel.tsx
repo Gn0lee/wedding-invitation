@@ -1,37 +1,37 @@
 'use client';
 
-import Autoplay, { AutoplayType } from 'embla-carousel-autoplay';
-import Fade from 'embla-carousel-fade';
+import AutoScroll, { AutoScrollType } from 'embla-carousel-auto-scroll';
 import { Images } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 export function GalleryCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [isKakaoLoginButtonVisible, setIsKakaoLoginButtonVisible] = useState(false);
-  const kakaoLoginButtonRef = useRef<HTMLDivElement>(null);
 
-  const autoPlayPlugin = useRef<AutoplayType>(
-    Autoplay({
-      delay: 2000,
-      playOnInit: false,
+  const autoScrollPlugin = useRef<AutoScrollType>(
+    AutoScroll({
+      speed: 1.5,
+      stopOnInteraction: false,
+      stopOnMouseEnter: false,
+      startDelay: 0,
     }),
   );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !isKakaoLoginButtonVisible) {
-          autoPlayPlugin.current.play();
+        console.log('entry', entry);
+        if (entry.isIntersecting) {
+          autoScrollPlugin.current.play();
         } else {
-          autoPlayPlugin.current.stop();
+          autoScrollPlugin.current.stop();
         }
       },
       {
-        threshold: 1,
+        threshold: 0.7,
       },
     );
 
@@ -45,32 +45,11 @@ export function GalleryCarousel() {
         observer.unobserve(currentRef);
       }
     };
-  }, [isKakaoLoginButtonVisible]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIsKakaoLoginButtonVisible(true);
-      } else {
-        setIsKakaoLoginButtonVisible(false);
-      }
-    });
-
-    const currentRef = kakaoLoginButtonRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
   }, []);
 
   return (
     <div ref={carouselRef} className="flex size-full items-center justify-center p-2">
-      <Carousel plugins={[autoPlayPlugin.current, Fade()]} className="w-full max-w-xs">
+      <Carousel plugins={[autoScrollPlugin.current]} className="w-full max-w-xs">
         <CarouselContent>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
@@ -88,7 +67,7 @@ export function GalleryCarousel() {
             </div>
           </CarouselItem>
           <CarouselItem>
-            <div className="p-2" ref={kakaoLoginButtonRef}>
+            <div className="p-2">
               <div className="flex aspect-square items-baseline justify-center pt-6">
                 <Button
                   asChild
