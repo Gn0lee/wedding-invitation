@@ -1,10 +1,9 @@
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { useAtom } from 'jotai';
 import { X, Loader2 } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,54 +12,25 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-  type CarouselApi,
 } from '@/components/ui/carousel';
 import { GalleryCommentOverlay } from '@/domains/gallery/components/GalleryCommentOverlay';
 import { GalleryLikeButton } from '@/domains/gallery/components/GalleryLikeButton';
-import { useGalleryItems } from '@/domains/gallery/hooks/useGalleryItems';
-import { galleryModalAtom } from '@/stores/galleryModal';
+import { useGalleryCarousel } from '@/domains/gallery/hooks/useGalleryCarousel';
 
 /**
  * 갤러리 썸네일을 클릭했을 때 뜨는 풀스크린 모달의 최소 골격.
  * 아직 캐러셀 기능은 없고, 선택된 단일 이미지만 표시한다.
  */
 export default function GalleryModalCarousel() {
-  // 모달 오픈 상태 & 선택 인덱스
-  const [modal, setModal] = useAtom(galleryModalAtom);
-  // 갤러리 전체 아이템과 무한 스크롤 로직
-  const { items, hasMore, isValidating, loadMore } = useGalleryItems();
+  const { modal, items, hasMore, isValidating, setEmblaApi, close, emblaApi } =
+    useGalleryCarousel();
 
-  // 캐러셀 API 보관
-  const [emblaApi, setEmblaApi] = useState<CarouselApi | null>(null);
-
-  const close = () => setModal((m) => ({ ...m, open: false }));
-
-  // 선택 또는 재초기화 시 마지막 슬라이드에 도달하면 loadMore 실행
+  // 모달이 열릴 때 초기 인덱스 설정
   useEffect(() => {
-    if (!emblaApi) return;
-
-    const loaderIndex = hasMore ? items.length : -1; // 로더 슬라이드(마지막)
-
-    const maybeLoadMore = () => {
-      // 아직 불러올 게 없거나 이미 요청 중이면 중단
-      if (!hasMore || isValidating) return;
-
-      const current = emblaApi.selectedScrollSnap();
-      // 로더 슬라이드가 선택됐을 때만 호출
-      if (current === loaderIndex) {
-        console.log('Loader slide reached. current:', current, 'loaderIndex:', loaderIndex);
-        loadMore();
-      }
-    };
-
-    maybeLoadMore(); // 초기 한 번
-    emblaApi.on('select', maybeLoadMore);
-    emblaApi.on('reInit', maybeLoadMore);
-    return () => {
-      emblaApi.off('select', maybeLoadMore);
-      emblaApi.off('reInit', maybeLoadMore);
-    };
-  }, [emblaApi, items.length, hasMore, isValidating, loadMore]);
+    if (emblaApi && modal.open) {
+      emblaApi.scrollTo(modal.index);
+    }
+  }, [emblaApi, modal.open, modal.index]);
 
   // 모달이 닫혀 있으면 아무것도 렌더하지 않음
   if (!modal.open) return null;
@@ -92,7 +62,7 @@ export default function GalleryModalCarousel() {
             <X size={16} />
           </Button>
 
-          <Carousel opts={{ loop: true, startIndex: modal.index }} setApi={setEmblaApi}>
+          <Carousel opts={{ loop: true }} setApi={setEmblaApi}>
             <CarouselContent>
               {items.map((it, index) => (
                 <CarouselItem key={it.id} className="m-auto">

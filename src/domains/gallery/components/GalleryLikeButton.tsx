@@ -34,7 +34,7 @@ export function GalleryLikeButton({ imageId, index }: GalleryLikeButtonProps) {
 
   return (
     <>
-      <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
+      <div className="absolute bottom-3 right-4 flex min-w-8 flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
         {data ? (
           <Heart
             size={16}
