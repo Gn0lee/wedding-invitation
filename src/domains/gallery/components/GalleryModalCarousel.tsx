@@ -111,7 +111,7 @@ export default function GalleryModalCarousel() {
                     />
 
                     {/* 좋아요 버튼 */}
-                    <GalleryLikeButton item={it} />
+                    <GalleryLikeButton imageId={it.id} />
 
                     {/* 코멘트 영역 */}
                     {(it.brideComment || it.groomComment) && <GalleryCommentOverlay item={it} />}
