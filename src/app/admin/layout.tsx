@@ -1,5 +1,23 @@
+import type { Metadata } from 'next';
 import { AdminGuard } from '@/components/AdminGuard';
 import { NavigationDrawerContent } from '@/domains/main/components/NavigationDrawerContent';
+
+export const metadata: Metadata = {
+  title: '관리자 페이지',
+  description: '관리자 전용 페이지입니다.',
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+  other: {
+    googlebot: 'noindex, nofollow',
+    robots: 'noindex, nofollow',
+  },
+};
 
 interface AdminLayoutProps {
   children: React.ReactNode;
