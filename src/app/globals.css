@@ -6,12 +6,10 @@ body {
   box-sizing: border-box;
 
   height: 100%;
-  
+
   /* iOS Safari에서 추가 최적화 */
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
-  
-  
 }
 
 /* 모바일 브라우저에서 viewport 높이 문제 해결을 위한 추가 설정 */
