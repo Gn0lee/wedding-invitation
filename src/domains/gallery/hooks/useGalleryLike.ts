@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai';
+import { useState } from 'react';
 import useSWR from 'swr';
 import { fetchGalleryLike, toggleGalleryLike } from '@/domains/gallery/services/galleryApi';
 import { type GalleryLikeResponse } from '@/domains/gallery/types/likes';
@@ -7,6 +8,7 @@ import { galleryModalAtom } from '@/stores/galleryModal';
 export function useGalleryLike(imageId: string, index: number) {
   const [modal] = useAtom(galleryModalAtom);
   const isSelected = modal.open && modal.index === index;
+  const [isMutating, setIsMutating] = useState(false);
 
   const { data, error, mutate } = useSWR<GalleryLikeResponse>(
     imageId && isSelected ? `/api/gallery/items/${imageId}/like` : null,
@@ -22,6 +24,7 @@ export function useGalleryLike(imageId: string, index: number) {
     if (!imageId || !data) return;
 
     try {
+      setIsMutating(true);
       await mutate(
         async () => {
           const result = await toggleGalleryLike(imageId);
@@ -53,6 +56,8 @@ export function useGalleryLike(imageId: string, index: number) {
       );
     } catch (error) {
       console.error('❌ Failed to toggle like:', error);
+    } finally {
+      setIsMutating(false);
     }
   };
 
@@ -60,6 +65,7 @@ export function useGalleryLike(imageId: string, index: number) {
     data,
     error,
     isLoading: !error && !data,
+    isMutating,
     toggleLike,
   };
 }

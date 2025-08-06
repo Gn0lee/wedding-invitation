@@ -20,7 +20,7 @@ interface GalleryLikeButtonProps {
 
 export function GalleryLikeButton({ imageId, index }: GalleryLikeButtonProps) {
   const { user } = useAuth();
-  const { data, toggleLike } = useGalleryLike(imageId, index);
+  const { data, toggleLike, isMutating } = useGalleryLike(imageId, index);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const handleClick = async () => {
@@ -36,13 +36,14 @@ export function GalleryLikeButton({ imageId, index }: GalleryLikeButtonProps) {
     <>
       <div className="absolute bottom-3 right-4 flex min-w-8 flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
         {data ? (
-          <Heart
-            size={16}
-            className={`${
-              data?.isLikedByUser ? 'fill-red-500 text-red-500' : 'fill-transparent stroke-white'
-            } cursor-pointer transition-colors duration-200`}
-            onClick={handleClick}
-          />
+          <button disabled={isMutating} onClick={handleClick}>
+            <Heart
+              size={16}
+              className={`${
+                data?.isLikedByUser ? 'fill-red-500 text-red-500' : 'fill-transparent stroke-white'
+              } transition-colors duration-200`}
+            />
+          </button>
         ) : (
           <div className="min-h-4" />
         )}
