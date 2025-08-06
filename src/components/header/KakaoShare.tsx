@@ -5,9 +5,17 @@ import { Button } from '@/components/ui/button';
 import { DialogClose } from '@/components/ui/dialog';
 
 export function KakaoShare() {
-  const handleKakaoShare = () => {
-    // TODO: 카카오 공유하기 기능 구현
-    console.log('카카오 공유하기 기능이 구현될 예정입니다.');
+  const handleKakaoShare = async () => {
+    if (typeof window !== 'undefined' && window.Kakao) {
+      try {
+        window.Kakao.Share.sendCustom({
+          templateId: 123169,
+        });
+      } catch (error) {
+        console.error(error);
+        alert('카카오톡 공유에 실패했습니다.');
+      }
+    }
   };
 
   return (
