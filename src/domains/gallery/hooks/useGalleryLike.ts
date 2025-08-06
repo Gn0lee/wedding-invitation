@@ -43,7 +43,7 @@ export function useGalleryLike(imageId: string, isSelected: boolean = false) {
             return optimisticData;
           },
           rollbackOnError: true,
-          revalidate: false,
+          revalidate: true,
         },
       );
     } catch (error) {
