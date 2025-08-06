@@ -63,7 +63,7 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://ka-f.fontawesome.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://t1.kakaocdn.net https://developers.kakao.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://ka-f.fontawesome.com https://www.googletagmanager.com https://www.google-analytics.com https://www.clarity.ms https://scripts.clarity.ms https://t1.kakaocdn.net https://developers.kakao.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://ka-f.fontawesome.com",
               "font-src 'self' https://fonts.gstatic.com https://ka-f.fontawesome.com",
               `img-src 'self' data: blob: https: ${process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.NEXT_PUBLIC_SUPABASE_URL.replace('https://', '').replace('http://', '')}` : ''}`,
