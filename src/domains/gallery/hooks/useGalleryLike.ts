@@ -1,12 +1,11 @@
 import useSWR from 'swr';
-import { GalleryLikeResponse, GalleryLikeToggleResponse } from '../types/likes';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { fetchGalleryLike, toggleGalleryLike } from '@/domains/gallery/services/galleryApi';
+import { type GalleryLikeResponse } from '@/domains/gallery/types/likes';
 
 export function useGalleryLike(imageId: string) {
   const { data, error, mutate } = useSWR<GalleryLikeResponse>(
     imageId ? `/api/gallery/${imageId}/like` : null,
-    fetcher,
+    () => fetchGalleryLike(imageId),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -20,15 +19,7 @@ export function useGalleryLike(imageId: string) {
     try {
       await mutate(
         async () => {
-          const response = await fetch(`/api/gallery/${imageId}/like`, {
-            method: 'POST',
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to toggle like');
-          }
-
-          const result: GalleryLikeToggleResponse = await response.json();
+          const result = await toggleGalleryLike(imageId);
           return {
             likes: result.likes,
             isLikedByUser: result.liked,

@@ -11,7 +11,7 @@ export interface GalleryItem {
   groomComment: string | null;
 }
 
-export interface GalleryResponse {
+export interface GalleryItemsResponse {
   items: GalleryItem[];
   pagination: {
     page: number;

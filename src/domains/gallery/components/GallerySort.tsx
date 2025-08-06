@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtom } from 'jotai';
-import { type SortBy } from '@/domains/gallery/types';
+import { type SortBy } from '@/domains/gallery/types/items';
 import { gallerySortByAtom } from '@/stores/gallery';
 
 export function GallerySort() {

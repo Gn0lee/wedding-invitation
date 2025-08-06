@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GalleryResponse, SortBy, SortOrder } from '@/domains/gallery/types';
+import { GalleryItemsResponse, SortBy, SortOrder } from '@/domains/gallery/types/items';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
@@ -87,7 +87,7 @@ export async function GET(request: NextRequest) {
     const hasNext = page < totalPages;
     const hasPrev = page > 1;
 
-    const response: GalleryResponse = {
+    const response: GalleryItemsResponse = {
       items,
       pagination: {
         page,

@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import useSWRInfinite from 'swr/infinite';
 import { fetchGalleryItems, DEFAULT_GALLERY_PARAMS } from '@/domains/gallery/services/galleryApi';
-import { GalleryResponse } from '@/domains/gallery/types';
+import { GalleryItemsResponse } from '@/domains/gallery/types/items';
 import { gallerySortByAtom, gallerySortOrderAtom } from '@/stores/gallery';
 
 export function useGalleryItems() {
@@ -9,7 +9,7 @@ export function useGalleryItems() {
   const sortBy = useAtomValue(gallerySortByAtom);
   const sortOrder = useAtomValue(gallerySortOrderAtom);
 
-  const getKey = (pageIndex: number, previousPageData: GalleryResponse | null) => {
+  const getKey = (pageIndex: number, previousPageData: GalleryItemsResponse | null) => {
     // 첫 페이지이거나 이전 페이지에 더 많은 데이터가 있는 경우
     if (pageIndex === 0 || (previousPageData && previousPageData.pagination.hasNext)) {
       return {
@@ -23,7 +23,7 @@ export function useGalleryItems() {
   };
 
   const { data, error, isLoading, isValidating, size, setSize, mutate } =
-    useSWRInfinite<GalleryResponse>(getKey, fetchGalleryItems, {
+    useSWRInfinite<GalleryItemsResponse>(getKey, fetchGalleryItems, {
       revalidateFirstPage: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

@@ -4,7 +4,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 
 import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
+import { GalleryItem as GalleryItemType } from '@/domains/gallery/types/items';
 
 interface GalleryCommentOverlayProps {
   item: GalleryItemType;

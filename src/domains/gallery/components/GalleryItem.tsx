@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
-import { GalleryItem as GalleryItemType } from '@/domains/gallery/types';
+import { GalleryItem as GalleryItemType } from '@/domains/gallery/types/items';
 import { galleryModalAtom } from '@/stores/galleryModal';
 
 interface GalleryItemProps {
