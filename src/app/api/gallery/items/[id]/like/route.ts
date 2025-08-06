@@ -37,12 +37,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
       isLikedByUser = !!existingLike;
     }
 
-    return NextResponse.json({
+    const response = {
       likes: image.likes_count || 0,
       isLikedByUser,
-    });
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
-    console.error('Gallery like status API error:', error);
+    console.error('❌ Gallery like status API error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
@@ -94,37 +96,24 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         .eq('image_id', imageId);
 
       if (deleteError) {
-        console.error('Delete like error:', deleteError);
+        console.error('❌ Delete like error:', deleteError);
         return NextResponse.json({ error: 'Failed to unlike' }, { status: 500 });
       }
 
-      // 현재 좋아요 개수 조회 후 감소
-      const { data: currentImage, error: fetchError } = await supabase
+      // 트리거가 자동으로 likes_count를 감소시킴
+      // 업데이트된 likes_count 조회
+      const { data: updatedImage, error: fetchError } = await supabase
         .from('gallery_images')
         .select('likes_count')
         .eq('id', imageId)
         .single();
 
       if (fetchError) {
-        console.error('Fetch likes count error:', fetchError);
+        console.error('❌ Fetch likes count error:', fetchError);
         return NextResponse.json({ error: 'Failed to fetch likes count' }, { status: 500 });
       }
 
-      const calculatedLikesCount = Math.max(0, (currentImage.likes_count || 0) - 1);
-
-      const { data: updateResult, error: updateError } = await supabase
-        .from('gallery_images')
-        .update({ likes_count: calculatedLikesCount })
-        .eq('id', imageId)
-        .select('likes_count')
-        .single();
-
-      if (updateError) {
-        console.error('Update likes count error:', updateError);
-        return NextResponse.json({ error: 'Failed to update likes count' }, { status: 500 });
-      }
-
-      newLikesCount = updateResult.likes_count;
+      newLikesCount = updatedImage.likes_count;
     } else {
       // 좋아요 추가
       const { error: insertError } = await supabase.from('gallery_image_likes').insert({
@@ -133,46 +122,35 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
       });
 
       if (insertError) {
-        console.error('Insert like error:', insertError);
+        console.error('❌ Insert like error:', insertError);
         return NextResponse.json({ error: 'Failed to like' }, { status: 500 });
       }
 
-      // 현재 좋아요 개수 조회 후 증가
-      const { data: currentImage, error: fetchError } = await supabase
+      // 트리거가 자동으로 likes_count를 증가시킴
+      // 업데이트된 likes_count 조회
+      const { data: updatedImage, error: fetchError } = await supabase
         .from('gallery_images')
         .select('likes_count')
         .eq('id', imageId)
         .single();
 
       if (fetchError) {
-        console.error('Fetch likes count error:', fetchError);
+        console.error('❌ Fetch likes count error:', fetchError);
         return NextResponse.json({ error: 'Failed to fetch likes count' }, { status: 500 });
       }
 
-      const calculatedLikesCount = (currentImage.likes_count || 0) + 1;
-
-      const { data: updateResult, error: updateError } = await supabase
-        .from('gallery_images')
-        .update({ likes_count: calculatedLikesCount })
-        .eq('id', imageId)
-        .select('likes_count')
-        .single();
-
-      if (updateError) {
-        console.error('Update likes count error:', updateError);
-        return NextResponse.json({ error: 'Failed to update likes count' }, { status: 500 });
-      }
-
-      newLikesCount = updateResult.likes_count;
+      newLikesCount = updatedImage.likes_count;
     }
 
-    return NextResponse.json({
+    const response = {
       success: true,
       liked: !existingLike, // 토글된 상태
       likes: newLikesCount,
-    });
+    };
+
+    return NextResponse.json(response);
   } catch (error) {
-    console.error('Gallery like API error:', error);
+    console.error('❌ Gallery like API error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

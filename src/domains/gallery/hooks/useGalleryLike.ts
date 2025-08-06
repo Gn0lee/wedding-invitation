@@ -20,28 +20,34 @@ export function useGalleryLike(imageId: string, isSelected: boolean = false) {
       await mutate(
         async () => {
           const result = await toggleGalleryLike(imageId);
-          return {
+
+          const newData = {
             likes: result.likes,
             isLikedByUser: result.liked,
           };
+
+          return newData;
         },
         {
           optimisticData: (currentData) => {
             if (!currentData) {
               return { likes: 0, isLikedByUser: false };
             }
-            return {
+
+            const optimisticData = {
               ...currentData,
               likes: currentData.isLikedByUser ? currentData.likes - 1 : currentData.likes + 1,
               isLikedByUser: !currentData.isLikedByUser,
             };
+
+            return optimisticData;
           },
           rollbackOnError: true,
           revalidate: false,
         },
       );
     } catch (error) {
-      console.error('Failed to toggle like:', error);
+      console.error('❌ Failed to toggle like:', error);
     }
   };
 

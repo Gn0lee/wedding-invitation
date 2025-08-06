@@ -1,7 +1,17 @@
 'use client';
 
 import { Heart } from 'lucide-react';
+import { useState } from 'react';
+import { KakaoLoginButton } from '@/components/KakaoLoginButton';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useGalleryLike } from '@/domains/gallery/hooks/useGalleryLike';
+import { useAuth } from '@/hooks/useAuth';
 
 interface GalleryLikeButtonProps {
   imageId: string;
@@ -9,32 +19,48 @@ interface GalleryLikeButtonProps {
 }
 
 export function GalleryLikeButton({ imageId, isSelected = false }: GalleryLikeButtonProps) {
-  const { data, isLoading, toggleLike } = useGalleryLike(imageId, isSelected);
+  const { user } = useAuth();
+  const { data, toggleLike } = useGalleryLike(imageId, isSelected);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const handleClick = async () => {
+    if (!user) {
+      setShowLoginDialog(true);
+      return;
+    }
+
     await toggleLike();
   };
 
-  // 로딩 중이거나 데이터가 없으면 기본 상태 표시
-  if (isLoading || !data) {
-    return (
-      <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
-        <Heart size={16} className="fill-transparent stroke-white" />
-        <span className="text-xs font-medium">0</span>
-      </div>
-    );
-  }
-
   return (
-    <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
-      <Heart
-        size={16}
-        className={`${
-          data.isLikedByUser ? 'fill-red-500 text-red-500' : 'fill-transparent stroke-white'
-        } cursor-pointer transition-colors duration-200`}
-        onClick={handleClick}
-      />
-      <span className="text-xs font-medium">{data.likes}</span>
-    </div>
+    <>
+      <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
+        <Heart
+          size={16}
+          className={`${
+            data?.isLikedByUser ? 'fill-red-500 text-red-500' : 'fill-transparent stroke-white'
+          } cursor-pointer transition-colors duration-200`}
+          onClick={handleClick}
+        />
+        <span className="text-xs font-medium">{data?.likes || 0}</span>
+      </div>
+
+      {/* 로그인 유도 다이얼로그 */}
+      <Dialog open={showLoginDialog} onOpenChange={setShowLoginDialog}>
+        <DialogContent className="max-w-xs">
+          <DialogHeader>
+            <DialogTitle>로그인이 필요합니다</DialogTitle>
+            <DialogDescription className="text-gray-300/80">
+              마음에 드는 사진에 좋아요를 남겨보세요!
+            </DialogDescription>
+          </DialogHeader>
+          <KakaoLoginButton
+            buttonProps={{ className: 'w-full text-kakao-text bg-kakao hover:bg-kakao/80' }}
+            innerText="카카오로 로그인"
+            next="/gallery"
+          />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
