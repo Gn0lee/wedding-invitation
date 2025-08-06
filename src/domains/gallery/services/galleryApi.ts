@@ -36,7 +36,7 @@ export async function fetchGalleryItems(params: GalleryQueryParams): Promise<Gal
 
 // 좋아요 상태 조회
 export async function fetchGalleryLike(imageId: string): Promise<GalleryLikeResponse> {
-  const response = await fetch(`/api/gallery/${imageId}/like`);
+  const response = await fetch(`/api/gallery/items/${imageId}/like`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch gallery like status');
@@ -47,7 +47,7 @@ export async function fetchGalleryLike(imageId: string): Promise<GalleryLikeResp
 
 // 좋아요 토글
 export async function toggleGalleryLike(imageId: string): Promise<GalleryLikeToggleResponse> {
-  const response = await fetch(`/api/gallery/${imageId}/like`, {
+  const response = await fetch(`/api/gallery/items/${imageId}/like`, {
     method: 'POST',
   });
 
