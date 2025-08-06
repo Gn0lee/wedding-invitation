@@ -23,7 +23,6 @@ export function GalleryCarousel() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log('entry', entry);
         if (entry.isIntersecting) {
           autoScrollPlugin.current.play();
         } else {
