@@ -1,8 +1,13 @@
+import { useAtom } from 'jotai';
 import useSWR from 'swr';
 import { fetchGalleryLike, toggleGalleryLike } from '@/domains/gallery/services/galleryApi';
 import { type GalleryLikeResponse } from '@/domains/gallery/types/likes';
+import { galleryModalAtom } from '@/stores/galleryModal';
 
-export function useGalleryLike(imageId: string, isSelected: boolean = false) {
+export function useGalleryLike(imageId: string, index: number) {
+  const [modal] = useAtom(galleryModalAtom);
+  const isSelected = modal.open && modal.index === index;
+
   const { data, error, mutate } = useSWR<GalleryLikeResponse>(
     imageId && isSelected ? `/api/gallery/items/${imageId}/like` : null,
     () => fetchGalleryLike(imageId),

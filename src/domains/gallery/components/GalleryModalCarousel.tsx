@@ -32,24 +32,8 @@ export default function GalleryModalCarousel() {
 
   // 캐러셀 API 보관
   const [emblaApi, setEmblaApi] = useState<CarouselApi | null>(null);
-  // 현재 선택된 슬라이드 인덱스
-  const [selectedIndex, setSelectedIndex] = useState(modal.index);
 
   const close = () => setModal((m) => ({ ...m, open: false }));
-
-  // 선택된 슬라이드 변경 감지
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-
-    emblaApi.on('select', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi]);
 
   // 선택 또는 재초기화 시 마지막 슬라이드에 도달하면 loadMore 실행
   useEffect(() => {
@@ -127,7 +111,7 @@ export default function GalleryModalCarousel() {
                     />
 
                     {/* 좋아요 버튼 - 선택된 이미지일 때만 요청 */}
-                    <GalleryLikeButton imageId={it.id} isSelected={index === selectedIndex} />
+                    <GalleryLikeButton imageId={it.id} index={index} />
 
                     {/* 코멘트 영역 */}
                     {(it.brideComment || it.groomComment) && <GalleryCommentOverlay item={it} />}

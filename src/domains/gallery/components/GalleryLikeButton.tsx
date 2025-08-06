@@ -15,12 +15,12 @@ import { useAuth } from '@/hooks/useAuth';
 
 interface GalleryLikeButtonProps {
   imageId: string;
-  isSelected?: boolean; // 선택된 이미지인지 여부
+  index: number; // 이미지의 인덱스
 }
 
-export function GalleryLikeButton({ imageId, isSelected = false }: GalleryLikeButtonProps) {
+export function GalleryLikeButton({ imageId, index }: GalleryLikeButtonProps) {
   const { user } = useAuth();
-  const { data, toggleLike } = useGalleryLike(imageId, isSelected);
+  const { data, toggleLike } = useGalleryLike(imageId, index);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const handleClick = async () => {
@@ -35,14 +35,18 @@ export function GalleryLikeButton({ imageId, isSelected = false }: GalleryLikeBu
   return (
     <>
       <div className="absolute bottom-3 right-4 flex flex-col items-center gap-1 rounded-full bg-gray-700/20 p-2 text-white backdrop-blur-sm">
-        <Heart
-          size={16}
-          className={`${
-            data?.isLikedByUser ? 'fill-red-500 text-red-500' : 'fill-transparent stroke-white'
-          } cursor-pointer transition-colors duration-200`}
-          onClick={handleClick}
-        />
-        <span className="text-xs font-medium">{data?.likes || 0}</span>
+        {data ? (
+          <Heart
+            size={16}
+            className={`${
+              data?.isLikedByUser ? 'fill-red-500 text-red-500' : 'fill-transparent stroke-white'
+            } cursor-pointer transition-colors duration-200`}
+            onClick={handleClick}
+          />
+        ) : (
+          <div className="min-h-4" />
+        )}
+        <span className="min-h-4 text-xs font-medium">{data?.likes}</span>
       </div>
 
       {/* 로그인 유도 다이얼로그 */}
