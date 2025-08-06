@@ -1,6 +1,5 @@
 import { Header } from '@/components/Header';
 import { NavigationButton } from '@/components/header/NavigationButton';
-import { KakaoSdkInstaller } from '@/components/KakaoSdkInstaller';
 import { PageStyleWrapper } from '@/components/PageStyleWrapper';
 import { GalleryHero } from '@/domains/main/components/gallery/GalleryHero';
 import { InformationSection } from '@/domains/main/components/InformationSection';
@@ -13,7 +12,6 @@ import { RSVPSection } from '@/domains/main/components/RSVPSection';
 export default function Home() {
   return (
     <>
-      <KakaoSdkInstaller />
       <Header leftChildren={<NavigationButton />} />
       <PageStyleWrapper>
         <MainHero />

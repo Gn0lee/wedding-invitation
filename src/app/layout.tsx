@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import './globals.css';
 
+import { KakaoSdkInstaller } from '@/components/KakaoSdkInstaller';
 import { SWRProvider } from '@/components/swr-provider';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -56,6 +57,7 @@ export default function RootLayout({
             }}
           />
         )}
+        <KakaoSdkInstaller />
       </head>
       <body className={clsx(bmJua.variable, nanumRound.variable, 'antialiased', 'font-nanumRound')}>
         <SWRProvider>{children}</SWRProvider>
