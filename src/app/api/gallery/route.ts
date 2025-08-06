@@ -68,35 +68,18 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
-    // 사용자별 좋아요 상태 조회 (인증된 사용자인 경우)
-    let likedItems: string[] = [];
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (user) {
-      const { data: likedData } = await supabase
-        .from('gallery_image_likes')
-        .select('image_id')
-        .eq('user_id', user.id);
-
-      likedItems = likedData?.map((item) => item.image_id) || [];
-    }
-
-    // 응답 데이터 변환
+    // 응답 데이터 변환 (좋아요 상태 제거)
     const items = (data || []).map((item) => ({
       id: item.id,
       src: item.src,
       width: item.width,
       height: item.height,
-      likes: item.likes_count,
       takenAt: item.taken_at,
       createdAt: item.created_at,
       updatedAt: item.updated_at,
       name: item.name,
       brideComment: item.bride_comment,
       groomComment: item.groom_comment,
-      isLikedByUser: likedItems.includes(item.id),
     }));
 
     // 페이지네이션 메타데이터 계산
