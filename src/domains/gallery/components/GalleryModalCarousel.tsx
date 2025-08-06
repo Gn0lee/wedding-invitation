@@ -32,8 +32,24 @@ export default function GalleryModalCarousel() {
 
   // 캐러셀 API 보관
   const [emblaApi, setEmblaApi] = useState<CarouselApi | null>(null);
+  // 현재 선택된 슬라이드 인덱스
+  const [selectedIndex, setSelectedIndex] = useState(modal.index);
 
   const close = () => setModal((m) => ({ ...m, open: false }));
+
+  // 선택된 슬라이드 변경 감지
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
+    emblaApi.on('select', onSelect);
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi]);
 
   // 선택 또는 재초기화 시 마지막 슬라이드에 도달하면 loadMore 실행
   useEffect(() => {
@@ -94,7 +110,7 @@ export default function GalleryModalCarousel() {
 
           <Carousel opts={{ loop: true, startIndex: modal.index }} setApi={setEmblaApi}>
             <CarouselContent>
-              {items.map((it) => (
+              {items.map((it, index) => (
                 <CarouselItem key={it.id} className="m-auto">
                   <div
                     className="relative overflow-hidden rounded-xl"
@@ -110,8 +126,8 @@ export default function GalleryModalCarousel() {
                       priority={false}
                     />
 
-                    {/* 좋아요 버튼 */}
-                    <GalleryLikeButton imageId={it.id} />
+                    {/* 좋아요 버튼 - 선택된 이미지일 때만 요청 */}
+                    <GalleryLikeButton imageId={it.id} isSelected={index === selectedIndex} />
 
                     {/* 코멘트 영역 */}
                     {(it.brideComment || it.groomComment) && <GalleryCommentOverlay item={it} />}
@@ -130,7 +146,7 @@ export default function GalleryModalCarousel() {
             </CarouselContent>
 
             {/* 네비게이션 버튼 */}
-            <CarouselPrevious className="left-2 size-5 border-none bg-gray-700/40 text-gray-50 hover:bg-gray-700/70 hover:text-gray-50" />
+            <CarouselPrevious className="left-2 size-5 border-none bg-gray-700/40 text-gray-50 hover:bg-gray-700/60 hover:text-gray-50" />
             <CarouselNext className="right-2 size-5 border-none bg-gray-700/40 text-gray-50 hover:bg-gray-700/70 hover:text-gray-50" />
           </Carousel>
         </motion.div>

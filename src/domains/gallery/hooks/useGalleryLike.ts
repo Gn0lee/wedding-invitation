@@ -2,9 +2,9 @@ import useSWR from 'swr';
 import { fetchGalleryLike, toggleGalleryLike } from '@/domains/gallery/services/galleryApi';
 import { type GalleryLikeResponse } from '@/domains/gallery/types/likes';
 
-export function useGalleryLike(imageId: string) {
+export function useGalleryLike(imageId: string, isSelected: boolean = false) {
   const { data, error, mutate } = useSWR<GalleryLikeResponse>(
-    imageId ? `/api/gallery/${imageId}/like` : null,
+    imageId && isSelected ? `/api/gallery/items/${imageId}/like` : null,
     () => fetchGalleryLike(imageId),
     {
       revalidateOnFocus: false,

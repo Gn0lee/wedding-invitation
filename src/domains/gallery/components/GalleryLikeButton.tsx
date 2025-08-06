@@ -5,10 +5,11 @@ import { useGalleryLike } from '@/domains/gallery/hooks/useGalleryLike';
 
 interface GalleryLikeButtonProps {
   imageId: string;
+  isSelected?: boolean; // 선택된 이미지인지 여부
 }
 
-export function GalleryLikeButton({ imageId }: GalleryLikeButtonProps) {
-  const { data, isLoading, toggleLike } = useGalleryLike(imageId);
+export function GalleryLikeButton({ imageId, isSelected = false }: GalleryLikeButtonProps) {
+  const { data, isLoading, toggleLike } = useGalleryLike(imageId, isSelected);
 
   const handleClick = async () => {
     await toggleLike();
