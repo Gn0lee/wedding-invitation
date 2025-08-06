@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
       success: true,
       data: {
         items:
-          items?.map((item) => ({
+          (items || []).map((item) => ({
             id: item.id,
             src: item.src,
             width: item.width,
@@ -67,7 +67,6 @@ export async function GET(request: NextRequest) {
             takenAt: item.taken_at,
             createdAt: item.created_at,
             updatedAt: item.updated_at,
-            isLikedByUser: false,
           })) || [],
         pagination: {
           page,
@@ -190,11 +189,9 @@ export async function POST(request: NextRequest) {
         name: newItem.name,
         brideComment: newItem.bride_comment,
         groomComment: newItem.groom_comment,
-        likes: newItem.likes_count,
         takenAt: newItem.taken_at,
         createdAt: newItem.created_at,
         updatedAt: newItem.updated_at,
-        isLikedByUser: false,
       },
     });
   } catch (error) {

@@ -11,6 +11,11 @@ export interface GalleryItem {
   groomComment: string | null;
 }
 
+// 관리자용 GalleryItem (좋아요 개수 포함)
+export interface AdminGalleryItem extends GalleryItem {
+  likes: number;
+}
+
 export interface GalleryItemsResponse {
   items: GalleryItem[];
   pagination: {

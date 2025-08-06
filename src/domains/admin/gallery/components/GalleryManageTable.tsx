@@ -42,21 +42,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
-
-interface GalleryItem {
-  id: string;
-  src: string;
-  width: number;
-  height: number;
-  name: string;
-  brideComment: string | null;
-  groomComment: string | null;
-  likes: number;
-  takenAt: string;
-  createdAt: string;
-  updatedAt: string;
-  isLikedByUser: boolean;
-}
+import { type AdminGalleryItem } from '@/domains/gallery/types/items';
 
 interface PaginationData {
   page: number;
@@ -70,14 +56,14 @@ interface PaginationData {
 interface GalleryResponse {
   success: boolean;
   data?: {
-    items: GalleryItem[];
+    items: AdminGalleryItem[];
     pagination: PaginationData;
   };
   error?: string;
 }
 
 export function GalleryManageTable() {
-  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [items, setItems] = useState<AdminGalleryItem[]>([]);
   const [pagination, setPagination] = useState<PaginationData>({
     page: 1,
     limit: 20,
@@ -93,11 +79,11 @@ export function GalleryManageTable() {
   const [sortOrder, setSortOrder] = useState('desc');
 
   // 이미지 미리보기 상태
-  const [previewImage, setPreviewImage] = useState<GalleryItem | null>(null);
+  const [previewImage, setPreviewImage] = useState<AdminGalleryItem | null>(null);
   const [showPreview, setShowPreview] = useState(false);
 
   // 편집 상태
-  const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
+  const [editingItem, setEditingItem] = useState<AdminGalleryItem | null>(null);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editForm, setEditForm] = useState({
     name: '',
@@ -107,7 +93,7 @@ export function GalleryManageTable() {
   });
 
   // 삭제 확인 상태
-  const [deletingItem, setDeletingItem] = useState<GalleryItem | null>(null);
+  const [deletingItem, setDeletingItem] = useState<AdminGalleryItem | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   // 편집 저장 상태
@@ -168,13 +154,13 @@ export function GalleryManageTable() {
   }, [pagination.page, pagination.limit, debouncedSearch, sortBy, sortOrder]);
 
   // 이미지 미리보기 열기
-  const handlePreview = (item: GalleryItem) => {
+  const handlePreview = (item: AdminGalleryItem) => {
     setPreviewImage(item);
     setShowPreview(true);
   };
 
   // 편집 다이얼로그 열기
-  const handleEdit = (item: GalleryItem) => {
+  const handleEdit = (item: AdminGalleryItem) => {
     setEditingItem(item);
     setEditForm({
       name: item.name,
@@ -224,7 +210,7 @@ export function GalleryManageTable() {
   };
 
   // 삭제 다이얼로그 열기
-  const handleDelete = (item: GalleryItem) => {
+  const handleDelete = (item: AdminGalleryItem) => {
     setDeletingItem(item);
     setShowDeleteDialog(true);
   };
@@ -335,12 +321,12 @@ export function GalleryManageTable() {
           <TableHeader>
             <TableRow>
               <TableHead>이름</TableHead>
-              <TableHead>신랑 댓글</TableHead>
-              <TableHead>신부 댓글</TableHead>
+              <TableHead>신랑 코멘트</TableHead>
+              <TableHead>신부 코멘트</TableHead>
               <TableHead className="w-20">좋아요</TableHead>
-              <TableHead className="w-32">촬영일</TableHead>
-              <TableHead className="w-32">등록일</TableHead>
-              <TableHead className="w-24">작업</TableHead>
+              <TableHead>촬영일</TableHead>
+              <TableHead>업로드일</TableHead>
+              <TableHead className="text-right">작업</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -362,7 +348,7 @@ export function GalleryManageTable() {
                   <TableCell className="font-medium">{item.name}</TableCell>
                   <TableCell className="max-w-32 truncate">{item.groomComment || '-'}</TableCell>
                   <TableCell className="max-w-32 truncate">{item.brideComment || '-'}</TableCell>
-                  <TableCell className="text-center">{item.likes}</TableCell>
+                  <TableCell>{item.likes}</TableCell>
                   <TableCell>{formatDate(item.takenAt)}</TableCell>
                   <TableCell>{formatDate(item.createdAt)}</TableCell>
                   <TableCell>
@@ -468,7 +454,7 @@ export function GalleryManageTable() {
               </div>
               <div>
                 <strong>촬영일:</strong>
-                <p className="mt-1">{previewImage ? formatDate(previewImage.takenAt) : '-'}</p>
+                <p className="mt-1">{formatDate(previewImage?.takenAt || '')}</p>
               </div>
               <div>
                 <strong>좋아요:</strong>

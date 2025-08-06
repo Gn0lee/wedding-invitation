@@ -70,7 +70,6 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         takenAt: updatedItem.taken_at,
         createdAt: updatedItem.created_at,
         updatedAt: updatedItem.updated_at,
-        isLikedByUser: false,
       },
     });
   } catch (error) {
