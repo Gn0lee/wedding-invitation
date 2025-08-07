@@ -4,6 +4,7 @@ import { NavigationButton } from '@/components/header/NavigationButton';
 import { PageStyleWrapper } from '@/components/PageStyleWrapper';
 import { GalleryHero } from '@/domains/main/components/gallery/GalleryHero';
 import { InformationSection } from '@/domains/main/components/InformationSection';
+import { IntroduceHero } from '@/domains/main/components/IntroduceHero';
 import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';
 import { NavigationDrawerContent } from '@/domains/main/components/NavigationDrawerContent';
@@ -32,6 +33,7 @@ export default function Home() {
     <>
       <Header leftChildren={<NavigationButton />} />
       <PageStyleWrapper>
+        <IntroduceHero />
         <MainHero />
         <RemainTimeHero />
         <LocationHero />
