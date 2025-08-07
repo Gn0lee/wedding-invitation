@@ -25,9 +25,8 @@ const nanumRound = localFont({
 });
 
 export const metadata: Metadata = {
-  title: '이진호 ♥ 김태운 결혼식',
-  description:
-    '이진호와 김태운의 결혼식에 초대합니다. 2026년 1월 25일 토요일 오후 4시, 로얄파크컨벤션 파크홀에서 진행됩니다.',
+  title: '태운 ♥ 진호의 결혼식에 초대합니다',
+  description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
   keywords: ['결혼식', '청첩장', '모바일 청첩장', '이진호', '김태운', '웨딩'],
   authors: [{ name: '이진호, 김태운' }],
   creator: '이진호',
@@ -45,25 +44,25 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ko_KR',
     url: '/',
-    siteName: '이진호 ♥ 김태운 결혼식',
-    title: '이진호 ♥ 김태운 결혼식',
-    description:
-      '이진호와 김태운의 결혼식에 초대합니다. 2026년 1월 25일 토요일 오후 4시, 로얄파크컨벤션 파크홀에서 진행됩니다.',
+    siteName: '태운 ♥ 진호의 결혼식에 초대합니다',
+    title: '태운 ♥ 진호의 결혼식에 초대합니다',
+    description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
     images: [
       {
-        url: '/images/main/040A1880.webp',
-        width: 1200,
-        height: 630,
+        url: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/main_og.webp',
+        width: 1920,
+        height: 1878,
         alt: '이진호 김태운 결혼식 청첩장',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: '이진호 ♥ 김태운 결혼식',
-    description:
-      '이진호와 김태운의 결혼식에 초대합니다. 2026년 1월 25일 토요일 오후 4시, 로얄파크컨벤션 파크홀에서 진행됩니다.',
-    images: ['/images/main/040A1880.webp'],
+    title: '태운 ♥ 진호의 결혼식에 초대합니다',
+    description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
+    images: [
+      'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/main_og.webp',
+    ],
   },
   robots: {
     index: true,
@@ -82,16 +81,12 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
-  ],
   other: {
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': '이진호 ♥ 김태운 결혼식',
-    'application-name': '이진호 ♥ 김태운 결혼식',
+    'apple-mobile-web-app-title': '태운 ♥ 진호의 결혼식에 초대합니다',
+    'application-name': '태운 ♥ 진호의 결혼식에 초대합니다',
     'msapplication-TileColor': '#ffffff',
   },
 };

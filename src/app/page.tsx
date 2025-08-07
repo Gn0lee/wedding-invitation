@@ -11,33 +11,49 @@ import { RemainTimeHero } from '@/domains/main/components/RemainTimeHero';
 import { RSVPSection } from '@/domains/main/components/RSVPSection';
 
 export const metadata: Metadata = {
-  title: '이진호 ♥ 김태운 결혼식',
-  description:
-    '이진호와 김태운의 결혼식에 초대합니다. 2026년 1월 25일 토요일 오후 4시, 로얄파크컨벤션 파크홀에서 진행됩니다.',
+  title: '태운 ♥ 진호의 결혼식에 초대합니다',
+  description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
   openGraph: {
-    title: '이진호 ♥ 김태운 결혼식',
-    description:
-      '이진호와 김태운의 결혼식에 초대합니다. 2026년 1월 25일 토요일 오후 4시, 로얄파크컨벤션 파크홀에서 진행됩니다.',
+    title: '태운 ♥ 진호의 결혼식에 초대합니다',
+    description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
     images: [
       {
-        url: '/images/main/040A1880.webp',
-        width: 1200,
-        height: 630,
+        url: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/main_og.webp',
+        width: 1920,
+        height: 1878,
         alt: '이진호 김태운 결혼식 청첩장',
       },
     ],
-  },
-  twitter: {
-    title: '이진호 ♥ 김태운 결혼식',
-    description:
-      '이진호와 김태운의 결혼식에 초대합니다. 2026년 1월 25일 토요일 오후 4시, 로얄파크컨벤션 파크홀에서 진행됩니다.',
-    images: ['/images/main/040A1880.webp'],
   },
 };
 
 export default function Home() {
   return (
     <>
+      <head>
+        <meta
+          property="kakao:template_json"
+          content={JSON.stringify({
+            object_type: 'feed',
+            content: {
+              title: '태운 ♥ 진호의 결혼식에 초대합니다',
+              description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
+              image_url:
+                'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/main_og.webp',
+              link: {
+                web_url: 'https://wedding-invitation-one-orcin.vercel.app',
+                mobile_web_url: 'https://wedding-invitation-one-orcin.vercel.app',
+              },
+            },
+            buttons: [
+              {
+                title: '초대장 보기',
+                link: { web_url: 'https://wedding-invitation-one-orcin.vercel.app' },
+              },
+            ],
+          })}
+        />
+      </head>
       <Header leftChildren={<NavigationButton />} />
       <PageStyleWrapper>
         <MainHero />
