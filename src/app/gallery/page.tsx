@@ -6,26 +6,26 @@ import { GalleryHero } from '@/domains/gallery/components/GalleryHero';
 import GalleryModalCarousel from '@/domains/gallery/components/GalleryModalCarousel';
 
 export const metadata: Metadata = {
-  title: '갤러리 - 이진호 ♥ 김태운 결혼식',
-  description: '이진호와 김태운의 결혼식 갤러리입니다. 신랑신부의 아름다운 순간들을 확인해보세요.',
+  title: '갤러리 - 태운 ♥ 진호의 결혼식',
+  description: '태운 ♥ 진호의 아름다운 순간들을 확인해보세요.',
   openGraph: {
-    title: '갤러리 - 이진호 ♥ 김태운 결혼식',
-    description:
-      '이진호와 김태운의 결혼식 갤러리입니다. 신랑신부의 아름다운 순간들을 확인해보세요.',
+    title: '갤러리 - 태운 ♥ 진호의 결혼식',
+    description: '태운 ♥ 진호의 아름다운 순간들을 확인해보세요.',
     images: [
       {
-        url: '/images/main/040A1880.webp',
-        width: 1200,
-        height: 630,
-        alt: '이진호 김태운 결혼식 갤러리',
+        url: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/3M1A0207%20(1).webp',
+        width: 1920,
+        height: 960,
+        alt: '태운 ♥ 진호의 결혼식 갤러리',
       },
     ],
   },
   twitter: {
-    title: '갤러리 - 이진호 ♥ 김태운 결혼식',
-    description:
-      '이진호와 김태운의 결혼식 갤러리입니다. 신랑신부의 아름다운 순간들을 확인해보세요.',
-    images: ['/images/main/040A1880.webp'],
+    title: '갤러리 - 태운 ♥ 진호의 결혼식',
+    description: '태운 ♥ 진호의 아름다운 순간들을 확인해보세요.',
+    images: [
+      'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/3M1A0207%20(1).webp',
+    ],
   },
 };
 
