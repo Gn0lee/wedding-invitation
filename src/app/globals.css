@@ -17,6 +17,10 @@ html {
   height: 100svh;
 }
 
+*:not(input):not(textarea):not(select) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
 /* iOS Safari에서 주소창 숨김/표시 시 높이 조정 */
 @supports (-webkit-touch-callout: none) {
   body {
