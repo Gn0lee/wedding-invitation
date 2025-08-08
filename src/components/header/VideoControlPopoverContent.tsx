@@ -1,13 +1,9 @@
 'use client';
 
 import { useAtom } from 'jotai';
-import { Maximize2, Minimize2, Play, Pause, VolumeOff, Volume2 } from 'lucide-react';
+import { Play, Pause, VolumeOff, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  isVideoMutedAtom,
-  isVideoPlayingAtom,
-  isVideoFullscreenAtom,
-} from '@/domains/main/store/video';
+import { isVideoMutedAtom, isVideoPlayingAtom } from '@/domains/main/store/video';
 
 interface VideoControlPopoverContentProps {
   onOpenChange: (open: boolean) => void;
@@ -16,16 +12,10 @@ interface VideoControlPopoverContentProps {
 export function VideoControlPopoverContent({ onOpenChange }: VideoControlPopoverContentProps) {
   const [isPlaying, setIsPlaying] = useAtom(isVideoPlayingAtom);
   const [isMuted, setIsMuted] = useAtom(isVideoMutedAtom);
-  const [isFullscreen, setIsFullscreen] = useAtom(isVideoFullscreenAtom);
 
   const togglePlay = () => {
     onOpenChange(false);
     setIsPlaying(!isPlaying);
-  };
-
-  const toggleFullscreen = () => {
-    onOpenChange(false);
-    setIsFullscreen(!isFullscreen);
   };
 
   const toggleMute = () => {
@@ -56,14 +46,15 @@ export function VideoControlPopoverContent({ onOpenChange }: VideoControlPopover
       </Button>
 
       {/* 전체화면 */}
-      <Button
+      {/* TODO: 모바일 대응 */}
+      {/* <Button
         variant="ghost"
         size="sm"
         onClick={toggleFullscreen}
         className="h-8 justify-start gap-2 border border-gray-50/20 bg-gray-50/10 px-2 text-gray-50 backdrop-blur-md transition-all duration-200 hover:bg-gray-50/20 hover:text-gray-50"
       >
         {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
-      </Button>
+      </Button> */}
     </div>
   );
 }
