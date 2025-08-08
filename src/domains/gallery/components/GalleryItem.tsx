@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { GalleryItem as GalleryItemType } from '@/domains/gallery/types/items';
-import { galleryModalAtom } from '@/stores/galleryModal';
+import { galleryModalOpenAtom, galleryModalInitialIndexAtom } from '@/stores/galleryModal';
 
 interface GalleryItemProps {
   item: GalleryItemType;
@@ -18,10 +18,12 @@ interface GalleryItemProps {
 export function GalleryItem({ item, index }: GalleryItemProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  const setModal = useSetAtom(galleryModalAtom);
+  const setModalOpen = useSetAtom(galleryModalOpenAtom);
+  const setModalInitialIndex = useSetAtom(galleryModalInitialIndexAtom);
 
   const handleClick = () => {
-    setModal({ open: true, index });
+    setModalInitialIndex(index);
+    setModalOpen(true);
   };
 
   const handleImageLoad = () => {

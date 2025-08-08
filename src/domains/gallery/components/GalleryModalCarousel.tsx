@@ -2,8 +2,6 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Loader2 } from 'lucide-react';
-import Image from 'next/image';
-import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -13,27 +11,19 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { GalleryCommentOverlay } from '@/domains/gallery/components/GalleryCommentOverlay';
-import { GalleryLikeButton } from '@/domains/gallery/components/GalleryLikeButton';
+import { GalleryCarouselItem } from '@/domains/gallery/components/GalleryCarouselItem';
 import { useGalleryCarousel } from '@/domains/gallery/hooks/useGalleryCarousel';
 
 /**
- * 갤러리 썸네일을 클릭했을 때 뜨는 풀스크린 모달의 최소 골격.
- * 아직 캐러셀 기능은 없고, 선택된 단일 이미지만 표시한다.
+ * 갤러리 썸네일을 클릭했을 때 뜨는 풀스크린 모달.
+ * Intersection Observer 기반 좋아요 로딩과 startIndex로 애니메이션 없는 초기화
  */
 export default function GalleryModalCarousel() {
-  const { modal, items, hasMore, isValidating, setEmblaApi, close, emblaApi } =
+  const { isOpen, initialIndex, items, hasMore, isValidating, setEmblaApi, close } =
     useGalleryCarousel();
 
-  // 모달이 열릴 때 초기 인덱스 설정
-  useEffect(() => {
-    if (emblaApi && modal.open) {
-      emblaApi.scrollTo(modal.index);
-    }
-  }, [emblaApi, modal.open, modal.index]);
-
   // 모달이 닫혀 있으면 아무것도 렌더하지 않음
-  if (!modal.open) return null;
+  if (!isOpen) return null;
 
   if (items.length === 0) return null;
 
@@ -62,31 +52,16 @@ export default function GalleryModalCarousel() {
             <X size={16} />
           </Button>
 
-          <Carousel opts={{ loop: true }} setApi={setEmblaApi}>
+          <Carousel
+            opts={{
+              loop: true,
+              startIndex: initialIndex, // scrollTo 대신 초기 인덱스로 바로 설정
+            }}
+            setApi={setEmblaApi}
+          >
             <CarouselContent>
-              {items.map((it, index) => (
-                <CarouselItem key={it.id} className="m-auto">
-                  <div
-                    className="relative overflow-hidden rounded-xl"
-                    style={{
-                      aspectRatio: `${it.width} / ${it.height}`,
-                    }}
-                  >
-                    <Image
-                      src={it.src}
-                      alt={it.name}
-                      fill
-                      className="object-contain"
-                      priority={false}
-                    />
-
-                    {/* 좋아요 버튼 - 선택된 이미지일 때만 요청 */}
-                    <GalleryLikeButton imageId={it.id} index={index} />
-
-                    {/* 코멘트 영역 */}
-                    {(it.brideComment || it.groomComment) && <GalleryCommentOverlay item={it} />}
-                  </div>
-                </CarouselItem>
+              {items.map((item, index) => (
+                <GalleryCarouselItem key={item.id} item={item} index={index} />
               ))}
               {hasMore && (
                 <CarouselItem className="flex items-center justify-center">

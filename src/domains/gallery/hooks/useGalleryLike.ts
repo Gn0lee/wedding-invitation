@@ -3,15 +3,17 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import { fetchGalleryLike, toggleGalleryLike } from '@/domains/gallery/services/galleryApi';
 import { type GalleryLikeResponse } from '@/domains/gallery/types/likes';
-import { galleryModalAtom } from '@/stores/galleryModal';
+import { galleryModalOpenAtom } from '@/stores/galleryModal';
 
-export function useGalleryLike(imageId: string, index: number) {
-  const [modal] = useAtom(galleryModalAtom);
-  const isSelected = modal.open && modal.index === index;
+export function useGalleryLike(imageId: string, index: number, shouldLoad = false) {
+  const [isModalOpen] = useAtom(galleryModalOpenAtom);
   const [isMutating, setIsMutating] = useState(false);
 
+  // 모달이 열려있고 shouldLoad가 true일 때만 API 호출
+  const shouldFetch = imageId && isModalOpen && shouldLoad;
+
   const { data, error, mutate } = useSWR<GalleryLikeResponse>(
-    imageId && isSelected ? `/api/gallery/items/${imageId}/like` : null,
+    shouldFetch ? `/api/gallery/items/${imageId}/like` : null,
     () => fetchGalleryLike(imageId),
     {
       revalidateOnFocus: false,

@@ -16,11 +16,12 @@ import { useAuth } from '@/hooks/useAuth';
 interface GalleryLikeButtonProps {
   imageId: string;
   index: number; // 이미지의 인덱스
+  shouldLoad?: boolean; // Intersection Observer로 결정된 로딩 여부
 }
 
-export function GalleryLikeButton({ imageId, index }: GalleryLikeButtonProps) {
+export function GalleryLikeButton({ imageId, index, shouldLoad = false }: GalleryLikeButtonProps) {
   const { user } = useAuth();
-  const { data, toggleLike, isMutating } = useGalleryLike(imageId, index);
+  const { data, toggleLike, isMutating } = useGalleryLike(imageId, index, shouldLoad);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   const handleClick = async () => {
