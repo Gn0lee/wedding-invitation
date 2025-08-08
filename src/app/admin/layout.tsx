@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { AdminGuard } from '@/components/AdminGuard';
 import { NavigationDrawerContent } from '@/domains/main/components/NavigationDrawerContent';
 
@@ -17,6 +17,12 @@ export const metadata: Metadata = {
     googlebot: 'noindex, nofollow',
     robots: 'noindex, nofollow',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 interface AdminLayoutProps {
