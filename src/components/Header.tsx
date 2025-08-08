@@ -2,6 +2,7 @@
 
 import { LogoutButton } from '@/components/header/LogoutButton';
 import { ShareDialog } from '@/components/header/ShareDialog';
+import { VideoControlPopover } from '@/components/header/VideoControlPopover';
 
 interface HeaderProps {
   leftChildren?: React.ReactNode;
@@ -14,6 +15,7 @@ export function Header({ leftChildren }: HeaderProps) {
         <div className="m-auto flex size-full items-center justify-between px-0 md:max-w-2xl md:px-4">
           {leftChildren}
           <div className="flex items-center space-x-4">
+            <VideoControlPopover />
             <ShareDialog />
             <LogoutButton />
           </div>

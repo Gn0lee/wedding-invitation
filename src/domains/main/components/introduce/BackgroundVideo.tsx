@@ -2,7 +2,11 @@
 
 import { useAtomValue } from 'jotai';
 import { useRef } from 'react';
-import { isVideoMutedAtom, isVideoPlayingAtom } from '@/domains/main/store/video';
+import {
+  isVideoMutedAtom,
+  isVideoPlayingAtom,
+  isVideoVisibleAtom,
+} from '@/domains/main/store/video';
 import { useVideoFullscreen } from '@/hooks/useVideoFullscreen';
 import { useVideoPlayback } from '@/hooks/useVideoPlayback';
 import { useVideoVisibility } from '@/hooks/useVideoVisibility';
@@ -10,13 +14,14 @@ import { useVideoVisibility } from '@/hooks/useVideoVisibility';
 export function BackgroundVideo() {
   const isPlaying = useAtomValue(isVideoPlayingAtom);
   const isMuted = useAtomValue(isVideoMutedAtom);
+  const isVisible = useAtomValue(isVideoVisibleAtom);
 
   // refs 생성
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // 가시성 추적
-  const isVisible = useVideoVisibility(containerRef);
+  // 가시성 추적 (isVideoVisibleAtom은 이 훅에서 자동으로 관리됨)
+  useVideoVisibility(containerRef);
 
   // 실제 재생 상태는 전역 상태와 가시성을 결합
   const shouldPlay = isPlaying && isVisible;
