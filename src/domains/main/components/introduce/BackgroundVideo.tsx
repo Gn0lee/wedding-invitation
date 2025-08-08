@@ -1,72 +1,36 @@
 'use client';
 
-import { useAtomValue, useSetAtom } from 'jotai';
-import { useEffect, useRef } from 'react';
-import {
-  isVideoMutedAtom,
-  isVideoPlayingAtom,
-  isVideoFullscreenAtom,
-} from '@/domains/main/store/video';
+import { useAtomValue } from 'jotai';
+import { useRef } from 'react';
+import { isVideoMutedAtom, isVideoPlayingAtom } from '@/domains/main/store/video';
+import { useVideoFullscreen } from '@/hooks/useVideoFullscreen';
+import { useVideoPlayback } from '@/hooks/useVideoPlayback';
+import { useVideoVisibility } from '@/hooks/useVideoVisibility';
 
 export function BackgroundVideo() {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const isPlaying = useAtomValue(isVideoPlayingAtom);
   const isMuted = useAtomValue(isVideoMutedAtom);
-  const isFullscreen = useAtomValue(isVideoFullscreenAtom);
-  const setIsFullscreen = useSetAtom(isVideoFullscreenAtom);
 
-  // 재생/멈춤 상태 변화 감지
-  useEffect(() => {
-    if (!videoRef.current) return;
+  // refs 생성
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-    if (isPlaying) {
-      videoRef.current.play().catch(console.error);
-    } else {
-      videoRef.current.pause();
-    }
-  }, [isPlaying]);
+  // 가시성 추적
+  const isVisible = useVideoVisibility(containerRef);
 
-  // 풀스크린 상태 변화 감지
-  useEffect(() => {
-    if (!videoRef.current) return;
+  // 실제 재생 상태는 전역 상태와 가시성을 결합
+  const shouldPlay = isPlaying && isVisible;
 
-    const handleFullscreenChange = () => {
-      const isCurrentlyFullscreen = !!document.fullscreenElement;
-      setIsFullscreen(isCurrentlyFullscreen);
-    };
+  // 비디오 재생/일시정지 제어
+  useVideoPlayback(videoRef, shouldPlay);
 
-    // 풀스크린 상태가 변경되었을 때
-    const handleFullscreenToggle = async () => {
-      if (isFullscreen && !document.fullscreenElement) {
-        try {
-          await videoRef.current!.requestFullscreen();
-        } catch (error) {
-          console.error('Fullscreen error:', error);
-          setIsFullscreen(false);
-        }
-      } else if (!isFullscreen && document.fullscreenElement) {
-        try {
-          await document.exitFullscreen();
-        } catch (error) {
-          console.error('Exit fullscreen error:', error);
-        }
-      }
-    };
-
-    handleFullscreenToggle();
-
-    // 브라우저의 풀스크린 상태 변화 감지
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
-    };
-  }, [isFullscreen, setIsFullscreen]);
+  // 풀스크린 제어
+  useVideoFullscreen(videoRef);
 
   return (
-    <div className="z-1 absolute inset-0 size-full">
+    <div ref={containerRef} className="z-1 absolute inset-0 size-full">
       <video
         ref={videoRef}
-        autoPlay
         muted={isMuted}
         playsInline
         loop
