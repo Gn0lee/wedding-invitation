@@ -5,7 +5,7 @@ export function WeddingInfo() {
     <div className="absolute bottom-16 left-1/2 -translate-x-1/2">
       {/* 배경 이미지 */}
       <Image
-        src="/images/main/intro2.png"
+        src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/intro2.png"
         alt="wedding-info"
         className="m-auto"
         priority

@@ -12,7 +12,7 @@ export function GalleryHero() {
     <HeroSection id="gallery">
       <HeroBackground
         image={{
-          src: '/images/main/IMG_6479.JPG',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/IMG_6479.webp',
           alt: '갤러리 배경',
           fill: true,
           className: 'brightness-[0.4]',

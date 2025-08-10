@@ -19,7 +19,7 @@ export function MapHero() {
     <HeroSection>
       <HeroBackground
         image={{
-          src: '/images/location/040A5895.webp',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A5895.webp',
           alt: '찾아오시는 길 배경',
           fill: true,
           className: 'brightness-[0.7]',
@@ -41,7 +41,7 @@ export function MapHero() {
               <AccordionContent>
                 <div className="relative aspect-[750/613] w-full rounded-md bg-gray-50">
                   <Image
-                    src="/images/location/230612-약도-명칭수정.png"
+                    src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/rough-map.webp"
                     alt="로얄파크컨벤션 약도"
                     fill
                     className="object-contain"

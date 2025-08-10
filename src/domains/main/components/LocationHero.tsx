@@ -18,7 +18,7 @@ export function LocationHero() {
     <HeroSection id="location">
       <HeroBackground
         image={{
-          src: '/images/main/040A4059.webp',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A4059.webp',
           alt: '위치 배경',
           fill: true,
         }}
@@ -46,7 +46,7 @@ export function LocationHero() {
                 className="rounded-full"
               >
                 <Avatar>
-                  <AvatarImage src="/images/main/티맵모빌리티_idBqPT7AKu_1.jpeg" />
+                  <AvatarImage src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/Tmap.webp" />
                   <AvatarFallback>티맵</AvatarFallback>
                 </Avatar>
               </motion.a>
@@ -61,7 +61,7 @@ export function LocationHero() {
                 className="rounded-full"
               >
                 <Avatar>
-                  <AvatarImage src="/images/main/unnamed.webp" />
+                  <AvatarImage src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/unnamed.webp" />
                   <AvatarFallback>네이버 지도</AvatarFallback>
                 </Avatar>
               </motion.a>
@@ -76,7 +76,7 @@ export function LocationHero() {
                 className="rounded-full"
               >
                 <Avatar>
-                  <AvatarImage src="/images/main/kakaomap_basic.png" />
+                  <AvatarImage src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/kakaomap_basic.webp" />
                   <AvatarFallback>카카오맵</AvatarFallback>
                 </Avatar>
               </motion.a>
