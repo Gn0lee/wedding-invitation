@@ -11,9 +11,10 @@ export function MainHero() {
     <HeroSection id="main">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0464.webp',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2346.webp',
           alt: 'Main Hero',
           fill: true,
+          className: 'brightness-[0.6]',
         }}
       />
       <HeroContainer>

@@ -14,6 +14,7 @@ export function RemainTimeHero() {
           src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0748.webp',
           alt: '남은 시간 배경',
           fill: true,
+          className: 'brightness-[0.6]',
         }}
       />
       <HeroContainer>

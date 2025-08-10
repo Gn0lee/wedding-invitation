@@ -21,6 +21,7 @@ export function LocationHero() {
           src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A4059.webp',
           alt: '위치 배경',
           fill: true,
+          className: 'brightness-[0.6]',
         }}
       />
       <HeroContainer>
