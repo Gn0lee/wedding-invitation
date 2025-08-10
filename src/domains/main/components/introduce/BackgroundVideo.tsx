@@ -33,7 +33,7 @@ export function BackgroundVideo() {
   useVideoFullscreen(videoRef);
 
   return (
-    <div ref={containerRef} className="z-1 absolute inset-0 size-full">
+    <div ref={containerRef} className="z-1 absolute inset-0 size-full bg-[#082D00]">
       <video
         ref={videoRef}
         muted={isMuted}
