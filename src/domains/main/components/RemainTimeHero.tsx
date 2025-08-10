@@ -14,7 +14,7 @@ export function RemainTimeHero() {
           src: '/images/main/DSCF0748.webp',
           alt: '남은 시간 배경',
           fill: true,
-          priority: true,
+          // priority: true,
         }}
       />
       <HeroContainer>

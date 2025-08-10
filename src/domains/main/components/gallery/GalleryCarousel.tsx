@@ -13,7 +13,7 @@ export function GalleryCarousel() {
 
   const autoScrollPlugin = useRef<AutoScrollType>(
     AutoScroll({
-      speed: 1.5,
+      speed: 2.7,
       stopOnInteraction: false,
       stopOnMouseEnter: false,
       startDelay: 0,
@@ -52,17 +52,32 @@ export function GalleryCarousel() {
         <CarouselContent>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
-              <Image src="/images/main/040A1880.webp" alt="Gallery1" fill priority />
+              <Image
+                src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2825_square.webp"
+                alt="Gallery1"
+                fill
+                priority
+              />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image src="/images/main/040A2830.webp" alt="Gallery2" fill priority />
+              <Image
+                src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSFF0058_square.webp"
+                alt="Gallery2"
+                fill
+                priority
+              />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image src="/images/main/040A7880.webp" alt="Gallery3" fill priority />
+              <Image
+                src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A1044_square.webp"
+                alt="Gallery3"
+                fill
+                priority
+              />
             </div>
           </CarouselItem>
           <CarouselItem>
