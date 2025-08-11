@@ -1,17 +1,11 @@
 import Image from 'next/image';
+import IntroImage from '@/assets/images/intro2.png';
 
 export function WeddingInfo() {
   return (
     <div className="absolute bottom-16 left-1/2 -translate-x-1/2">
       {/* 배경 이미지 */}
-      <Image
-        src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/intro2.png"
-        alt="wedding-info"
-        className="m-auto"
-        priority
-        width={179}
-        height={177}
-      />
+      <Image src={IntroImage} alt="wedding-info" className="m-auto" priority />
 
       {/* 텍스트 오버레이 */}
       <div className="relative z-10 mt-4 flex flex-col items-center text-center text-xs font-light leading-relaxed text-gray-200">

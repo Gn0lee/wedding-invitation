@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import RoughMapImage from '@/assets/images/rough-map.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -41,7 +42,7 @@ export function MapHero() {
               <AccordionContent>
                 <div className="relative aspect-[750/613] w-full rounded-md bg-gray-50">
                   <Image
-                    src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/rough-map.webp"
+                    src={RoughMapImage}
                     alt="로얄파크컨벤션 약도"
                     fill
                     className="object-contain"

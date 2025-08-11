@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Map } from 'lucide-react';
 import Link from 'next/link';
 
+import KakaoMapImage from '@/assets/images/kakaomap_basic.webp';
+import NaverMapImage from '@/assets/images/naver_map.webp';
+import TmapImage from '@/assets/images/Tmap.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -47,7 +50,7 @@ export function LocationHero() {
                 className="rounded-full"
               >
                 <Avatar>
-                  <AvatarImage src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/Tmap.webp" />
+                  <AvatarImage src={TmapImage.src} />
                   <AvatarFallback>티맵</AvatarFallback>
                 </Avatar>
               </motion.a>
@@ -62,7 +65,7 @@ export function LocationHero() {
                 className="rounded-full"
               >
                 <Avatar>
-                  <AvatarImage src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/unnamed.webp" />
+                  <AvatarImage src={NaverMapImage.src} />
                   <AvatarFallback>네이버 지도</AvatarFallback>
                 </Avatar>
               </motion.a>
@@ -77,7 +80,7 @@ export function LocationHero() {
                 className="rounded-full"
               >
                 <Avatar>
-                  <AvatarImage src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/kakaomap_basic.webp" />
+                  <AvatarImage src={KakaoMapImage.src} />
                   <AvatarFallback>카카오맵</AvatarFallback>
                 </Avatar>
               </motion.a>
