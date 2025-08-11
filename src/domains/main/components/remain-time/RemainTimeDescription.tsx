@@ -1,11 +1,11 @@
 'use client';
 
+import { WEDDING_DATE } from '@/domains/main/data/date';
 import { useRemainTimeMessage } from '@/domains/main/hooks/useRemainTimeMessage';
 
 export function RemainTimeDescription() {
   // 예식 시간(한국시간)
-  const weddingDate = new Date('2026-01-25T16:00:00+09:00');
-  const { state, days, hours, minutes, seconds } = useRemainTimeMessage(weddingDate);
+  const { state, days, hours, minutes, seconds } = useRemainTimeMessage(WEDDING_DATE);
 
   if (state === 'after') {
     return (

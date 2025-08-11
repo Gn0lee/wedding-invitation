@@ -1,10 +1,12 @@
 import { HeroBackground } from '@/components/hero/HeroBackground';
+import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
 import { HeroDescription } from '@/components/hero/HeroDescription';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
-import { RemainTimeDescription } from '@/domains/main/components/RemainTimeDescription';
+import { RemainTimeCalendar } from '@/domains/main/components/remain-time/Calendar';
+import { RemainTimeDescription } from '@/domains/main/components/remain-time/RemainTimeDescription';
 
 export function RemainTimeHero() {
   return (
@@ -28,6 +30,9 @@ export function RemainTimeHero() {
             <RemainTimeDescription />
           </HeroDescription>
         </HeroTextColumn>
+        <HeroBottomContent>
+          <RemainTimeCalendar />
+        </HeroBottomContent>
       </HeroContainer>
     </HeroSection>
   );
