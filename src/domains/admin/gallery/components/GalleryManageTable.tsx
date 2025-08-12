@@ -440,7 +440,8 @@ export function GalleryManageTable() {
                 width={800}
                 height={600}
                 className="max-h-96 max-w-full rounded object-contain"
-                priority
+                placeholder={previewImage?.blurDataUrl ? 'blur' : 'empty'}
+                blurDataURL={previewImage?.blurDataUrl || undefined}
               />
             </div>
             <div className="grid grid-cols-2 gap-4 text-sm">

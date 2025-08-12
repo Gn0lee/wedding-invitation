@@ -53,7 +53,14 @@ export function GalleryCarouselItem({ item, index }: GalleryCarouselItemProps) {
           aspectRatio: `${item.width} / ${item.height}`,
         }}
       >
-        <Image src={item.src} alt={item.name} fill className="object-contain" priority={false} />
+        <Image
+          src={item.src}
+          alt={item.name}
+          fill
+          className="object-contain"
+          placeholder={item.blurDataUrl ? 'blur' : 'empty'}
+          blurDataURL={item.blurDataUrl || undefined}
+        />
 
         {/* 좋아요 버튼 - Intersection Observer로 0.7 이상 노출될 때만 로딩 */}
         <GalleryLikeButton imageId={item.id} index={index} shouldLoad={shouldLoadLike} />
