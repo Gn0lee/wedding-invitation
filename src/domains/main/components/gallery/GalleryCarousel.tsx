@@ -5,6 +5,9 @@ import { Images } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useEffect } from 'react';
+import Gallery3Image from '@/assets/images/040A1044_square.webp';
+import Gallery1Image from '@/assets/images/040A2825_square.webp';
+import Gallery2Image from '@/assets/images/DSFF0058_square.webp';
 import { Button } from '@/components/ui/button';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
@@ -52,32 +55,17 @@ export function GalleryCarousel() {
         <CarouselContent>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
-              <Image
-                src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2825_square.webp"
-                alt="Gallery1"
-                fill
-                priority
-              />
+              <Image src={Gallery1Image} alt="Gallery_carousel_1" fill priority />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image
-                src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSFF0058_square.webp"
-                alt="Gallery2"
-                fill
-                priority
-              />
+              <Image src={Gallery2Image} alt="Gallery_carousel_2" fill placeholder="blur" />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image
-                src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A1044_square.webp"
-                alt="Gallery3"
-                fill
-                priority
-              />
+              <Image src={Gallery3Image} alt="Gallery_carousel_3" fill placeholder="blur" />
             </div>
           </CarouselItem>
           <CarouselItem>
