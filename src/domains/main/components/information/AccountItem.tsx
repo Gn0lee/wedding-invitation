@@ -3,13 +3,7 @@
 import { Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-
-interface AccountInfo {
-  name: string;
-  bank: string;
-  accountNumber: string;
-  accountHolder: string;
-}
+import { type AccountInfo } from '@/domains/main/components/information/data';
 
 export function AccountItem({ account }: { account: AccountInfo }) {
   const copyToClipboard = async (text: string) => {
