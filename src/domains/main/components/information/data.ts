@@ -5,11 +5,35 @@ export interface AccountInfo {
   accountHolder: string;
 }
 
+// 연락처 타입 정의
+export type ContactType =
+  | 'phone'
+  | 'email'
+  | 'linked-in'
+  | 'github'
+  | 'instagram'
+  | 'facebook'
+  | 'line';
+
+export interface ContactInfo {
+  type: ContactType;
+  value: string;
+  label?: string; // 선택적 라벨 (예: "휴대폰", "회사", "집" 등)
+}
+
+export interface ContactPerson {
+  role: string; // 신랑, 신부, 신랑 아버지 등
+  fullName: string; // 한국 이름
+  contacts: ContactInfo[];
+}
+
 export interface InformationData {
   mealInfo: string;
   parkingInfo: string;
   groomAccounts: AccountInfo[];
   brideAccounts: AccountInfo[];
+  groomContacts: ContactPerson[]; // 신랑측 연락처
+  brideContacts: ContactPerson[]; // 신부측 연락처
 }
 
 // 정적 데이터 (기본값)
@@ -54,6 +78,44 @@ export const defaultInformationData: InformationData = {
       bank: '기업은행',
       accountNumber: '123-456789-01',
       accountHolder: '최수진',
+    },
+  ],
+  groomContacts: [
+    {
+      role: '신랑',
+      fullName: '이진호',
+      contacts: [
+        { type: 'linked-in', value: '진호-이-532b1a215' },
+        { type: 'github', value: 'Gn0lee' },
+        { type: 'phone', value: '010-2782-7462', label: '휴대폰' },
+      ],
+    },
+    {
+      role: '신랑 아버지',
+      fullName: '김영수',
+      contacts: [{ type: 'phone', value: '010-1111-2222', label: '휴대폰' }],
+    },
+    {
+      role: '신랑 어머니',
+      fullName: '이미영',
+      contacts: [{ type: 'phone', value: '010-3333-4444', label: '휴대폰' }],
+    },
+  ],
+  brideContacts: [
+    {
+      role: '신부',
+      fullName: '박영희',
+      contacts: [{ type: 'phone', value: '010-9876-5432', label: '휴대폰' }],
+    },
+    {
+      role: '신부 아버지',
+      fullName: '박민수',
+      contacts: [{ type: 'phone', value: '010-5555-6666', label: '휴대폰' }],
+    },
+    {
+      role: '신부 어머니',
+      fullName: '최수진',
+      contacts: [{ type: 'phone', value: '010-7777-8888', label: '휴대폰' }],
     },
   ],
 };

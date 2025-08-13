@@ -31,11 +31,11 @@ export function AccountItem({ account }: { account: AccountInfo }) {
       </div>
       <Button
         variant="ghost"
-        size="sm"
+        size="icon"
         onClick={() => copyToClipboard(account.accountNumber)}
-        className="ml-3 text-gray-300 hover:bg-white/10 hover:text-white"
+        className="size-12 text-gray-300 hover:bg-white/10 hover:text-white [&_svg]:size-5 [&_svg]:shrink-0"
       >
-        <Copy className="size-5" />
+        <Copy />
       </Button>
     </div>
   );

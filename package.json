@@ -11,6 +11,7 @@
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^13.7.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",

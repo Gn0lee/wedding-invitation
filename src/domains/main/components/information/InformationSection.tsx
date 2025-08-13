@@ -13,6 +13,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { AccountItem } from '@/domains/main/components/information/AccountItem';
+import { ContactItem } from '@/domains/main/components/information/ContactItem';
 import {
   defaultInformationData,
   type InformationData,
@@ -101,6 +102,34 @@ export function InformationSection({ data }: InformationSectionProps) {
                   <div className="space-y-3">
                     {finalData.brideAccounts.map((account, index) => (
                       <AccountItem key={index} account={account} />
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 신랑측 연락처 */}
+              <AccordionItem value="groom-contacts" className="border-b border-gray-200/20">
+                <AccordionTrigger className="text-lg font-semibold text-gray-50 hover:text-white [&>svg]:text-gray-50">
+                  신랑측 연락처
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3">
+                    {finalData.groomContacts.map((contact, index) => (
+                      <ContactItem key={index} contact={contact} />
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              {/* 신부측 연락처 */}
+              <AccordionItem value="bride-contacts" className="border-b border-gray-200/20">
+                <AccordionTrigger className="text-lg font-semibold text-gray-50 hover:text-white [&>svg]:text-gray-50">
+                  신부측 연락처
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3">
+                    {finalData.brideContacts.map((contact, index) => (
+                      <ContactItem key={index} contact={contact} />
                     ))}
                   </div>
                 </AccordionContent>
