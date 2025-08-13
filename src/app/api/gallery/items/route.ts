@@ -52,8 +52,7 @@ export async function GET(request: NextRequest) {
         likes_count,
         taken_at,
         created_at,
-        updated_at,
-        blur_data_url
+        updated_at
       `,
       )
       .order(sortColumn, { ascending: sortOrder === 'asc' });
@@ -81,7 +80,6 @@ export async function GET(request: NextRequest) {
       name: item.name,
       brideComment: item.bride_comment,
       groomComment: item.groom_comment,
-      blurDataUrl: item.blur_data_url,
     }));
 
     // 페이지네이션 메타데이터 계산

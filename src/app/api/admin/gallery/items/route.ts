@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAdminPermission } from '@/lib/admin';
-import { generateBlurDataUrlFromFile } from '@/lib/blur-data-url';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
@@ -68,7 +67,6 @@ export async function GET(request: NextRequest) {
             takenAt: item.taken_at,
             createdAt: item.created_at,
             updatedAt: item.updated_at,
-            blurDataUrl: item.blur_data_url,
           })) || [],
         pagination: {
           page,
@@ -135,9 +133,6 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // blurDataUrl 생성
-    const blurDataUrl = await generateBlurDataUrlFromFile(file);
-
     // 파일명 생성 (고유한 이름)
     const fileExtension = file.name.split('.').pop() || 'webp';
     const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExtension}`;
@@ -172,7 +167,6 @@ export async function POST(request: NextRequest) {
         bride_comment: brideComment || null,
         groom_comment: groomComment || null,
         taken_at: takenAt,
-        blur_data_url: blurDataUrl,
       })
       .select()
       .single();
@@ -198,7 +192,6 @@ export async function POST(request: NextRequest) {
         takenAt: newItem.taken_at,
         createdAt: newItem.created_at,
         updatedAt: newItem.updated_at,
-        blurDataUrl: newItem.blur_data_url,
       },
     });
   } catch (error) {
