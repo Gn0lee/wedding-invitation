@@ -1,10 +1,11 @@
 'use client';
 
-import AutoScroll, { AutoScrollType } from 'embla-carousel-auto-scroll';
+import Autoplay from 'embla-carousel-autoplay';
+import Fade from 'embla-carousel-fade';
 import { Images } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import Gallery3Image from '@/assets/images/040A1044_square.webp';
 import Gallery1Image from '@/assets/images/040A2825_square.webp';
 import Gallery2Image from '@/assets/images/DSFF0058_square.webp';
@@ -14,22 +15,28 @@ import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carouse
 export function GalleryCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  const autoScrollPlugin = useRef<AutoScrollType>(
-    AutoScroll({
-      speed: 2.7,
+  const [isLastItemVisible, setIsLastItemVisible] = useState(false);
+  const lastItemRef = useRef<HTMLDivElement>(null);
+
+  const autoplayPlugin = useRef(
+    Autoplay({
+      delay: 2000,
       stopOnInteraction: false,
       stopOnMouseEnter: false,
-      startDelay: 0,
+      playOnInit: false,
+      stopOnLastSnap: true,
     }),
   );
+
+  const fadePlugin = useRef(Fade());
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          autoScrollPlugin.current.play();
+        if (entry.isIntersecting && !isLastItemVisible) {
+          autoplayPlugin.current.play();
         } else {
-          autoScrollPlugin.current.stop();
+          autoplayPlugin.current.stop();
         }
       },
       {
@@ -47,11 +54,32 @@ export function GalleryCarousel() {
         observer.unobserve(currentRef);
       }
     };
+  }, [isLastItemVisible]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsLastItemVisible(true);
+      } else {
+        setIsLastItemVisible(false);
+      }
+    });
+
+    const currentRef = lastItemRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
   }, []);
 
   return (
     <div ref={carouselRef} className="flex size-full items-center justify-center p-2">
-      <Carousel plugins={[autoScrollPlugin.current]} className="w-full max-w-xs">
+      <Carousel plugins={[autoplayPlugin.current, fadePlugin.current]} className="w-full max-w-xs">
         <CarouselContent>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-2xl">
@@ -68,7 +96,7 @@ export function GalleryCarousel() {
               <Image src={Gallery3Image} alt="Gallery_carousel_3" fill />
             </div>
           </CarouselItem>
-          <CarouselItem>
+          <CarouselItem ref={lastItemRef}>
             <div className="p-2">
               <div className="flex aspect-square items-baseline justify-center pt-6">
                 <Button
