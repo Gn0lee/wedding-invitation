@@ -14,18 +14,8 @@ export interface InformationData {
 
 // 정적 데이터 (기본값)
 export const defaultInformationData: InformationData = {
-  mealInfo: `
-    식사는 오후 12시부터 시작됩니다.
-    식사 장소: 2층 다이닝홀
-    식사 시간: 약 1시간 30분
-    식사 후에는 커피와 디저트를 즐기실 수 있습니다.
-  `,
-  parkingInfo: `
-    주차는 지하 1층 주차장을 이용해 주세요.
-    주차비는 무료입니다.
-    주차장 입구는 건물 동쪽에 위치해 있습니다.
-    주차 후 1층 로비로 이동하시면 됩니다.
-  `,
+  mealInfo: `• 시간: 오후 3시 30분 ~ 5시 30분 (2시간)\n• 장소: 2층 연회장`,
+  parkingInfo: `• 위치: 전쟁기념관 지상/지하 주차장\n• 요금: 2시간 무료, 이후 30분당 1,500원\n• 수용: 총 1,000대`,
   groomAccounts: [
     {
       name: '신랑',

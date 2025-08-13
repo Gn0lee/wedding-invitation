@@ -3,7 +3,7 @@ import { Header } from '@/components/Header';
 import { NavigationButton } from '@/components/header/NavigationButton';
 import { PageStyleWrapper } from '@/components/PageStyleWrapper';
 import { GalleryHero } from '@/domains/main/components/gallery/GalleryHero';
-import { InformationSection } from '@/domains/main/components/InformationSection';
+import { InformationSection } from '@/domains/main/components/information/InformationSection';
 import { IntroduceHero } from '@/domains/main/components/IntroduceHero';
 import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';

@@ -1,11 +1,6 @@
-'use client';
-import { motion } from 'framer-motion';
 import { Map } from 'lucide-react';
 import Link from 'next/link';
 
-import KakaoMapImage from '@/assets/images/kakaomap_basic.webp';
-import NaverMapImage from '@/assets/images/naver_map.webp';
-import TmapImage from '@/assets/images/Tmap.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -13,7 +8,7 @@ import { HeroDescription } from '@/components/hero/HeroDescription';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { MapAppButtons } from '@/components/MapAppButtons';
 import { Button } from '@/components/ui/button';
 
 export function LocationHero() {
@@ -38,53 +33,7 @@ export function LocationHero() {
         </HeroTextColumn>
         <HeroBottomContent className="pt-6">
           <div className="flex flex-col gap-8">
-            <div className="flex items-center gap-4">
-              <motion.a
-                href="https://tmap.life/e1e87e54"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="티맵으로 길찾기"
-                whileHover={{ scale: 1.15, boxShadow: '0 0 16px #fff8' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="rounded-full"
-              >
-                <Avatar>
-                  <AvatarImage src={TmapImage.src} />
-                  <AvatarFallback>티맵</AvatarFallback>
-                </Avatar>
-              </motion.a>
-              <motion.a
-                href="https://naver.me/IFgdRRqM"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="네이버지도에서 보기"
-                whileHover={{ scale: 1.15, boxShadow: '0 0 16px #fff8' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="rounded-full"
-              >
-                <Avatar>
-                  <AvatarImage src={NaverMapImage.src} />
-                  <AvatarFallback>네이버 지도</AvatarFallback>
-                </Avatar>
-              </motion.a>
-              <motion.a
-                href="https://place.map.kakao.com/1505842477"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="카카오맵으로 길찾기"
-                whileHover={{ scale: 1.15, boxShadow: '0 0 16px #fff8' }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="rounded-full"
-              >
-                <Avatar>
-                  <AvatarImage src={KakaoMapImage.src} />
-                  <AvatarFallback>카카오맵</AvatarFallback>
-                </Avatar>
-              </motion.a>
-            </div>
+            <MapAppButtons />
             <Button
               asChild
               variant="secondary"

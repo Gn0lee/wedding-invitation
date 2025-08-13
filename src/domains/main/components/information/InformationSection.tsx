@@ -5,6 +5,7 @@ import { HeroDescription } from '@/components/hero/HeroDescription';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
+import { MapAppButtons } from '@/components/MapAppButtons';
 import {
   Accordion,
   AccordionContent,
@@ -53,7 +54,9 @@ export function InformationSection({ data }: InformationSectionProps) {
                   식사안내
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="leading-relaxed text-gray-100">{finalData.mealInfo}</div>
+                  <div className="whitespace-pre-line leading-relaxed text-gray-100">
+                    {finalData.mealInfo}
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
@@ -63,7 +66,15 @@ export function InformationSection({ data }: InformationSectionProps) {
                   주차안내
                 </AccordionTrigger>
                 <AccordionContent>
-                  <div className="leading-relaxed text-gray-100">{finalData.parkingInfo}</div>
+                  <div className="space-y-4">
+                    <div className="whitespace-pre-line leading-relaxed text-gray-100">
+                      {finalData.parkingInfo}
+                    </div>
+                    <div className="pt-2">
+                      <p className="mb-3 text-sm text-gray-200">길찾기</p>
+                      <MapAppButtons />
+                    </div>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
 
