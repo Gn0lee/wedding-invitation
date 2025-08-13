@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { AdminGuard } from '@/components/AdminGuard';
-import { NavigationDrawerContent } from '@/domains/main/components/NavigationDrawerContent';
 
 export const metadata: Metadata = {
   title: '관리자 페이지',
@@ -36,7 +35,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <div className="container mx-auto p-6">
           <div className="mx-auto max-w-6xl">{children}</div>
         </div>
-        <NavigationDrawerContent />
       </div>
     </AdminGuard>
   );
