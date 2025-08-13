@@ -9,7 +9,6 @@ export interface GalleryItem {
   name: string;
   brideComment: string | null;
   groomComment: string | null;
-  blurDataUrl: string | null; // 이미지 로딩 시 사용할 blur 데이터 URL
 }
 
 // 관리자용 GalleryItem (좋아요 개수 포함)
