@@ -38,7 +38,6 @@ export function GalleryItem({ item, index }: GalleryItemProps) {
     <motion.div
       className="w-full cursor-pointer overflow-hidden rounded-lg"
       onClick={handleClick}
-      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       layoutId={`gallery-item-${item.id}`}
     >

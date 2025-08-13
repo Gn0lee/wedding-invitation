@@ -6,5 +6,7 @@ interface GallerySkeletonProps {
 }
 
 export function GallerySkeleton({ className }: GallerySkeletonProps) {
-  return <Skeleton className={cn('rounded-lg bg-white/20 backdrop-blur-sm', className)} />;
+  return (
+    <Skeleton className={cn('size-full rounded-lg bg-white/20 backdrop-blur-sm', className)} />
+  );
 }
