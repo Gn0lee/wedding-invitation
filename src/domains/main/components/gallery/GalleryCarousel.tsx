@@ -20,7 +20,7 @@ export function GalleryCarousel() {
 
   const autoplayPlugin = useRef(
     Autoplay({
-      delay: 2000,
+      delay: 1500,
       stopOnInteraction: false,
       stopOnMouseEnter: false,
       playOnInit: false,
