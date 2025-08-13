@@ -18,7 +18,7 @@ export type ContactType =
 export interface ContactInfo {
   type: ContactType;
   value: string;
-  label?: string; // 선택적 라벨 (예: "휴대폰", "회사", "집" 등)
+  label: string | null; // 선택적 라벨 (예: "휴대폰", "회사", "집" 등)
 }
 
 export interface ContactPerson {
@@ -85,8 +85,8 @@ export const defaultInformationData: InformationData = {
       role: '신랑',
       fullName: '이진호',
       contacts: [
-        { type: 'linked-in', value: '진호-이-532b1a215' },
-        { type: 'github', value: 'Gn0lee' },
+        { type: 'linked-in', value: '진호-이-532b1a215', label: null },
+        { type: 'github', value: 'Gn0lee', label: null },
         { type: 'phone', value: '010-2782-7462', label: '휴대폰' },
       ],
     },

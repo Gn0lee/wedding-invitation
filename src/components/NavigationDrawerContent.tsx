@@ -32,6 +32,7 @@ const ADMIN_SECTIONS: Section[] = [
   { id: 'admin-gallery-create', label: '갤러리 추가', href: '/admin/gallery/create' },
   { id: 'admin-gallery-manage', label: '갤러리 관리', href: '/admin/gallery/manage' },
   { id: 'admin-gallery-compress', label: '이미지 압축', href: '/admin/gallery/compress' },
+  { id: 'admin-wedding-info', label: '결혼 정보 관리', href: '/admin/wedding-info' },
 ];
 
 export function NavigationDrawerContent() {
