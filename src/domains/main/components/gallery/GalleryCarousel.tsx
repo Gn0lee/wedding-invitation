@@ -60,12 +60,12 @@ export function GalleryCarousel() {
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image src={Gallery2Image} alt="Gallery_carousel_2" fill placeholder="blur" />
+              <Image src={Gallery2Image} alt="Gallery_carousel_2" fill />
             </div>
           </CarouselItem>
           <CarouselItem>
             <div className="relative aspect-square overflow-hidden rounded-xl">
-              <Image src={Gallery3Image} alt="Gallery_carousel_3" fill placeholder="blur" />
+              <Image src={Gallery3Image} alt="Gallery_carousel_3" fill />
             </div>
           </CarouselItem>
           <CarouselItem>
