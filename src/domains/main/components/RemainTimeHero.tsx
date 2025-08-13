@@ -13,10 +13,10 @@ export function RemainTimeHero() {
     <HeroSection id="remain-time">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0748.webp',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0080_1.webp',
           alt: '남은 시간 배경',
           fill: true,
-          className: 'brightness-[0.6]',
+          className: 'brightness-[0.7]',
         }}
       />
       <HeroContainer>
