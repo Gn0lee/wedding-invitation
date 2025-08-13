@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CarouselItem } from '@/components/ui/carousel';
 import { GalleryCommentOverlay } from '@/domains/gallery/components/GalleryCommentOverlay';
 import { GalleryLikeButton } from '@/domains/gallery/components/GalleryLikeButton';
+import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
 import { GalleryItem as GalleryItemType } from '@/domains/gallery/types/items';
 
 interface GalleryCarouselItemProps {
@@ -19,6 +20,7 @@ interface GalleryCarouselItemProps {
  */
 export function GalleryCarouselItem({ item, index }: GalleryCarouselItemProps) {
   const [shouldLoadLike, setShouldLoadLike] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const itemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -44,6 +46,14 @@ export function GalleryCarouselItem({ item, index }: GalleryCarouselItemProps) {
     };
   }, []);
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setImageLoaded(true); // 에러가 나도 스켈레톤은 사라지게
+  };
+
   return (
     <CarouselItem key={item.id} className="m-auto">
       <div
@@ -53,13 +63,18 @@ export function GalleryCarouselItem({ item, index }: GalleryCarouselItemProps) {
           aspectRatio: `${item.width} / ${item.height}`,
         }}
       >
+        {!imageLoaded && (
+          <div className="absolute inset-0 size-full">
+            <GallerySkeleton />
+          </div>
+        )}
         <Image
           src={item.src}
           alt={item.name}
           fill
           className="object-contain"
-          placeholder={item.blurDataUrl ? 'blur' : 'empty'}
-          blurDataURL={item.blurDataUrl || undefined}
+          onLoad={handleImageLoad}
+          onError={handleImageError}
         />
 
         {/* 좋아요 버튼 - Intersection Observer로 0.7 이상 노출될 때만 로딩 */}
