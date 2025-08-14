@@ -5,7 +5,7 @@ import { Phone, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 import { LinkedInIcon } from '@/components/icons/LinkedInIcon';
 import { Button } from '@/components/ui/button';
-import { type ContactPerson } from '@/domains/main/components/information/data';
+import type { ContactPerson } from '@/types/information';
 
 // 연락처 타입별 아이콘 매핑
 const contactIcons = {

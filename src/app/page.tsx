@@ -10,7 +10,7 @@ import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';
 import { RemainTimeHero } from '@/domains/main/components/RemainTimeHero';
 import { RSVPSection } from '@/domains/main/components/RSVPSection';
-import { getWeddingInfoWithRelations } from '@/lib/api/wedding-info';
+import { getWeddingInfoWithRelationsForBuild } from '@/lib/api/wedding-info-build';
 import { transformWeddingData, validateWeddingDataForBuild } from '@/lib/wedding-info-transformer';
 
 export const metadata: Metadata = {
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // wedding-info 데이터 조회
-  const weddingData = await getWeddingInfoWithRelations();
+  // wedding-info 데이터 조회 (빌드용)
+  const weddingData = await getWeddingInfoWithRelationsForBuild();
 
   // 데이터 검증 (없으면 빌드 실패)
   validateWeddingDataForBuild(weddingData);
