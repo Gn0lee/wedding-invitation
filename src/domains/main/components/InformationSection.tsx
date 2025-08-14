@@ -14,18 +14,14 @@ import {
 } from '@/components/ui/accordion';
 import { AccountItem } from '@/domains/main/components/information/AccountItem';
 import { ContactItem } from '@/domains/main/components/information/ContactItem';
-import {
-  defaultInformationData,
-  type InformationData,
-} from '@/domains/main/components/information/data';
+import type { InformationData } from '@/types/information';
 
 interface InformationSectionProps {
-  data?: InformationData;
+  data: InformationData;
 }
 
 export function InformationSection({ data }: InformationSectionProps) {
-  // props가 있으면 사용하고, 없으면 기본값 사용
-  const finalData = data || defaultInformationData;
+  const finalData = data;
 
   return (
     <HeroSection id="information">

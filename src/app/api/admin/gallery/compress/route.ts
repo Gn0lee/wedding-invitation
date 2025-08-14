@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
-import { requireAdminPermission } from '@/lib/admin';
+import { checkAdminPermission } from '@/lib/admin';
 
 const MAX_COMPRESSED_SIZE = 3 * 1024 * 1024; // 3MB
 
 export async function POST(request: NextRequest) {
   try {
     // Admin 권한 확인
-    await requireAdminPermission();
+    await checkAdminPermission();
 
     const formData = await request.formData();
     const file = formData.get('file') as File;

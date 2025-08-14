@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdminPermission } from '@/lib/admin';
+import { checkAdminPermission } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
   try {
     // Admin 권한 확인
-    await requireAdminPermission();
+    await checkAdminPermission();
 
     // 쿼리 파라미터 파싱
     const { searchParams } = new URL(request.url);
@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Admin 권한 확인
-    await requireAdminPermission();
+    await checkAdminPermission();
 
     // FormData 파싱
     const formData = await request.formData();

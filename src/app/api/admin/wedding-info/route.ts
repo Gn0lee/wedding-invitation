@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type {
+  CreateWeddingInfoRequest,
+  UpdateWeddingInfoRequest,
+} from '@/domains/main/scheme/wedding-info';
 import {
   checkWeddingInfoCreatePermission,
   checkWeddingInfoUpdatePermission,
   createUnauthorizedResponse,
 } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
-import type { CreateWeddingInfoRequest, UpdateWeddingInfoRequest } from '@/types/wedding-info';
 
 // GET: wedding-info 목록 조회
 export async function GET() {

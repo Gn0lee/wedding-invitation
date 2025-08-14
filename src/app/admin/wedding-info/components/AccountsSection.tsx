@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import type { WeddingAccount, WeddingSide } from '@/types/wedding-info';
+import type { WeddingAccount, WeddingSide } from '@/domains/main/scheme/wedding-info';
 
 interface AccountsSectionProps {
   weddingInfoId: string;

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { CreateWeddingContactRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
-import type { CreateWeddingContactRequest } from '@/types/wedding-info';
 
 // GET: 특정 wedding_info의 연락처 목록 조회
 export async function GET(

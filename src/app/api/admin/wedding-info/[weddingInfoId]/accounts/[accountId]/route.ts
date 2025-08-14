@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { UpdateWeddingAccountRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
-import type { UpdateWeddingAccountRequest } from '@/types/wedding-info';
 
 // PUT: 특정 계좌 수정
 export async function PUT(

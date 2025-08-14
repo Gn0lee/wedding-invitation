@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { CreateWeddingAccountRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
-import type { CreateWeddingAccountRequest } from '@/types/wedding-info';
 
 // GET: 특정 wedding_info의 계좌 목록 조회
 export async function GET(

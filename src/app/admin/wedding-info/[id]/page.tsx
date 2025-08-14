@@ -5,7 +5,7 @@ import { UpdateWeddingInfoForm } from '@/app/admin/wedding-info/components/Weddi
 import { useUpdateWeddingInfo } from '@/app/admin/wedding-info/hooks/useUpdateWeddingInfo';
 import { useWeddingInfoDetail } from '@/app/admin/wedding-info/hooks/useWeddingInfoDetail';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import type { UpdateWeddingInfoRequest } from '@/types/wedding-info';
+import type { UpdateWeddingInfoRequest } from '@/domains/main/scheme/wedding-info';
 
 export default function WeddingInfoDetailPage() {
   const params = useParams();

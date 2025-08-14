@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { UpdateWeddingInfoRequest, WeddingInfo } from '@/types/wedding-info';
+import type { UpdateWeddingInfoRequest, WeddingInfo } from '@/domains/main/scheme/wedding-info';
 
 export function useUpdateWeddingInfo() {
   const [isUpdating, setIsUpdating] = useState(false);

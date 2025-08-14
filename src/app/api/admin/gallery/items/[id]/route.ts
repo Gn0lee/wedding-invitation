@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAdminPermission } from '@/lib/admin';
+import { checkAdminPermission } from '@/lib/admin';
 import { updateGalleryItemSchema } from '@/lib/gallery-schemas';
 import { createClient } from '@/lib/supabase/server';
 
 export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     // Admin 권한 확인
-    await requireAdminPermission();
+    await checkAdminPermission();
 
     // 요청 데이터 파싱
     const body = await request.json();
@@ -95,7 +95,7 @@ export async function DELETE(
 ) {
   try {
     // Admin 권한 확인
-    await requireAdminPermission();
+    await checkAdminPermission();
 
     // Supabase 클라이언트 생성
     const supabase = await createClient();

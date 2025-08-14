@@ -11,7 +11,7 @@ import type {
   WeddingAccount,
   WeddingContact,
   WeddingDetails,
-} from '@/types/wedding-info';
+} from '@/domains/main/scheme/wedding-info';
 
 // ===== 기본 결혼 정보 관리 =====
 

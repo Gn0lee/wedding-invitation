@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import type { WeddingContact, WeddingSide, ContactType } from '@/types/wedding-info';
+import type { WeddingContact, WeddingSide, ContactType } from '@/domains/main/scheme/wedding-info';
 import { useWeddingContacts } from '../hooks/useWeddingContacts';
 
 interface ContactsSectionProps {

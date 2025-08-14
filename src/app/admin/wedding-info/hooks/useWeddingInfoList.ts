@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import type { WeddingInfo } from '@/types/wedding-info';
+import type { WeddingInfo } from '@/domains/main/scheme/wedding-info';
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);

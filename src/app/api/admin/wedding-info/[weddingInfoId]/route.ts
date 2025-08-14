@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { UpdateWeddingInfoRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoUpdatePermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
-import type { UpdateWeddingInfoRequest } from '@/types/wedding-info';
 
 // GET: 특정 wedding-info 조회
 export async function GET(

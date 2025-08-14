@@ -1,11 +1,11 @@
-import { createClient } from '@/lib/supabase/server';
 import type {
   WeddingInfo,
   WeddingAccount,
   WeddingContact,
   WeddingDetails,
   WeddingInfoWithRelations,
-} from '@/types/wedding-info';
+} from '@/domains/main/scheme/wedding-info';
+import { createClient } from '@/lib/supabase/server';
 
 /**
  * 전체 결혼 정보를 조회합니다 (관계 포함)

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import type { WeddingAccount } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
-import type { WeddingAccount } from '@/types/wedding-info';
 
 // PUT: 계좌 정보 배치 업데이트 (기존 계좌 삭제 후 새로 생성)
 export async function PUT(

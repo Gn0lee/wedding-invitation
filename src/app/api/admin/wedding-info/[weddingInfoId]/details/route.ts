@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
-import { createClient } from '@/lib/supabase/server';
 import type {
   CreateWeddingDetailsRequest,
   UpdateWeddingDetailsRequest,
-} from '@/types/wedding-info';
+} from '@/domains/main/scheme/wedding-info';
+import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
+import { createClient } from '@/lib/supabase/server';
 
 // GET: 특정 wedding_info의 상세 정보 조회
 export async function GET(

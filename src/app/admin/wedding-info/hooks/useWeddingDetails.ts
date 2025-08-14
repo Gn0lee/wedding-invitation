@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSWR from 'swr';
-import type { WeddingDetails } from '@/types/wedding-info';
+import type { WeddingDetails } from '@/domains/main/scheme/wedding-info';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

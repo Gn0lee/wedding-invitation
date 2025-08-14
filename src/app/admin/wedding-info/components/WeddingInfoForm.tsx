@@ -12,7 +12,7 @@ import type {
   WeddingInfo,
   CreateWeddingInfoRequest,
   UpdateWeddingInfoRequest,
-} from '@/types/wedding-info';
+} from '@/domains/main/scheme/wedding-info';
 
 // 검증 스키마
 const weddingInfoSchema = z.object({

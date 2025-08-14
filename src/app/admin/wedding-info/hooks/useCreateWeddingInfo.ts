@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { CreateWeddingInfoRequest, WeddingInfo } from '@/types/wedding-info';
+import type { CreateWeddingInfoRequest, WeddingInfo } from '@/domains/main/scheme/wedding-info';
 
 export function useCreateWeddingInfo() {
   const [isCreating, setIsCreating] = useState(false);

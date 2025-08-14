@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import useSWR from 'swr';
+import type { WeddingAccount } from '@/domains/main/scheme/wedding-info';
 import {
   createWeddingAccount,
   updateWeddingAccount,
   deleteWeddingAccount,
   updateWeddingAccountsBatch,
 } from '@/lib/api/wedding-info-admin';
-import type { WeddingAccount } from '@/types/wedding-info';
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);

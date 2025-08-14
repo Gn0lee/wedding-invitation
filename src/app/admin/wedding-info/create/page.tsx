@@ -8,7 +8,7 @@ import { useCreateWeddingInfo } from '@/app/admin/wedding-info/hooks/useCreateWe
 import { SuperAdminGuard } from '@/components/AdminGuard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import type { CreateWeddingInfoRequest } from '@/types/wedding-info';
+import type { CreateWeddingInfoRequest } from '@/domains/main/scheme/wedding-info';
 
 export default function CreateWeddingInfoPage() {
   const router = useRouter();
