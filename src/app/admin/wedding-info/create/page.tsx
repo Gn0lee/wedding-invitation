@@ -3,7 +3,7 @@
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { WeddingInfoForm } from '@/app/admin/wedding-info/components/WeddingInfoForm';
+import { CreateWeddingInfoForm } from '@/app/admin/wedding-info/components/WeddingInfoForm';
 import { useCreateWeddingInfo } from '@/app/admin/wedding-info/hooks/useCreateWeddingInfo';
 import { SuperAdminGuard } from '@/components/AdminGuard';
 import { Button } from '@/components/ui/button';
@@ -54,7 +54,7 @@ export default function CreateWeddingInfoPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <WeddingInfoForm data={null} onUpdate={handleSubmit} isSubmitting={isCreating} />
+            <CreateWeddingInfoForm onUpdate={handleSubmit} isSubmitting={isCreating} />
           </CardContent>
         </Card>
       </div>
