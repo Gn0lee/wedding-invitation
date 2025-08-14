@@ -22,8 +22,8 @@ export function MapAppButtons() {
         <Image
           src={TmapImage}
           alt="티맵"
-          width={48}
-          height={48}
+          width={36}
+          height={36}
           className="rounded-full"
           priority
         />
@@ -41,8 +41,8 @@ export function MapAppButtons() {
         <Image
           src={NaverMapImage}
           alt="네이버 지도"
-          width={48}
-          height={48}
+          width={36}
+          height={36}
           className="rounded-full"
           priority
         />
@@ -60,8 +60,8 @@ export function MapAppButtons() {
         <Image
           src={KakaoMapImage}
           alt="카카오맵"
-          width={48}
-          height={48}
+          width={36}
+          height={36}
           className="rounded-full"
           priority
         />

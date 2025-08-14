@@ -16,10 +16,11 @@ export function WeddingInfo({ weddingInfo }: WeddingInfoProps) {
       {/* 텍스트 오버레이 */}
       <div className="relative z-10 mt-4 flex flex-col items-center text-center text-xs font-light leading-relaxed text-gray-200">
         <p>
-          {weddingInfo.groom_name} & {weddingInfo.bride_name}
+          신랑 {weddingInfo.groom_name} & 신부 {weddingInfo.bride_name}
         </p>
         <p className="whitespace-nowrap">
-          {formatKoreaTime(weddingInfo.wedding_date)} | {weddingInfo.venue_name}
+          {formatKoreaTime(weddingInfo.wedding_date, 'yyyy.M.d (E) a h:mm')} |{' '}
+          {weddingInfo.venue_name}
         </p>
       </div>
     </div>

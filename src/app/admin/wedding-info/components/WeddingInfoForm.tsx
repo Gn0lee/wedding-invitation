@@ -13,6 +13,7 @@ import type {
   CreateWeddingInfoRequest,
   UpdateWeddingInfoRequest,
 } from '@/domains/main/scheme/wedding-info';
+import { formatKoreaTime } from '@/lib/date-utils';
 
 // 검증 스키마
 const weddingInfoSchema = z.object({
@@ -341,7 +342,7 @@ export function UpdateWeddingInfoForm({
               신랑 {data.groom_name} & 신부 {data.bride_name}
             </p>
             <p>
-              {new Date(data.wedding_date).toLocaleString('ko-KR')} | {data.venue_name}
+              {formatKoreaTime(data.wedding_date, 'yyyy.M.d (E) a h:mm')} | {data.venue_name}
             </p>
           </div>
         </CardContent>
