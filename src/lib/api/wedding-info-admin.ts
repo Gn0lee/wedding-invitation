@@ -75,7 +75,7 @@ export async function updateWeddingInfo(
   data: UpdateWeddingInfoRequest,
 ): Promise<WeddingInfo | null> {
   try {
-    const response = await fetch('/api/admin/wedding-info', {
+    const response = await fetch(`/api/admin/wedding-info/${data.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -101,9 +101,9 @@ export async function updateWeddingInfo(
 /**
  * 계좌 정보를 조회합니다
  */
-export async function getWeddingAccounts(): Promise<WeddingAccount[]> {
+export async function getWeddingAccounts(weddingInfoId: string): Promise<WeddingAccount[]> {
   try {
-    const response = await fetch('/api/admin/wedding-info/accounts', {
+    const response = await fetch(`/api/admin/wedding-info/${weddingInfoId}/accounts`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export async function createWeddingAccount(
   data: CreateWeddingAccountRequest,
 ): Promise<WeddingAccount | null> {
   try {
-    const response = await fetch('/api/admin/wedding-info/accounts', {
+    const response = await fetch(`/api/admin/wedding-info/${data.wedding_info_id}/accounts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -158,13 +158,16 @@ export async function updateWeddingAccount(
   data: UpdateWeddingAccountRequest,
 ): Promise<WeddingAccount | null> {
   try {
-    const response = await fetch('/api/admin/wedding-info/accounts', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `/api/admin/wedding-info/${data.wedding_info_id}/accounts/${data.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
 
     if (!response.ok) {
       const error = await response.json();
@@ -182,9 +185,12 @@ export async function updateWeddingAccount(
 /**
  * 계좌 정보를 삭제합니다
  */
-export async function deleteWeddingAccount(id: string): Promise<boolean> {
+export async function deleteWeddingAccount(
+  weddingInfoId: string,
+  accountId: string,
+): Promise<boolean> {
   try {
-    const response = await fetch(`/api/admin/wedding-info/accounts?id=${id}`, {
+    const response = await fetch(`/api/admin/wedding-info/${weddingInfoId}/accounts/${accountId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -201,6 +207,35 @@ export async function deleteWeddingAccount(id: string): Promise<boolean> {
   } catch (error) {
     console.error('계좌 정보 삭제 중 오류 발생:', error);
     return false;
+  }
+}
+
+/**
+ * 계좌 정보를 배치로 업데이트합니다 (기존 계좌 삭제 후 새로 생성)
+ */
+export async function updateWeddingAccountsBatch(
+  weddingInfoId: string,
+  accounts: WeddingAccount[],
+): Promise<WeddingAccount[]> {
+  try {
+    const response = await fetch(`/api/admin/wedding-info/${weddingInfoId}/accounts/batch`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(accounts),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      console.error('계좌 정보 배치 업데이트 실패:', error);
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('계좌 정보 배치 업데이트 중 오류 발생:', error);
+    return [];
   }
 }
 

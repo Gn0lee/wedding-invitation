@@ -18,10 +18,14 @@ import type { WeddingAccount, WeddingSide } from '@/types/wedding-info';
 
 interface AccountsSectionProps {
   accounts: WeddingAccount[];
-  onUpdate: (accounts: WeddingAccount[]) => void;
+  onAdd: (
+    account: Omit<WeddingAccount, 'id' | 'wedding_info_id' | 'created_at' | 'updated_at'>,
+  ) => void;
+  onUpdate: (accountId: string, account: Partial<WeddingAccount>) => void;
+  onDelete: (accountId: string) => void;
 }
 
-export function AccountsSection({ accounts, onUpdate }: AccountsSectionProps) {
+export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: AccountsSectionProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -65,29 +69,26 @@ export function AccountsSection({ accounts, onUpdate }: AccountsSectionProps) {
       return;
     }
 
-    const newAccount: WeddingAccount = {
-      id: editingId || `temp-${Date.now()}`,
-      wedding_info_id: '', // 실제 저장 시 설정됨
-      side: editData.side as WeddingSide,
-      name: editData.name,
-      bank: editData.bank,
-      account_number: editData.account_number,
-      account_holder: editData.account_holder,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
-
-    let newAccounts: WeddingAccount[];
-
     if (editingId) {
       // 수정
-      newAccounts = accounts.map((account) => (account.id === editingId ? newAccount : account));
+      onUpdate(editingId, {
+        side: editData.side as WeddingSide,
+        name: editData.name,
+        bank: editData.bank,
+        account_number: editData.account_number,
+        account_holder: editData.account_holder,
+      });
     } else {
       // 추가
-      newAccounts = [...accounts, newAccount];
+      onAdd({
+        side: editData.side as WeddingSide,
+        name: editData.name,
+        bank: editData.bank,
+        account_number: editData.account_number,
+        account_holder: editData.account_holder,
+      });
     }
 
-    onUpdate(newAccounts);
     setEditingId(null);
     setIsAdding(false);
     setEditData({
@@ -112,8 +113,7 @@ export function AccountsSection({ accounts, onUpdate }: AccountsSectionProps) {
   };
 
   const handleDelete = (id: string) => {
-    const newAccounts = accounts.filter((account) => account.id !== id);
-    onUpdate(newAccounts);
+    onDelete(id);
   };
 
   const renderAccountForm = () => (

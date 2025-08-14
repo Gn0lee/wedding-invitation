@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import useSWR from 'swr';
+import {
+  createWeddingAccount,
+  updateWeddingAccount,
+  deleteWeddingAccount,
+  updateWeddingAccountsBatch,
+} from '@/lib/api/wedding-info-admin';
 import type { WeddingAccount } from '@/types/wedding-info';
 
 const fetcher = async (url: string) => {
@@ -24,37 +30,24 @@ export function useWeddingAccounts(weddingInfoId: string) {
     revalidateOnReconnect: true,
   });
 
-  const updateAccounts = async (newAccounts: WeddingAccount[]) => {
+  // 새 계좌 추가
+  const addAccount = async (
+    newAccount: Omit<WeddingAccount, 'id' | 'wedding_info_id' | 'created_at' | 'updated_at'>,
+  ) => {
     setIsUpdating(true);
     setUpdateError(null);
 
     try {
-      // 기존 계좌 삭제
-      for (const account of accounts) {
-        await fetch(`/api/admin/wedding-info/accounts/${account.id}`, {
-          method: 'DELETE',
-        });
-      }
+      const result = await createWeddingAccount({
+        ...newAccount,
+        wedding_info_id: weddingInfoId,
+      });
 
-      // 새 계좌 생성
-      for (const account of newAccounts) {
-        await fetch('/api/admin/wedding-info/accounts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            wedding_info_id: weddingInfoId,
-            side: account.side,
-            name: account.name,
-            bank: account.bank,
-            account_number: account.account_number,
-            account_holder: account.account_holder,
-          }),
-        });
+      if (result) {
+        await mutate();
+      } else {
+        setUpdateError('계좌 추가에 실패했습니다.');
       }
-
-      await mutate();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.';
       setUpdateError(errorMessage);
@@ -63,9 +56,88 @@ export function useWeddingAccounts(weddingInfoId: string) {
     }
   };
 
+  // 계좌 수정
+  const updateAccount = async (accountId: string, updatedAccount: Partial<WeddingAccount>) => {
+    setIsUpdating(true);
+    setUpdateError(null);
+
+    try {
+      // Partial<WeddingAccount>에서 API 요청에 필요한 필드만 추출
+      const { side, name, bank, account_number, account_holder } = updatedAccount;
+
+      const result = await updateWeddingAccount({
+        id: accountId,
+        wedding_info_id: weddingInfoId,
+        ...(side && { side }),
+        ...(name && { name }),
+        ...(bank && { bank }),
+        ...(account_number && { account_number }),
+        ...(account_holder && { account_holder }),
+      });
+
+      if (result) {
+        await mutate();
+      } else {
+        setUpdateError('계좌 수정에 실패했습니다.');
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.';
+      setUpdateError(errorMessage);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  // 계좌 삭제
+  const deleteAccount = async (accountId: string) => {
+    setIsUpdating(true);
+    setUpdateError(null);
+
+    try {
+      const success = await deleteWeddingAccount(weddingInfoId, accountId);
+
+      if (success) {
+        await mutate();
+      } else {
+        setUpdateError('계좌 삭제에 실패했습니다.');
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.';
+      setUpdateError(errorMessage);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
+  // 전체 계좌 목록 교체 (배치 업데이트)
+  const replaceAllAccounts = async (newAccounts: WeddingAccount[]) => {
+    setIsUpdating(true);
+    setUpdateError(null);
+
+    try {
+      const updatedAccounts = await updateWeddingAccountsBatch(weddingInfoId, newAccounts);
+
+      if (updatedAccounts.length > 0) {
+        await mutate(updatedAccounts, false);
+      } else {
+        setUpdateError('계좌 목록 교체에 실패했습니다.');
+        await mutate();
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.';
+      setUpdateError(errorMessage);
+      await mutate();
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   return {
     accounts,
-    updateAccounts,
+    addAccount,
+    updateAccount,
+    deleteAccount,
+    replaceAllAccounts,
     isUpdating,
     updateError,
     error: error?.message,
