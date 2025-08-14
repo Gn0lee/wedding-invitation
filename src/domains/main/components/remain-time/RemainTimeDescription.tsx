@@ -1,11 +1,17 @@
 'use client';
 
-import { WEDDING_DATE } from '@/domains/main/data/date';
 import { useRemainTimeMessage } from '@/domains/main/hooks/useRemainTimeMessage';
+import { utcToKoreaTime } from '@/lib/date-utils';
 
-export function RemainTimeDescription() {
+interface RemainTimeDescriptionProps {
+  weddingDate: string;
+}
+
+export function RemainTimeDescription({ weddingDate }: RemainTimeDescriptionProps) {
+  // UTC 날짜를 한국 시간으로 변환
+  const weddingDateObj = utcToKoreaTime(weddingDate);
   // 예식 시간(한국시간)
-  const { state, days, hours, minutes, seconds } = useRemainTimeMessage(WEDDING_DATE);
+  const { state, days, hours, minutes, seconds } = useRemainTimeMessage(weddingDateObj);
 
   if (state === 'after') {
     return (

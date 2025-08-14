@@ -7,8 +7,13 @@ import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
 import { RemainTimeCalendar } from '@/domains/main/components/remain-time/Calendar';
 import { RemainTimeDescription } from '@/domains/main/components/remain-time/RemainTimeDescription';
+import type { WeddingInfo } from '@/domains/main/scheme/wedding-info';
 
-export function RemainTimeHero() {
+interface RemainTimeHeroProps {
+  weddingInfo: WeddingInfo;
+}
+
+export function RemainTimeHero({ weddingInfo }: RemainTimeHeroProps) {
   return (
     <HeroSection id="remain-time">
       <HeroBackground
@@ -27,11 +32,11 @@ export function RemainTimeHero() {
             만날 그날
           </HeroTitle>
           <HeroDescription>
-            <RemainTimeDescription />
+            <RemainTimeDescription weddingDate={weddingInfo.wedding_date} />
           </HeroDescription>
         </HeroTextColumn>
         <HeroBottomContent>
-          <RemainTimeCalendar />
+          <RemainTimeCalendar weddingDate={weddingInfo.wedding_date} />
         </HeroBottomContent>
       </HeroContainer>
     </HeroSection>

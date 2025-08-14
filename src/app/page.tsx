@@ -10,6 +10,8 @@ import { LocationHero } from '@/domains/main/components/LocationHero';
 import { MainHero } from '@/domains/main/components/MainHero';
 import { RemainTimeHero } from '@/domains/main/components/RemainTimeHero';
 import { RSVPSection } from '@/domains/main/components/RSVPSection';
+import { getWeddingInfoWithRelations } from '@/lib/api/wedding-info';
+import { transformWeddingData, validateWeddingDataForBuild } from '@/lib/wedding-info-transformer';
 
 export const metadata: Metadata = {
   title: '태운 ♥ 진호의 결혼식에 초대합니다',
@@ -28,18 +30,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  // wedding-info 데이터 조회
+  const weddingData = await getWeddingInfoWithRelations();
+
+  // 데이터 검증 (없으면 빌드 실패)
+  validateWeddingDataForBuild(weddingData);
+
+  // UI 컴포넌트용 데이터로 변환
+  const informationData = transformWeddingData(weddingData!);
+
   return (
     <>
       <Header leftChildren={<NavigationButton />} />
       <PageStyleWrapper>
-        <IntroduceHero />
+        <IntroduceHero weddingInfo={weddingData!.info} />
         <MainHero />
-        <RemainTimeHero />
+        <RemainTimeHero weddingInfo={weddingData!.info} />
         <LocationHero />
         <GalleryHero />
         <RSVPSection />
-        <InformationSection />
+        <InformationSection data={informationData} />
       </PageStyleWrapper>
       <NavigationDrawerContent />
     </>

@@ -4,21 +4,27 @@ import { format } from 'date-fns';
 import { ko as dateFnsKo } from 'date-fns/locale';
 import { ko } from 'react-day-picker/locale';
 import { Calendar } from '@/components/ui/calendar';
-import { WEDDING_DATE } from '@/domains/main/data/date';
+import { utcToKoreaTime } from '@/lib/date-utils';
 import { cn } from '@/lib/utils';
 
-export function RemainTimeCalendar() {
-  const formattedDate = format(WEDDING_DATE, 'yyyy년 M월 d일 a h시', {
+interface RemainTimeCalendarProps {
+  weddingDate: string;
+}
+
+export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
+  // UTC 날짜를 한국 시간으로 변환
+  const weddingDateObj = utcToKoreaTime(weddingDate);
+  const formattedDate = format(weddingDateObj, 'yyyy년 M월 d일 a h시', {
     locale: dateFnsKo,
   });
 
   return (
     <Calendar
       mode="single"
-      selected={WEDDING_DATE}
+      selected={weddingDateObj}
       className="size-full [--cell-size:1rem]"
       timeZone="Asia/Seoul"
-      defaultMonth={WEDDING_DATE}
+      defaultMonth={weddingDateObj}
       locale={ko}
       classNames={{
         root: 'bg-white/20 backdrop-blur-sm rounded-xl border border-white/40',
