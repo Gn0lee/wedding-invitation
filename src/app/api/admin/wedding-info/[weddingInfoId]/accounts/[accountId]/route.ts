@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import type { UpdateWeddingAccountRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
@@ -66,6 +67,8 @@ export async function PUT(
       return NextResponse.json({ error: '계좌 수정 중 오류가 발생했습니다.' }, { status: 500 });
     }
 
+    revalidatePath('/');
+
     return NextResponse.json(data);
   } catch (error) {
     console.error('계좌 수정 오류:', error);
@@ -121,6 +124,8 @@ export async function DELETE(
       console.error('계좌 삭제 오류:', deleteError);
       return NextResponse.json({ error: '계좌 삭제 중 오류가 발생했습니다.' }, { status: 500 });
     }
+
+    revalidatePath('/');
 
     return NextResponse.json({ message: '계좌가 삭제되었습니다.' });
   } catch (error) {

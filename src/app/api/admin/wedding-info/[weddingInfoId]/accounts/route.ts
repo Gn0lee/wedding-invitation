@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import type { CreateWeddingAccountRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
@@ -89,6 +90,8 @@ export async function POST(
       console.error('계좌 생성 오류:', error);
       return NextResponse.json({ error: '계좌 생성 중 오류가 발생했습니다.' }, { status: 500 });
     }
+
+    revalidatePath('/');
 
     return NextResponse.json(data, { status: 201 });
   } catch (error) {

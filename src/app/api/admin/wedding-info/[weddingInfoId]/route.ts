@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import type { UpdateWeddingInfoRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoUpdatePermission, createUnauthorizedResponse } from '@/lib/admin';
@@ -87,6 +88,8 @@ export async function PUT(
       );
     }
 
+    revalidatePath('/');
+
     return NextResponse.json(data);
   } catch (error) {
     console.error('결혼 정보 수정 오류:', error);
@@ -125,6 +128,8 @@ export async function DELETE(
         { status: 500 },
       );
     }
+
+    revalidatePath('/');
 
     return NextResponse.json({ message: '결혼 정보가 삭제되었습니다.' });
   } catch (error) {
