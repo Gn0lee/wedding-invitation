@@ -97,6 +97,35 @@ export function useWeddingContacts(weddingInfoId: string) {
     }
   };
 
+  // 개별 연락처 생성
+  const createContact = async (
+    contactData: Omit<WeddingContact, 'id' | 'wedding_info_id' | 'created_at' | 'updated_at'>,
+  ) => {
+    setIsUpdating(true);
+    setUpdateError(null);
+
+    try {
+      const response = await fetch(`/api/admin/wedding-info/${weddingInfoId}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      });
+
+      if (!response.ok) {
+        throw new Error('연락처 생성에 실패했습니다.');
+      }
+
+      // 데이터 재검증
+      await mutate();
+    } catch (err) {
+      setUpdateError(err instanceof Error ? err.message : '연락처 생성 중 오류가 발생했습니다.');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   // 개별 연락처 삭제
   const deleteContact = async (contactId: string) => {
     setIsUpdating(true);
@@ -126,6 +155,7 @@ export function useWeddingContacts(weddingInfoId: string) {
   return {
     contacts,
     updateContacts,
+    createContact,
     updateContact,
     deleteContact,
     isUpdating,

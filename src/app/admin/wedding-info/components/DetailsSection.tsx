@@ -4,10 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useWeddingDetails } from '@/app/admin/wedding-info/hooks/useWeddingDetails';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import type { WeddingDetails } from '@/types/wedding-info';
 
 // 검증 스키마
 const detailsSchema = z.object({
@@ -18,11 +18,12 @@ const detailsSchema = z.object({
 type DetailsFormData = z.infer<typeof detailsSchema>;
 
 interface DetailsSectionProps {
-  details: WeddingDetails | null;
-  onUpdate: (data: Partial<WeddingDetails>) => void;
+  weddingInfoId: string;
 }
 
-export function DetailsSection({ details, onUpdate }: DetailsSectionProps) {
+export function DetailsSection({ weddingInfoId }: DetailsSectionProps) {
+  const { details, updateDetails, isUpdating, updateError } = useWeddingDetails(weddingInfoId);
+
   const {
     register,
     handleSubmit,
@@ -46,15 +47,26 @@ export function DetailsSection({ details, onUpdate }: DetailsSectionProps) {
     }
   }, [details, reset]);
 
-  const onSubmit = (formData: DetailsFormData) => {
-    onUpdate({
-      meal_info: formData.meal_info || null,
-      parking_info: formData.parking_info || null,
-    });
+  const onSubmit = async (formData: DetailsFormData) => {
+    try {
+      await updateDetails({
+        meal_info: formData.meal_info || null,
+        parking_info: formData.parking_info || null,
+      });
+    } catch (error) {
+      console.error('상세 정보 업데이트 오류:', error);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* 에러 메시지 */}
+      {updateError && (
+        <div className="rounded-md bg-red-50 p-4 text-red-700">
+          <p>{updateError}</p>
+        </div>
+      )}
+
       {/* 식사 안내 */}
       <Card>
         <CardHeader>
@@ -131,6 +143,17 @@ export function DetailsSection({ details, onUpdate }: DetailsSectionProps) {
           </CardContent>
         </Card>
       )}
+
+      {/* 저장 버튼 */}
+      <div className="flex justify-end">
+        <button
+          type="submit"
+          disabled={isUpdating}
+          className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
+        >
+          {isUpdating ? '저장 중...' : '저장'}
+        </button>
+      </div>
     </form>
   );
 }

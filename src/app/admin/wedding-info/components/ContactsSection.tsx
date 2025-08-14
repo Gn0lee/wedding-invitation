@@ -15,10 +15,10 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import type { WeddingContact, WeddingSide, ContactType } from '@/types/wedding-info';
+import { useWeddingContacts } from '../hooks/useWeddingContacts';
 
 interface ContactsSectionProps {
-  contacts: WeddingContact[];
-  onUpdate: (contacts: WeddingContact[]) => void;
+  weddingInfoId: string;
 }
 
 const CONTACT_TYPES: { value: ContactType; label: string }[] = [
@@ -31,7 +31,10 @@ const CONTACT_TYPES: { value: ContactType; label: string }[] = [
   { value: 'line', label: 'LINE' },
 ];
 
-export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
+export function ContactsSection({ weddingInfoId }: ContactsSectionProps) {
+  const { contacts, createContact, updateContact, deleteContact, isUpdating, updateError } =
+    useWeddingContacts(weddingInfoId);
+
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -46,8 +49,8 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
   });
 
   // 신랑측/신부측 연락처 분리
-  const groomContacts = contacts.filter((contact) => contact.side === 'groom');
-  const brideContacts = contacts.filter((contact) => contact.side === 'bride');
+  const groomContacts = contacts.filter((contact: WeddingContact) => contact.side === 'groom');
+  const brideContacts = contacts.filter((contact: WeddingContact) => contact.side === 'bride');
 
   const handleAdd = () => {
     setIsAdding(true);
@@ -73,45 +76,47 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!editData.role || !editData.full_name || !editData.contact_value) {
       return;
     }
 
-    const newContact: WeddingContact = {
-      id: editingId || `temp-${Date.now()}`,
-      wedding_info_id: '', // 실제 저장 시 설정됨
-      side: editData.side as WeddingSide,
-      role: editData.role,
-      full_name: editData.full_name,
-      contact_type: editData.contact_type as ContactType,
-      contact_value: editData.contact_value,
-      contact_label: editData.contact_label || null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    };
+    try {
+      if (editingId) {
+        // 수정
+        await updateContact(editingId, {
+          side: editData.side as WeddingSide,
+          role: editData.role,
+          full_name: editData.full_name,
+          contact_type: editData.contact_type as ContactType,
+          contact_value: editData.contact_value,
+          contact_label: editData.contact_label || null,
+        });
+      } else {
+        // 추가
+        await createContact({
+          side: editData.side as WeddingSide,
+          role: editData.role,
+          full_name: editData.full_name,
+          contact_type: editData.contact_type as ContactType,
+          contact_value: editData.contact_value,
+          contact_label: editData.contact_label || null,
+        });
+      }
 
-    let newContacts: WeddingContact[];
-
-    if (editingId) {
-      // 수정
-      newContacts = contacts.map((contact) => (contact.id === editingId ? newContact : contact));
-    } else {
-      // 추가
-      newContacts = [...contacts, newContact];
+      setEditingId(null);
+      setIsAdding(false);
+      setEditData({
+        side: 'groom',
+        role: '',
+        full_name: '',
+        contact_type: 'phone',
+        contact_value: '',
+        contact_label: '',
+      });
+    } catch (error) {
+      console.error('연락처 저장 오류:', error);
     }
-
-    onUpdate(newContacts);
-    setEditingId(null);
-    setIsAdding(false);
-    setEditData({
-      side: 'groom',
-      role: '',
-      full_name: '',
-      contact_type: 'phone',
-      contact_value: '',
-      contact_label: '',
-    });
   };
 
   const handleCancel = () => {
@@ -127,9 +132,12 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
     });
   };
 
-  const handleDelete = (id: string) => {
-    const newContacts = contacts.filter((contact) => contact.id !== id);
-    onUpdate(newContacts);
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteContact(id);
+    } catch (error) {
+      console.error('연락처 삭제 오류:', error);
+    }
   };
 
   const renderContactForm = () => (
@@ -227,10 +235,12 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={handleCancel}>
+          <Button variant="outline" onClick={handleCancel} disabled={isUpdating}>
             취소
           </Button>
-          <Button onClick={handleSave}>저장</Button>
+          <Button onClick={handleSave} disabled={isUpdating}>
+            {isUpdating ? '저장 중...' : '저장'}
+          </Button>
         </div>
       </CardContent>
     </Card>
@@ -239,7 +249,7 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
   const renderContactList = (sideContacts: WeddingContact[], side: WeddingSide) => {
     // 역할별로 그룹화
     const groupedContacts = sideContacts.reduce(
-      (groups, contact) => {
+      (groups, contact: WeddingContact) => {
         if (!groups[contact.role]) {
           groups[contact.role] = [];
         }
@@ -281,10 +291,20 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
                       </div>
                     </div>
                     <div className="flex gap-1">
-                      <Button variant="ghost" size="sm" onClick={() => handleEdit(contact)}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleEdit(contact)}
+                        disabled={isUpdating}
+                      >
                         <Edit className="size-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" onClick={() => handleDelete(contact.id)}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(contact.id)}
+                        disabled={isUpdating}
+                      >
                         <Trash2 className="size-4" />
                       </Button>
                     </div>
@@ -300,9 +320,16 @@ export function ContactsSection({ contacts, onUpdate }: ContactsSectionProps) {
 
   return (
     <div className="space-y-6">
+      {/* 에러 메시지 */}
+      {updateError && (
+        <div className="rounded-md bg-red-50 p-4 text-red-700">
+          <p>{updateError}</p>
+        </div>
+      )}
+
       {/* 추가 버튼 */}
       <div className="flex justify-end">
-        <Button onClick={handleAdd} disabled={isAdding || editingId !== null}>
+        <Button onClick={handleAdd} disabled={isAdding || editingId !== null || isUpdating}>
           <Plus className="mr-2 size-4" />
           연락처 추가
         </Button>

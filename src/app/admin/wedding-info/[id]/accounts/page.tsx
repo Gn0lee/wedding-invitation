@@ -11,8 +11,7 @@ export default function WeddingAccountsPage() {
   const weddingInfoId = params.id as string;
 
   const { weddingInfo } = useWeddingInfoDetail(weddingInfoId);
-  const { accounts, addAccount, updateAccount, deleteAccount, updateError } =
-    useWeddingAccounts(weddingInfoId);
+  const { updateError } = useWeddingAccounts(weddingInfoId);
 
   if (!weddingInfo) {
     return null; // Layout에서 로딩/에러 처리
@@ -31,12 +30,7 @@ export default function WeddingAccountsPage() {
           <CardDescription>신랑측과 신부측의 계좌 정보를 관리하세요.</CardDescription>
         </CardHeader>
         <CardContent>
-          <AccountsSection
-            accounts={accounts}
-            onAdd={addAccount}
-            onUpdate={updateAccount}
-            onDelete={deleteAccount}
-          />
+          <AccountsSection weddingInfoId={weddingInfoId} />
         </CardContent>
       </Card>
     </>

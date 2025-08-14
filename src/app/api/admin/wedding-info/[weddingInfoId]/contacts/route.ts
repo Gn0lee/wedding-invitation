@@ -29,8 +29,7 @@ export async function GET(
       .from('wedding_contacts')
       .select('*')
       .eq('wedding_info_id', weddingInfoId)
-      .order('side', { ascending: true })
-      .order('role', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('연락처 조회 오류:', error);

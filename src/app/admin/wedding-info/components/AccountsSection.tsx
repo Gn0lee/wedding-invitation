@@ -2,6 +2,7 @@
 
 import { Trash2, Plus, Edit, X } from 'lucide-react';
 import React, { useState } from 'react';
+import { useWeddingAccounts } from '@/app/admin/wedding-info/hooks/useWeddingAccounts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,15 +18,13 @@ import {
 import type { WeddingAccount, WeddingSide } from '@/types/wedding-info';
 
 interface AccountsSectionProps {
-  accounts: WeddingAccount[];
-  onAdd: (
-    account: Omit<WeddingAccount, 'id' | 'wedding_info_id' | 'created_at' | 'updated_at'>,
-  ) => void;
-  onUpdate: (accountId: string, account: Partial<WeddingAccount>) => void;
-  onDelete: (accountId: string) => void;
+  weddingInfoId: string;
 }
 
-export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: AccountsSectionProps) {
+export function AccountsSection({ weddingInfoId }: AccountsSectionProps) {
+  const { accounts, addAccount, updateAccount, deleteAccount, isUpdating, updateError } =
+    useWeddingAccounts(weddingInfoId);
+
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -39,8 +38,8 @@ export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: Account
   });
 
   // 신랑측/신부측 계좌 분리
-  const groomAccounts = accounts.filter((account) => account.side === 'groom');
-  const brideAccounts = accounts.filter((account) => account.side === 'bride');
+  const groomAccounts = accounts.filter((account: WeddingAccount) => account.side === 'groom');
+  const brideAccounts = accounts.filter((account: WeddingAccount) => account.side === 'bride');
 
   const handleAdd = () => {
     setIsAdding(true);
@@ -64,40 +63,44 @@ export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: Account
     });
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!editData.name || !editData.bank || !editData.account_number || !editData.account_holder) {
       return;
     }
 
-    if (editingId) {
-      // 수정
-      onUpdate(editingId, {
-        side: editData.side as WeddingSide,
-        name: editData.name,
-        bank: editData.bank,
-        account_number: editData.account_number,
-        account_holder: editData.account_holder,
-      });
-    } else {
-      // 추가
-      onAdd({
-        side: editData.side as WeddingSide,
-        name: editData.name,
-        bank: editData.bank,
-        account_number: editData.account_number,
-        account_holder: editData.account_holder,
-      });
-    }
+    try {
+      if (editingId) {
+        // 수정
+        await updateAccount(editingId, {
+          side: editData.side as WeddingSide,
+          name: editData.name,
+          bank: editData.bank,
+          account_number: editData.account_number,
+          account_holder: editData.account_holder,
+        });
+      } else {
+        // 추가
+        await addAccount({
+          side: editData.side as WeddingSide,
+          name: editData.name,
+          bank: editData.bank,
+          account_number: editData.account_number,
+          account_holder: editData.account_holder,
+        });
+      }
 
-    setEditingId(null);
-    setIsAdding(false);
-    setEditData({
-      side: 'groom',
-      name: '',
-      bank: '',
-      account_number: '',
-      account_holder: '',
-    });
+      setEditingId(null);
+      setIsAdding(false);
+      setEditData({
+        side: 'groom',
+        name: '',
+        bank: '',
+        account_number: '',
+        account_holder: '',
+      });
+    } catch (error) {
+      console.error('계좌 저장 오류:', error);
+    }
   };
 
   const handleCancel = () => {
@@ -112,8 +115,12 @@ export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: Account
     });
   };
 
-  const handleDelete = (id: string) => {
-    onDelete(id);
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteAccount(id);
+    } catch (error) {
+      console.error('계좌 삭제 오류:', error);
+    }
   };
 
   const renderAccountForm = () => (
@@ -184,10 +191,12 @@ export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: Account
         </div>
 
         <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={handleCancel}>
+          <Button variant="outline" onClick={handleCancel} disabled={isUpdating}>
             취소
           </Button>
-          <Button onClick={handleSave}>저장</Button>
+          <Button onClick={handleSave} disabled={isUpdating}>
+            {isUpdating ? '저장 중...' : '저장'}
+          </Button>
         </div>
       </CardContent>
     </Card>
@@ -213,10 +222,20 @@ export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: Account
                 </div>
               </div>
               <div className="flex gap-1">
-                <Button variant="ghost" size="sm" onClick={() => handleEdit(account)}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleEdit(account)}
+                  disabled={isUpdating}
+                >
                   <Edit className="size-4" />
                 </Button>
-                <Button variant="ghost" size="sm" onClick={() => handleDelete(account.id)}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleDelete(account.id)}
+                  disabled={isUpdating}
+                >
                   <Trash2 className="size-4" />
                 </Button>
               </div>
@@ -229,9 +248,16 @@ export function AccountsSection({ accounts, onAdd, onUpdate, onDelete }: Account
 
   return (
     <div className="space-y-6">
+      {/* 에러 메시지 */}
+      {updateError && (
+        <div className="rounded-md bg-red-50 p-4 text-red-700">
+          <p>{updateError}</p>
+        </div>
+      )}
+
       {/* 추가 버튼 */}
       <div className="flex justify-end">
-        <Button onClick={handleAdd} disabled={isAdding || editingId !== null}>
+        <Button onClick={handleAdd} disabled={isAdding || editingId !== null || isUpdating}>
           <Plus className="mr-2 size-4" />
           계좌 추가
         </Button>

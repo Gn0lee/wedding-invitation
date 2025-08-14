@@ -11,7 +11,7 @@ export default function WeddingContactsPage() {
   const weddingInfoId = params.id as string;
 
   const { weddingInfo } = useWeddingInfoDetail(weddingInfoId);
-  const { contacts, updateContacts, updateError } = useWeddingContacts(weddingInfoId);
+  const { updateError } = useWeddingContacts(weddingInfoId);
 
   if (!weddingInfo) {
     return null; // Layout에서 로딩/에러 처리
@@ -32,7 +32,7 @@ export default function WeddingContactsPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ContactsSection contacts={contacts} onUpdate={updateContacts} />
+          <ContactsSection weddingInfoId={weddingInfoId} />
         </CardContent>
       </Card>
     </>
