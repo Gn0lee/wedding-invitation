@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
 import type {
   CreateWeddingAccountRequest,
@@ -32,7 +33,6 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body: CreateWeddingAccountRequest = await request.json();
-    const supabase = await createClient();
 
     // 필수 필드 검증
     const { wedding_info_id, side, name, bank, account_number, account_holder } = body;
@@ -41,11 +41,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '모든 필수 필드를 입력해주세요.' }, { status: 400 });
     }
 
+    // 권한 체크
+    const { hasPermission, error: permissionError } =
+      await checkWeddingInfoDataPermission(wedding_info_id);
+
+    if (!hasPermission) {
+      return createUnauthorizedResponse(permissionError);
+    }
+
     // side 값 검증
     if (!['groom', 'bride'].includes(side)) {
       return NextResponse.json({ error: 'side는 groom 또는 bride여야 합니다.' }, { status: 400 });
     }
 
+    const supabase = await createClient();
     const { data, error } = await supabase.from('wedding_accounts').insert(body).select().single();
 
     if (error) {

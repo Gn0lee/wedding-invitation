@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/drawer';
 import { useProfile } from '@/hooks/useProfile';
 import { navigationDrawerOpenAtom } from '@/stores/navigation';
+import type { UserRole } from '@/types/profile';
 
 type Section = {
   id: string;
@@ -41,7 +42,8 @@ export function NavigationDrawerContent() {
 
   // 사용자 role에 따라 섹션 동적 생성
   const sections = useMemo(() => {
-    const isAdmin = profile?.role === 'admin' || profile?.role === 'super_admin';
+    const adminRoles: UserRole[] = ['admin', 'super_admin'];
+    const isAdmin = profile?.role && adminRoles.includes(profile.role);
 
     if (isAdmin) {
       return [...BASE_SECTIONS, ...ADMIN_SECTIONS];

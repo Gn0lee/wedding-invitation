@@ -59,7 +59,7 @@ export async function getWeddingInfoWithRelations(): Promise<WeddingInfoWithRela
     }
 
     return {
-      wedding_info: weddingInfo,
+      info: weddingInfo,
       accounts: accounts || [],
       contacts: contacts || [],
       details: details || null,

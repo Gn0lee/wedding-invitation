@@ -1,4 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import {
+  checkWeddingInfoCreatePermission,
+  checkWeddingInfoUpdatePermission,
+  createUnauthorizedResponse,
+} from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
 import type { CreateWeddingInfoRequest, UpdateWeddingInfoRequest } from '@/types/wedding-info';
 
@@ -21,9 +26,16 @@ export async function GET() {
   }
 }
 
-// POST: 기본 결혼 정보 생성
+// POST: 기본 결혼 정보 생성 (Super Admin만)
 export async function POST(request: NextRequest) {
   try {
+    // 권한 체크
+    const { hasPermission, error: permissionError } = await checkWeddingInfoCreatePermission();
+
+    if (!hasPermission) {
+      return createUnauthorizedResponse(permissionError);
+    }
+
     const body: CreateWeddingInfoRequest = await request.json();
     const supabase = await createClient();
 
@@ -34,7 +46,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '모든 필수 필드를 입력해주세요.' }, { status: 400 });
     }
 
-    const { data, error } = await supabase.from('wedding_info').insert(body).select().single();
+    // 현재 사용자 ID를 created_by에 추가
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const weddingInfoData = {
+      ...body,
+      created_by: user?.id,
+    };
+
+    const { data, error } = await supabase
+      .from('wedding_info')
+      .insert(weddingInfoData)
+      .select()
+      .single();
 
     if (error) {
       console.error('결혼 정보 생성 실패:', error);
@@ -48,17 +73,24 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// PUT: 기본 결혼 정보 수정
+// PUT: 기본 결혼 정보 수정 (생성자이거나 Super Admin만)
 export async function PUT(request: NextRequest) {
   try {
     const body: UpdateWeddingInfoRequest = await request.json();
-    const supabase = await createClient();
-
     const { id, ...updateData } = body;
 
     if (!id) {
       return NextResponse.json({ error: '수정할 결혼 정보의 ID가 필요합니다.' }, { status: 400 });
     }
+
+    // 권한 체크
+    const { hasPermission, error: permissionError } = await checkWeddingInfoUpdatePermission(id);
+
+    if (!hasPermission) {
+      return createUnauthorizedResponse(permissionError);
+    }
+
+    const supabase = await createClient();
 
     const { data, error } = await supabase
       .from('wedding_info')

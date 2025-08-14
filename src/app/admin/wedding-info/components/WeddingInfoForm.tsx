@@ -4,10 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { WeddingInfo } from '@/types/wedding-info';
+import type { WeddingInfo, CreateWeddingInfoRequest } from '@/types/wedding-info';
 
 // 검증 스키마
 const weddingInfoSchema = z.object({
@@ -22,10 +23,11 @@ type WeddingInfoFormData = z.infer<typeof weddingInfoSchema>;
 
 interface WeddingInfoFormProps {
   data: WeddingInfo | null;
-  onUpdate: (data: Partial<WeddingInfo>) => void;
+  onUpdate: (data: CreateWeddingInfoRequest) => void;
+  isSubmitting?: boolean;
 }
 
-export function WeddingInfoForm({ data, onUpdate }: WeddingInfoFormProps) {
+export function WeddingInfoForm({ data, onUpdate, isSubmitting = false }: WeddingInfoFormProps) {
   const {
     register,
     handleSubmit,
@@ -189,6 +191,13 @@ export function WeddingInfoForm({ data, onUpdate }: WeddingInfoFormProps) {
           </CardContent>
         </Card>
       )}
+
+      {/* 제출 버튼 */}
+      <div className="flex justify-end">
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? '저장 중...' : '저장하기'}
+        </Button>
+      </div>
     </form>
   );
 }

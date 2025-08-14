@@ -1,19 +1,8 @@
 'use client';
 
 import useSWR from 'swr';
-import { useAuth } from './useAuth';
-
-interface Profile {
-  id: string;
-  name: string;
-  full_name: string | null;
-  preferred_username: string | null;
-  email: string;
-  avatar_url: string | null;
-  role: 'user' | 'admin' | 'super_admin';
-  created_at: string;
-  updated_at: string;
-}
+import { useAuth } from '@/hooks/useAuth';
+import type { Profile } from '@/types/profile';
 
 const fetcher = async (url: string) => {
   const response = await fetch(url);
