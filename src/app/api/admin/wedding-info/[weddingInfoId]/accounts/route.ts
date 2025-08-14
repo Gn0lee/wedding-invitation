@@ -29,8 +29,7 @@ export async function GET(
       .from('wedding_accounts')
       .select('*')
       .eq('wedding_info_id', weddingInfoId)
-      .order('side', { ascending: true })
-      .order('name', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('계좌 조회 오류:', error);
