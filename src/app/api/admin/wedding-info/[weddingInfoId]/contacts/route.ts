@@ -29,6 +29,7 @@ export async function GET(
       .from('wedding_contacts')
       .select('*')
       .eq('wedding_info_id', weddingInfoId)
+      .order('side', { ascending: true })
       .order('created_at', { ascending: true });
 
     if (error) {

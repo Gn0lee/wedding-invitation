@@ -102,7 +102,7 @@ export async function getWeddingAccounts(): Promise<WeddingAccount[]> {
       .from('wedding_accounts')
       .select('*')
       .order('side', { ascending: true })
-      .order('name', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('계좌 정보 조회 실패:', error);
@@ -127,7 +127,7 @@ export async function getWeddingContacts(): Promise<WeddingContact[]> {
       .from('wedding_contacts')
       .select('*')
       .order('side', { ascending: true })
-      .order('role', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('연락처 정보 조회 실패:', error);
@@ -174,7 +174,7 @@ export async function getGroomAccounts(): Promise<WeddingAccount[]> {
       .from('wedding_accounts')
       .select('*')
       .eq('side', 'groom')
-      .order('name', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('신랑측 계좌 정보 조회 실패:', error);
@@ -199,7 +199,7 @@ export async function getBrideAccounts(): Promise<WeddingAccount[]> {
       .from('wedding_accounts')
       .select('*')
       .eq('side', 'bride')
-      .order('name', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('신부측 계좌 정보 조회 실패:', error);
@@ -224,7 +224,7 @@ export async function getGroomContacts(): Promise<WeddingContact[]> {
       .from('wedding_contacts')
       .select('*')
       .eq('side', 'groom')
-      .order('role', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('신랑측 연락처 정보 조회 실패:', error);
@@ -249,7 +249,7 @@ export async function getBrideContacts(): Promise<WeddingContact[]> {
       .from('wedding_contacts')
       .select('*')
       .eq('side', 'bride')
-      .order('role', { ascending: true });
+      .order('created_at', { ascending: true });
 
     if (error) {
       console.error('신부측 연락처 정보 조회 실패:', error);
