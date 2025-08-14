@@ -7,21 +7,24 @@ import {
 import { createClient } from '@/lib/supabase/server';
 import type { CreateWeddingInfoRequest, UpdateWeddingInfoRequest } from '@/types/wedding-info';
 
-// GET: 기본 결혼 정보 조회
+// GET: wedding-info 목록 조회
 export async function GET() {
   try {
     const supabase = await createClient();
 
-    const { data, error } = await supabase.from('wedding_info').select('*').single();
+    const { data, error } = await supabase
+      .from('wedding_info')
+      .select('*')
+      .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('결혼 정보 조회 실패:', error);
-      return NextResponse.json({ error: '결혼 정보를 조회할 수 없습니다.' }, { status: 500 });
+      console.error('결혼 정보 목록 조회 실패:', error);
+      return NextResponse.json({ error: '결혼 정보 목록을 조회할 수 없습니다.' }, { status: 500 });
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data || []);
   } catch (error) {
-    console.error('결혼 정보 조회 중 오류 발생:', error);
+    console.error('결혼 정보 목록 조회 중 오류 발생:', error);
     return NextResponse.json({ error: '서버 오류가 발생했습니다.' }, { status: 500 });
   }
 }

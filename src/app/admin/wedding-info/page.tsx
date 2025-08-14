@@ -54,11 +54,6 @@ export default function WeddingInfoListPage() {
             <Card>
               <CardContent className="py-8 text-center">
                 <p className="text-gray-500">등록된 결혼 정보가 없습니다.</p>
-                <Button asChild className="mt-4">
-                  <Link href="/admin/wedding-info/create">
-                    <Plus className="mr-2 size-4" />첫 번째 결혼 정보 생성
-                  </Link>
-                </Button>
               </CardContent>
             </Card>
           ) : (
