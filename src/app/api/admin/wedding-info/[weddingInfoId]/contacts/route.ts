@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import type { CreateWeddingContactRequest } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
@@ -77,6 +78,9 @@ export async function POST(
       console.error('연락처 생성 오류:', error);
       return NextResponse.json({ error: '연락처 생성 중 오류가 발생했습니다.' }, { status: 500 });
     }
+
+    // 메인 페이지 재생성
+    revalidatePath('/');
 
     return NextResponse.json(data, { status: 201 });
   } catch (error) {

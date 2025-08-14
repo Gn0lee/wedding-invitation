@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import type { WeddingAccount } from '@/domains/main/scheme/wedding-info';
 import { checkWeddingInfoDataPermission, createUnauthorizedResponse } from '@/lib/admin';
 import { createClient } from '@/lib/supabase/server';
@@ -76,6 +77,9 @@ export async function PUT(
         { status: 500 },
       );
     }
+
+    // 메인 페이지 재생성
+    revalidatePath('/');
 
     return NextResponse.json(updatedAccounts || []);
   } catch (error) {

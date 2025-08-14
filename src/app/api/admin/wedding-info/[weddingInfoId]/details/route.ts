@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import type {
   CreateWeddingDetailsRequest,
@@ -90,6 +91,9 @@ export async function POST(
       );
     }
 
+    // 메인 페이지 재생성
+    revalidatePath('/');
+
     return NextResponse.json(data, { status: 201 });
   } catch (error) {
     console.error('상세 정보 생성 오류:', error);
@@ -179,6 +183,9 @@ export async function PUT(
       }
       result = data;
     }
+
+    // 메인 페이지 재생성
+    revalidatePath('/');
 
     return NextResponse.json(result);
   } catch (error) {
