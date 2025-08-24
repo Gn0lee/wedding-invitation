@@ -22,19 +22,21 @@ export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
     <Calendar
       mode="single"
       selected={weddingDateObj}
-      className="[--cell-size:1rem]"
       timeZone="Asia/Seoul"
+      className="[--cell-size:0.75rem]"
       defaultMonth={weddingDateObj}
       locale={ko}
       classNames={{
         root: 'bg-white/20 backdrop-blur-sm rounded-xl border border-white/40',
         nav: 'hidden',
         outside: 'text-gray-50/20',
+        month: 'block',
+        month_grid: 'w-full',
       }}
       components={{
         MonthCaption(props) {
           return (
-            <div className={cn('text-sm font-semibold', props.className)}>{formattedDate}</div>
+            <div className={cn('text-sm font-semibold mb-4', props.className)}>{formattedDate}</div>
           );
         },
       }}
