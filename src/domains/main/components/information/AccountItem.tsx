@@ -3,15 +3,15 @@
 import { Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
+import { copyToClipboard } from '@/lib/utils';
 import type { AccountInfo } from '@/types/information';
 
 export function AccountItem({ account }: { account: AccountInfo }) {
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
+  const handleCopyToClipboard = async () => {
+    const success = await copyToClipboard(account.accountNumber);
+    if (success) {
       toast.success('계좌번호가 복사되었습니다');
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
+    } else {
       toast.error('복사에 실패했습니다');
     }
   };
@@ -32,7 +32,7 @@ export function AccountItem({ account }: { account: AccountInfo }) {
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => copyToClipboard(account.accountNumber)}
+        onClick={handleCopyToClipboard}
         className="size-12 text-gray-300 hover:bg-white/10 hover:text-white [&_svg]:size-5 [&_svg]:shrink-0"
       >
         <Copy />
