@@ -22,7 +22,7 @@ export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
     <Calendar
       mode="single"
       selected={weddingDateObj}
-      className="size-full [--cell-size:1rem]"
+      className="[--cell-size:1rem]"
       timeZone="Asia/Seoul"
       defaultMonth={weddingDateObj}
       locale={ko}
