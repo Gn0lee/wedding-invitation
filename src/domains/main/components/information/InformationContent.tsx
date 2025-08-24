@@ -48,7 +48,7 @@ export function InformationContent({ data }: InformationContentProps) {
         {/* 신랑측 계좌번호 */}
         <AccordionItem value="groom-account" className="border-b border-gray-200/20">
           <AccordionTrigger className="text-lg font-semibold text-gray-50 hover:text-white [&>svg]:text-gray-50">
-            신랑측 계좌번호
+            신랑측 마음 전할 곳
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-3">
@@ -62,7 +62,7 @@ export function InformationContent({ data }: InformationContentProps) {
         {/* 신부측 계좌번호 */}
         <AccordionItem value="bride-account" className="border-b border-gray-200/20">
           <AccordionTrigger className="text-lg font-semibold text-gray-50 hover:text-white [&>svg]:text-gray-50">
-            신부측 계좌번호
+            신부측 마음 전할 곳
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-3">
