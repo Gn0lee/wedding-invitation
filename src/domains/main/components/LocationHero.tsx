@@ -29,7 +29,10 @@ export function LocationHero() {
             <br />
             하나가 될 곳
           </HeroTitle>
-          <HeroDescription>로얄파크 컨벤션 1F 파크홀</HeroDescription>
+          <HeroDescription>
+            <p>로얄파크컨벤션, 1층 파크홀</p>
+            <p>(서울특별시 용산구 이태원로 29)</p>
+          </HeroDescription>
         </HeroTextColumn>
         <HeroBottomContent className="pt-6">
           <div className="flex flex-col gap-8">
