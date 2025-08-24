@@ -22,7 +22,7 @@ type Section = {
 
 const BASE_SECTIONS: Section[] = [
   { id: 'main', label: '메인' },
-  { id: 'remain-time', label: '카운트다운' },
+  { id: 'remain-time', label: '예식 일정' },
   { id: 'location', label: '오시는 길' },
   { id: 'gallery', label: '갤러리' },
   { id: 'rsvp', label: '참석 여부' },
