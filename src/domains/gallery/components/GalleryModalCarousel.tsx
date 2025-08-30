@@ -38,7 +38,7 @@ export default function GalleryModalCarousel() {
       >
         <motion.div
           onClick={(e) => e.stopPropagation()}
-          className="relative max-h-[90svh] w-full max-w-[90svw] md:max-w-lg"
+          className="relative max-h-[90dvh] w-full max-w-[90dvw] md:max-w-lg"
           initial={{ scale: 0.95 }}
           animate={{ scale: 1 }}
           exit={{ scale: 0.95 }}

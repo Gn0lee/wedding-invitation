@@ -14,7 +14,7 @@ body {
 
 /* 모바일 브라우저에서 viewport 높이 문제 해결을 위한 추가 설정 */
 html {
-  height: 100svh;
+  height: 100dvh;
 }
 
 *:not(input):not(textarea):not(select) {
