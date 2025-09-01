@@ -40,7 +40,7 @@ export function LocationHero() {
             <Button
               asChild
               variant="secondary"
-              className="w-fit border border-gray-50 bg-transparent text-gray-50 backdrop-blur-[1px] transition-colors hover:border-white hover:bg-white/10 hover:text-white"
+              className="w-fit border border-gray-50 bg-transparent text-gray-50 backdrop-blur-[2px] transition-colors hover:border-white hover:bg-white/10 hover:text-white"
               size="lg"
             >
               <Link href="/rough-map">

@@ -29,7 +29,7 @@ export function InformationSection({ data }: InformationSectionProps) {
         <HeroTextColumn>
           <HeroTitle className="text-center">안내사항</HeroTitle>
           <HeroDescription className="text-center">
-            <p>식사, 주차, 계좌번호 등</p>
+            <p>식사, 주차, 연락처 등</p>
             <p>참석하시는 분들을 위한</p>
             <p>유용한 정보를 확인하세요</p>
           </HeroDescription>

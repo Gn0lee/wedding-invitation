@@ -26,8 +26,7 @@ export function GalleryHero() {
             빛나는 순간들
           </HeroTitle>
           <HeroDescription>
-            <p>설렘으로 수놓은</p>
-            <p>사랑의 장면들</p>
+            <p>설렘으로 수놓은 사랑의 장면들</p>
             <p>지금 만나보세요</p>
           </HeroDescription>
         </HeroTextColumn>
