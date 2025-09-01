@@ -22,6 +22,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       name?: string;
       bride_comment?: string | null;
       groom_comment?: string | null;
+      taken_at?: string;
     } = {};
 
     if (validatedData.name !== undefined) updateData.name = validatedData.name;
@@ -29,6 +30,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       updateData.bride_comment = validatedData.brideComment;
     if (validatedData.groomComment !== undefined)
       updateData.groom_comment = validatedData.groomComment;
+    if (validatedData.takenAt !== undefined) updateData.taken_at = validatedData.takenAt;
 
     const { id } = await params;
 

@@ -1,20 +1,25 @@
 'use client';
 
+import { toZonedTime, formatInTimeZone, fromZonedTime } from 'date-fns-tz';
 import { useCallback } from 'react';
 import { UploadFile } from '../scheme/types';
 
 export const useFileUpload = () => {
+  const KOREA_TIMEZONE = 'Asia/Seoul';
+
   // UTC를 한국 시간으로 변환 (datetime-local 입력용)
   const utcToKoreaTime = useCallback((utcString: string) => {
-    const date = new Date(utcString);
-    const koreaTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-    return koreaTime.toISOString().slice(0, 16);
+    const utcDate = new Date(utcString);
+    const koreaDate = toZonedTime(utcDate, KOREA_TIMEZONE);
+    return formatInTimeZone(koreaDate, KOREA_TIMEZONE, "yyyy-MM-dd'T'HH:mm");
   }, []);
 
   // 한국 시간을 UTC로 변환 (저장용)
   const koreaTimeToUtc = useCallback((koreaTimeString: string) => {
-    const koreaDate = new Date(koreaTimeString);
-    const utcDate = new Date(koreaDate.getTime() - 9 * 60 * 60 * 1000); // UTC-9
+    // 한국 시간 문자열을 한국 시간대로 파싱
+    const koreaDate = new Date(koreaTimeString + ':00'); // 초 단위 추가
+    // 한국 시간을 UTC로 변환 (9시간 빼기)
+    const utcDate = fromZonedTime(koreaDate, KOREA_TIMEZONE);
     return utcDate.toISOString();
   }, []);
 

@@ -18,6 +18,7 @@ export const updateGalleryItemSchema = z.object({
     .optional(),
   brideComment: z.string().max(500, '코멘트는 500자 이하여야 합니다').optional(),
   groomComment: z.string().max(500, '코멘트는 500자 이하여야 합니다').optional(),
+  takenAt: z.string().datetime('올바른 날짜 형식을 입력해주세요').optional(),
 });
 
 export type CreateGalleryItemFormRequest = z.infer<typeof createGalleryItemFormSchema>;
