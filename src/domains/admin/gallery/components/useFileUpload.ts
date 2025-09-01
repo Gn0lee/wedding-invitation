@@ -1,28 +1,10 @@
 'use client';
 
-import { toZonedTime, formatInTimeZone, fromZonedTime } from 'date-fns-tz';
 import { useCallback } from 'react';
+import { utcToKoreaTimeForDateTimeLocal, koreaTimeToUtcForDateTimeLocal } from '@/lib/date-utils';
 import { UploadFile } from '../scheme/types';
 
 export const useFileUpload = () => {
-  const KOREA_TIMEZONE = 'Asia/Seoul';
-
-  // UTC를 한국 시간으로 변환 (datetime-local 입력용)
-  const utcToKoreaTime = useCallback((utcString: string) => {
-    const utcDate = new Date(utcString);
-    const koreaDate = toZonedTime(utcDate, KOREA_TIMEZONE);
-    return formatInTimeZone(koreaDate, KOREA_TIMEZONE, "yyyy-MM-dd'T'HH:mm");
-  }, []);
-
-  // 한국 시간을 UTC로 변환 (저장용)
-  const koreaTimeToUtc = useCallback((koreaTimeString: string) => {
-    // 한국 시간 문자열을 한국 시간대로 파싱
-    const koreaDate = new Date(koreaTimeString + ':00'); // 초 단위 추가
-    // 한국 시간을 UTC로 변환 (9시간 빼기)
-    const utcDate = fromZonedTime(koreaDate, KOREA_TIMEZONE);
-    return utcDate.toISOString();
-  }, []);
-
   const compressImage = useCallback(
     async (file: File): Promise<{ compressedImage: string; width: number; height: number }> => {
       // 압축 API 호출
@@ -76,7 +58,7 @@ export const useFileUpload = () => {
         formData.append('brideComment', uploadFile.brideComment);
         formData.append('groomComment', uploadFile.groomComment);
         // 한국 시간을 UTC로 변환하여 저장
-        formData.append('takenAt', koreaTimeToUtc(uploadFile.takenAt));
+        formData.append('takenAt', koreaTimeToUtcForDateTimeLocal(uploadFile.takenAt));
         formData.append('width', compressedResult.width.toString());
         formData.append('height', compressedResult.height.toString());
 
@@ -95,24 +77,21 @@ export const useFileUpload = () => {
         throw error;
       }
     },
-    [compressImage, koreaTimeToUtc],
+    [compressImage],
   );
 
-  const createUploadFile = useCallback(
-    (file: File): UploadFile => {
-      const defaultDate = new Date(file.lastModified);
-      return {
-        file,
-        id: Math.random().toString(36).substring(2),
-        name: file.name.replace(/\.[^/.]+$/, ''), // 확장자 제거
-        brideComment: '',
-        groomComment: '',
-        takenAt: utcToKoreaTime(defaultDate.toISOString()), // 한국 시간으로 변환
-        status: 'pending',
-      };
-    },
-    [utcToKoreaTime],
-  );
+  const createUploadFile = (file: File): UploadFile => {
+    const defaultDate = new Date(file.lastModified);
+    return {
+      file,
+      id: Math.random().toString(36).substring(2),
+      name: file.name.replace(/\.[^/.]+$/, ''), // 확장자 제거
+      brideComment: '',
+      groomComment: '',
+      takenAt: utcToKoreaTimeForDateTimeLocal(defaultDate.toISOString()), // 한국 시간으로 변환
+      status: 'pending',
+    };
+  };
 
   return {
     uploadSingleFile,

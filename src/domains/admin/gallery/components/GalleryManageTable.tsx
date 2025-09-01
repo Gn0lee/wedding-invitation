@@ -43,7 +43,7 @@ import {
 } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
 import { type AdminGalleryItem } from '@/domains/gallery/types/items';
-
+import { utcToKoreaTimeForDateTimeLocal, koreaTimeToUtcForDateTimeLocal } from '@/lib/date-utils';
 interface PaginationData {
   page: number;
   limit: number;
@@ -181,7 +181,7 @@ export function GalleryManageTable() {
       // 한국 시간을 UTC로 변환
       const updateData = {
         ...editForm,
-        takenAt: koreaTimeToUtc(editForm.takenAt),
+        takenAt: koreaTimeToUtcForDateTimeLocal(editForm.takenAt),
       };
 
       const response = await fetch(`/api/admin/gallery/items/${editingItem.id}`, {
@@ -250,31 +250,6 @@ export function GalleryManageTable() {
       minute: '2-digit',
       timeZone: 'Asia/Seoul',
     });
-  };
-
-  // UTC를 한국 시간으로 변환 (datetime-local 입력용)
-  const utcToKoreaTime = (utcString: string) => {
-    // 빈 값이나 유효하지 않은 값 체크
-    if (!utcString || utcString === '') {
-      throw new Error('촬영일이 설정되지 않았습니다.');
-    }
-
-    const date = new Date(utcString);
-
-    // 유효하지 않은 날짜 체크
-    if (isNaN(date.getTime())) {
-      throw new Error('유효하지 않은 촬영일입니다.');
-    }
-
-    const koreaTime = new Date(date.getTime() + 9 * 60 * 60 * 1000); // UTC+9
-    return koreaTime.toISOString().slice(0, 16);
-  };
-
-  // 한국 시간을 UTC로 변환 (저장용)
-  const koreaTimeToUtc = (koreaTimeString: string) => {
-    const koreaDate = new Date(koreaTimeString);
-    const utcDate = new Date(koreaDate.getTime() - 9 * 60 * 60 * 1000); // UTC-9
-    return utcDate.toISOString();
   };
 
   return (
@@ -489,7 +464,7 @@ export function GalleryManageTable() {
                 type="datetime-local"
                 value={(() => {
                   try {
-                    return editForm.takenAt ? utcToKoreaTime(editForm.takenAt) : '';
+                    return editForm.takenAt ? utcToKoreaTimeForDateTimeLocal(editForm.takenAt) : '';
                   } catch {
                     return '';
                   }
