@@ -41,6 +41,7 @@ export function BackgroundVideo() {
         loop
         preload="metadata"
         className="size-full object-cover brightness-50"
+        poster="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/video-capture-t0000.00seg-7591.webp"
       >
         <source
           src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/background_720p.vp9.webm"
