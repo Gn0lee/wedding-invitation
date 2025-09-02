@@ -80,15 +80,16 @@ export const useFileUpload = () => {
     [compressImage],
   );
 
-  const createUploadFile = (file: File): UploadFile => {
-    const defaultDate = new Date(file.lastModified);
+  const createUploadFile = (file: File, takenAt?: string): UploadFile => {
+    const safeTakenAt =
+      takenAt || utcToKoreaTimeForDateTimeLocal(new Date(file.lastModified).toISOString());
     return {
       file,
       id: Math.random().toString(36).substring(2),
       name: file.name.replace(/\.[^/.]+$/, ''), // 확장자 제거
       brideComment: '',
       groomComment: '',
-      takenAt: utcToKoreaTimeForDateTimeLocal(defaultDate.toISOString()), // 한국 시간으로 변환
+      takenAt: safeTakenAt,
       status: 'pending',
     };
   };

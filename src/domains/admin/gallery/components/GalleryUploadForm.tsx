@@ -1,10 +1,12 @@
 'use client';
 
+import exifr from 'exifr';
 import { useCallback, useState } from 'react';
 import { FileSelector } from '@/domains/admin/gallery/components/FileSelector';
 import { UploadTable } from '@/domains/admin/gallery/components/UploadTable';
 import { useFileUpload } from '@/domains/admin/gallery/components/useFileUpload';
 import { UploadFile } from '@/domains/admin/gallery/scheme/types';
+import { utcToKoreaTimeForDateTimeLocal } from '@/lib/date-utils';
 
 export function GalleryUploadForm() {
   const [uploadFilesMap, setUploadFilesMap] = useState<Map<string, UploadFile>>(new Map());
@@ -36,8 +38,46 @@ export function GalleryUploadForm() {
   }, []);
 
   const handleFileSelect = useCallback(
-    (files: File[]) => {
-      const newFiles = files.map(createUploadFile);
+    async (files: File[]) => {
+      // 각 파일에 대해 EXIF 정보 추출 후 UploadFile 생성
+      const newFiles = await Promise.all(
+        files.map(async (file) => {
+          try {
+            // EXIF에서 촬영 날짜 추출
+            const exifData = await exifr.parse(file, {
+              exif: true,
+              tiff: true,
+              xmp: true,
+            });
+
+            // EXIF 날짜 우선순위로 추출
+            const exifDate =
+              exifData?.DateTimeOriginal ||
+              exifData?.DateTime ||
+              exifData?.CreateDate ||
+              exifData?.ModifyDate;
+
+            let takenAt: string;
+            if (exifDate) {
+              const date = new Date(exifDate);
+              if (!isNaN(date.getTime())) {
+                takenAt = utcToKoreaTimeForDateTimeLocal(date.toISOString());
+              } else {
+                takenAt = utcToKoreaTimeForDateTimeLocal(new Date(file.lastModified).toISOString());
+              }
+            } else {
+              takenAt = utcToKoreaTimeForDateTimeLocal(new Date(file.lastModified).toISOString());
+            }
+
+            // createUploadFile 호출 시 takenAt 전달
+            return createUploadFile(file, takenAt);
+          } catch (error) {
+            console.warn('EXIF 정보 읽기 실패:', error);
+            // EXIF 읽기 실패 시 기본값으로 생성
+            return createUploadFile(file);
+          }
+        }),
+      );
 
       setUploadFilesMap((prev) => {
         const newMap = new Map(prev);

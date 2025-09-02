@@ -32,7 +32,7 @@ export function utcToKoreaTimeForDateTimeLocal(utcString: string): string {
  * @returns 서버에 저장할 UTC 날짜 문자열
  */
 export function koreaTimeToUtcForDateTimeLocal(koreaString: string): string {
-  const koreaDate = new Date(koreaString + ':00');
+  const koreaDate = new Date(koreaString);
   const utcDate = fromZonedTime(koreaDate, KOREA_TZ);
   return utcDate.toISOString();
 }
