@@ -10,8 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
 import { FormContainer } from '@/domains/main/components/rsvp/FormContainer';
 import { SuccessDialog } from '@/domains/main/components/rsvp/SuccessDialog';
 import { useAuth } from '@/hooks/useAuth';
@@ -313,19 +313,19 @@ export function Form() {
                     <Label className="text-sm text-gray-50" htmlFor="child">
                       소인
                     </Label>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <span
-                            tabIndex={0}
-                            className="ml-1 cursor-pointer align-middle text-gray-50"
-                          >
-                            <Info size={14} />
-                          </span>
-                        </TooltipTrigger>
-                        <TooltipContent side="top">만 7세 ~ 12세 (초등학생)</TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <span
+                          tabIndex={0}
+                          className="ml-1 cursor-pointer align-middle text-gray-50"
+                        >
+                          <Info size={14} />
+                        </span>
+                      </PopoverTrigger>
+                      <PopoverContent side="top" className="w-auto border-none bg-gray-900 p-2">
+                        <p className="text-xs">만 7세 ~ 12세 (초등학생)</p>
+                      </PopoverContent>
+                    </Popover>
                   </div>
                   <Controller
                     name="child"
