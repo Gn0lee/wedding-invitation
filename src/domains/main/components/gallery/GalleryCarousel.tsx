@@ -79,8 +79,11 @@ export function GalleryCarousel() {
 
   return (
     <div ref={carouselRef} className="flex size-full items-center justify-center p-4">
-      <Carousel plugins={[autoplayPlugin.current, fadePlugin.current]} className="size-full">
-        <CarouselContent>
+      <Carousel
+        plugins={[autoplayPlugin.current, fadePlugin.current]}
+        className="size-full [&>div]:size-full"
+      >
+        <CarouselContent className="size-full">
           <CarouselItem>
             <div className="relative size-full overflow-hidden rounded-2xl">
               <Image src={Gallery1Image} alt="Gallery_carousel_1" fill priority />
@@ -98,7 +101,7 @@ export function GalleryCarousel() {
           </CarouselItem>
           <CarouselItem ref={lastItemRef}>
             <div className="p-2">
-              <div className="flex aspect-square items-baseline justify-center pt-6">
+              <div className="flex items-baseline justify-center pt-6">
                 <Button
                   asChild
                   variant="secondary"
