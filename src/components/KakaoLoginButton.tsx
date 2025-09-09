@@ -2,7 +2,6 @@
 
 import { KakaoIcon } from '@/components/icons/kakao-icon';
 import { Button, ButtonProps } from '@/components/ui/button';
-import { getKakaoLoginQueryParams } from '@/lib/kakao';
 import { createClient } from '@/lib/supabase/client';
 
 interface KakaoLoginButtonProps {
@@ -25,7 +24,7 @@ export function KakaoLoginButton({
       provider: 'kakao',
       options: {
         redirectTo: `${window.location.origin}/api/auth/callback/kakao${next ? `/${encodeURIComponent(next)}` : ''}`,
-        queryParams: getKakaoLoginQueryParams(baseParams),
+        queryParams: baseParams,
       },
     });
   };
