@@ -9,7 +9,7 @@ export function HeroSection({ children, className, ...props }: HeroSectionProps)
   return (
     <section
       className={cn(
-        'relative mx-auto flex w-svw h-dvh max-w snap-start pt-[72px] text-gray-50 md:max-w-2xl',
+        'relative mx-auto flex w-svw min-h-dvh pt-[72px] text-gray-50 md:max-w-2xl',
         className,
       )}
       {...props}

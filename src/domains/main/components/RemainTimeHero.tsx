@@ -35,7 +35,7 @@ export function RemainTimeHero({ weddingInfo }: RemainTimeHeroProps) {
             <RemainTimeDescription weddingDate={weddingInfo.wedding_date} />
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="overflow-y-auto">
+        <HeroBottomContent>
           <RemainTimeCalendar weddingDate={weddingInfo.wedding_date} />
         </HeroBottomContent>
       </HeroContainer>

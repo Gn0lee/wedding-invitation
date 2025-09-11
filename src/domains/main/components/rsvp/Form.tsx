@@ -149,7 +149,7 @@ export function Form() {
 
   return (
     <FormContainer>
-      <form onSubmit={handleSubmit(onSubmit)} className="h-full min-h-0 flex-col overflow-y-auto">
+      <form onSubmit={handleSubmit(onSubmit)} className="h-full min-h-0 flex-col">
         {/* 입력 그룹 전체 */}
         <div className="flex flex-1 flex-col gap-3">
           {/* 신랑측/신부측 */}

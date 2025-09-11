@@ -20,7 +20,7 @@ export function NavigationButton({ className, ...props }: NavigationButtonProps)
       variant="ghost"
       size="icon"
       className={cn(
-        'size-9 text-gray-50 hover:bg-white/10 hover:text-white [&_svg]:!size-6',
+        'size-9 text-gray-50 backdrop-blur-md hover:bg-white/10 hover:text-white [&_svg]:!size-6',
         className,
       )}
       aria-label="메뉴 열기"

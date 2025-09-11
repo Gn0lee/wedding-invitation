@@ -16,7 +16,7 @@ export function InformationSection({ data }: InformationSectionProps) {
   const finalData = data;
 
   return (
-    <HeroSection id="information">
+    <HeroSection id="information" className="h-dvh">
       <HeroBackground
         image={{
           src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0079.webp',

@@ -4,7 +4,7 @@ import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { isVideoVisibleAtom } from '@/domains/main/store/video';
 
-const INTERSECTION_THRESHOLD = 0.8;
+const INTERSECTION_THRESHOLD = 0.4;
 
 /**
  * Intersection Observer를 사용하여 요소의 가시성을 추적하는 hook
@@ -17,6 +17,7 @@ export function useVideoVisibility(containerRef: React.RefObject<HTMLDivElement 
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        console.log(entry.intersectionRatio);
         const isIntersecting = entry.intersectionRatio >= INTERSECTION_THRESHOLD;
         setIsVideoVisible(isIntersecting);
       },

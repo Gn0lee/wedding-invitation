@@ -23,7 +23,7 @@ export function VideoControlPopover() {
       <PopoverTrigger asChild>
         <Button
           variant="ghost"
-          className="size-9 text-gray-50 hover:bg-white/10 hover:text-white [&_svg]:!size-6"
+          className="size-9 text-gray-50 backdrop-blur-md hover:bg-white/10 hover:text-white [&_svg]:!size-6"
           aria-label="비디오 제어"
         >
           <Video />
