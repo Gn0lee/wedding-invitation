@@ -1,6 +1,3 @@
-import Image from 'next/image';
-
-import RoughMapImage from '@/assets/images/rough-map.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -15,6 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { MapImage } from '@/domains/main/components/MapImage';
 
 export function LocationHero() {
   return (
@@ -46,15 +44,7 @@ export function LocationHero() {
                     약도
                   </AccordionTrigger>
                   <AccordionContent>
-                    <div className="relative aspect-[750/613] w-full rounded-md bg-gray-50">
-                      <Image
-                        src={RoughMapImage}
-                        alt="로얄파크컨벤션 약도"
-                        fill
-                        className="object-contain"
-                        priority
-                      />
-                    </div>
+                    <MapImage />
                   </AccordionContent>
                 </AccordionItem>
 
