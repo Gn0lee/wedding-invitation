@@ -36,7 +36,9 @@ export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
       components={{
         MonthCaption(props) {
           return (
-            <div className={cn('text-sm font-semibold mb-4', props.className)}>{formattedDate}</div>
+            <div className={cn('text-base font-semibold mb-4', props.className)}>
+              {formattedDate}
+            </div>
           );
         },
       }}
