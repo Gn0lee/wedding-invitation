@@ -10,7 +10,7 @@ import { GallerySort } from '@/domains/gallery/components/GallerySort';
 
 export function GalleryHero() {
   return (
-    <HeroSection id="gallery" className="bg-[#082D00]">
+    <HeroSection id="gallery" className="h-dvh bg-[#BFCAC3]">
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>
@@ -19,7 +19,7 @@ export function GalleryHero() {
           </HeroTitle>
           <GallerySort />
         </HeroTextColumn>
-        <HeroBottomContent className="min-h-0 overflow-y-auto pt-0">
+        <HeroBottomContent className="h-full min-h-0 overflow-y-auto pt-0">
           <GalleryGrid />
         </HeroBottomContent>
       </HeroContainer>
