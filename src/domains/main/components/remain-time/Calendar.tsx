@@ -27,7 +27,7 @@ export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
       defaultMonth={weddingDateObj}
       locale={ko}
       classNames={{
-        root: 'bg-white/20 backdrop-blur-sm rounded-xl border border-white/40',
+        root: 'bg-white/20 backdrop-blur-sm rounded-xl border border-white/40 pointer-events-none',
         nav: 'hidden',
         outside: 'text-gray-50/20',
         month: 'block',
