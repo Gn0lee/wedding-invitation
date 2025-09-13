@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { ko as dateFnsKo } from 'date-fns/locale';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -8,12 +10,18 @@ import { HeroTitle } from '@/components/hero/HeroTitle';
 import { RemainTimeCalendar } from '@/domains/main/components/remain-time/Calendar';
 import { RemainTimeDescription } from '@/domains/main/components/remain-time/RemainTimeDescription';
 import type { WeddingInfo } from '@/domains/main/scheme/wedding-info';
+import { utcToKoreaTime } from '@/lib/date-utils';
 
 interface RemainTimeHeroProps {
   weddingInfo: WeddingInfo;
 }
 
 export function RemainTimeHero({ weddingInfo }: RemainTimeHeroProps) {
+  const weddingDateObj = utcToKoreaTime(weddingInfo.wedding_date);
+  const formattedDate = format(weddingDateObj, 'yyyy년 M월 d일 a h시', {
+    locale: dateFnsKo,
+  });
+
   return (
     <HeroSection id="remain-time">
       <HeroBackground
@@ -27,9 +35,9 @@ export function RemainTimeHero({ weddingInfo }: RemainTimeHeroProps) {
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>
-            기다림 끝에
+            두 사람이
             <br />
-            만날 그날
+            하나가 되는 날
           </HeroTitle>
           <HeroDescription>
             <RemainTimeDescription weddingDate={weddingInfo.wedding_date} />
