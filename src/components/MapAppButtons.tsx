@@ -8,7 +8,7 @@ import TmapImage from '@/assets/images/Tmap.webp';
 
 export function MapAppButtons() {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center justify-center gap-4">
       <motion.a
         href="https://tmap.life/e1e87e54"
         target="_blank"

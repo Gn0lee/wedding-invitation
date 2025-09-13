@@ -17,7 +17,7 @@ import {
 
 export function MapHero() {
   return (
-    <HeroSection>
+    <HeroSection className="h-dvh">
       <HeroBackground
         image={{
           src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A5895.webp',
