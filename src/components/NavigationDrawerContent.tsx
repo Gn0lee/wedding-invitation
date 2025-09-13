@@ -21,10 +21,10 @@ type Section = {
 };
 
 const BASE_SECTIONS: Section[] = [
-  { id: 'main', label: '메인' },
+  { id: 'main', label: '인사말' },
   { id: 'remain-time', label: '예식 일정' },
-  { id: 'location', label: '오시는 길' },
   { id: 'gallery', label: '갤러리' },
+  { id: 'location', label: '오시는 길' },
   { id: 'rsvp', label: '참석 여부' },
   { id: 'information', label: '안내사항' },
 ];
