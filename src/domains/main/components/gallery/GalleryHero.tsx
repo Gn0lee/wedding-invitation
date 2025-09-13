@@ -21,7 +21,7 @@ export function GalleryHero() {
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle>
-            우리 둘의
+            우리들의
             <br />
             빛나는 순간들
           </HeroTitle>
