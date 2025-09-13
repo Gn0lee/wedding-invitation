@@ -47,8 +47,8 @@ export default async function Home() {
         <IntroduceHero weddingInfo={weddingData!.info} />
         <MainHero />
         <RemainTimeHero weddingInfo={weddingData!.info} />
-        <LocationHero />
         <GalleryHero />
+        <LocationHero />
         <RSVPSection />
         <InformationSection data={informationData} />
       </PageStyleWrapper>
