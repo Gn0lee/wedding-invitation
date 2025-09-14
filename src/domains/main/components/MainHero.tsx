@@ -7,10 +7,16 @@ import { HeroContainer } from '@/components/hero/HeroContainer';
 import { HeroDescription } from '@/components/hero/HeroDescription';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export function MainHero() {
+  const { ref, isIntersecting } = useIntersectionObserver({
+    threshold: 0.8, // 80% 노출
+    triggerOnce: true,
+  });
+
   return (
-    <HeroSection id="main">
+    <HeroSection id="main" ref={ref}>
       <HeroBackground
         image={{
           src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2346.webp',
@@ -24,7 +30,7 @@ export function MainHero() {
           <HeroDescription className="text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 1.0, delay: 0.5, ease: 'easeOut' }}
               className="mb-6 text-2xl font-extrabold"
             >
@@ -35,7 +41,7 @@ export function MainHero() {
             {/* 첫 번째 문단 */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 1.0, delay: 1.8, ease: 'easeOut' }}
             >
               <p>서로를 바라보는 마음이 쌓여</p>
@@ -51,7 +57,7 @@ export function MainHero() {
             {/* 두 번째 문단 */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 1.0, delay: 3.1, ease: 'easeOut' }}
             >
               <p>이제 두 사람,</p>
@@ -67,7 +73,7 @@ export function MainHero() {
             {/* 세 번째 문단 */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 1.0, delay: 4.4, ease: 'easeOut' }}
             >
               <p>저희의 새로운 시작에 함께해 주신다면</p>
@@ -78,7 +84,7 @@ export function MainHero() {
         <HeroBottomContent className="mt-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{
               duration: 0.8,
               delay: 5.7,
