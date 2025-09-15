@@ -5,14 +5,14 @@ import { HeroDescription } from '@/components/hero/HeroDescription';
 import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
-import { GalleryCarousel } from '@/domains/main/components/gallery/GalleryCarousel';
+import { GalleryGrid } from '@/domains/main/components/gallery/GalleryGrid';
 
 export function GalleryHero() {
   return (
-    <HeroSection id="gallery">
+    <HeroSection id="gallery" className="h-dvh">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/IMG_6479.webp',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/3M1A0207.webp',
           alt: '갤러리 배경',
           fill: true,
           className: 'brightness-[0.4]',
@@ -30,8 +30,8 @@ export function GalleryHero() {
             <p>지금 만나보세요</p>
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="pt-0">
-          <GalleryCarousel />
+        <HeroBottomContent className="mt-4 h-full min-h-0 overflow-y-auto pt-0">
+          <GalleryGrid />
         </HeroBottomContent>
       </HeroContainer>
     </HeroSection>

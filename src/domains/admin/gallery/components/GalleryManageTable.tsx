@@ -42,7 +42,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Textarea } from '@/components/ui/textarea';
-import { type AdminGalleryItem } from '@/domains/gallery/types/items';
+import { type AdminGalleryItem } from '@/domains/main/types/items';
 import { utcToKoreaTimeForDateTimeLocal, koreaTimeToUtcForDateTimeLocal } from '@/lib/date-utils';
 interface PaginationData {
   page: number;

@@ -3,8 +3,8 @@
 import { Loader2 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import Masonry from 'react-responsive-masonry';
-import { GalleryItem } from '@/domains/gallery/components/GalleryItem';
-import { useGalleryItems } from '@/domains/gallery/hooks/useGalleryItems';
+import { GalleryItem } from '@/domains/main/components/gallery/GalleryItem';
+import { useGalleryItems } from '@/domains/main/hooks/useGalleryItems';
 
 export function GalleryGrid() {
   const { items, isLoading, isValidating, hasMore, loadMore } = useGalleryItems();

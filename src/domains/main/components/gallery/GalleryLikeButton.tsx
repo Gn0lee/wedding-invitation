@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { useGalleryLike } from '@/domains/gallery/hooks/useGalleryLike';
+import { useGalleryLike } from '@/domains/main/hooks/useGalleryLike';
 import { useAuth } from '@/hooks/useAuth';
 
 interface GalleryLikeButtonProps {

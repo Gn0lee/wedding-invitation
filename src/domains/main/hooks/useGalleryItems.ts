@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import useSWRInfinite from 'swr/infinite';
-import { fetchGalleryItems, DEFAULT_GALLERY_PARAMS } from '@/domains/gallery/services/galleryApi';
-import { GalleryItemsResponse } from '@/domains/gallery/types/items';
+import { fetchGalleryItems, DEFAULT_GALLERY_PARAMS } from '@/domains/main/services/galleryApi';
+import { GalleryItemsResponse } from '@/domains/main/types/items';
 import { gallerySortByAtom, gallerySortOrderAtom } from '@/stores/gallery';
 
 export function useGalleryItems() {

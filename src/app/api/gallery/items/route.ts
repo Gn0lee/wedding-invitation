@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GalleryItemsResponse, SortBy, SortOrder } from '@/domains/gallery/types/items';
+import { GalleryItemsResponse, SortBy, SortOrder } from '@/domains/main/types/items';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {

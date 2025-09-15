@@ -1,8 +1,8 @@
-import { type GalleryItemsResponse, type GalleryQueryParams } from '@/domains/gallery/types/items';
+import { type GalleryItemsResponse, type GalleryQueryParams } from '@/domains/main/types/items';
 import {
   type GalleryLikeResponse,
   type GalleryLikeToggleResponse,
-} from '@/domains/gallery/types/likes';
+} from '@/domains/main/types/likes';
 
 // 기본 갤러리 파라미터
 export const DEFAULT_GALLERY_PARAMS = {

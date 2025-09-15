@@ -4,10 +4,10 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 import { CarouselItem } from '@/components/ui/carousel';
-import { GalleryCommentOverlay } from '@/domains/gallery/components/GalleryCommentOverlay';
-import { GalleryLikeButton } from '@/domains/gallery/components/GalleryLikeButton';
-import { GallerySkeleton } from '@/domains/gallery/components/GallerySkeleton';
-import { GalleryItem as GalleryItemType } from '@/domains/gallery/types/items';
+import { GalleryCommentOverlay } from '@/domains/main/components/gallery/GalleryCommentOverlay';
+import { GalleryLikeButton } from '@/domains/main/components/gallery/GalleryLikeButton';
+import { GallerySkeleton } from '@/domains/main/components/gallery/GallerySkeleton';
+import { GalleryItem as GalleryItemType } from '@/domains/main/types/items';
 
 interface GalleryCarouselItemProps {
   item: GalleryItemType;

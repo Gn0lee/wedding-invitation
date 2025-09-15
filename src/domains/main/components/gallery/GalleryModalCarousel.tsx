@@ -11,8 +11,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { GalleryCarouselItem } from '@/domains/gallery/components/GalleryCarouselItem';
-import { useGalleryCarousel } from '@/domains/gallery/hooks/useGalleryCarousel';
+import { GalleryCarouselItem } from '@/domains/main/components/gallery/GalleryCarouselItem';
+import { useGalleryCarousel } from '@/domains/main/hooks/useGalleryCarousel';
 
 /**
  * 갤러리 썸네일을 클릭했을 때 뜨는 풀스크린 모달.

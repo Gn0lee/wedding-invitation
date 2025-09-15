@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai';
 import { useState } from 'react';
 import useSWR from 'swr';
-import { fetchGalleryLike, toggleGalleryLike } from '@/domains/gallery/services/galleryApi';
-import { type GalleryLikeResponse } from '@/domains/gallery/types/likes';
+import { fetchGalleryLike, toggleGalleryLike } from '@/domains/main/services/galleryApi';
+import { type GalleryLikeResponse } from '@/domains/main/types/likes';
 import { galleryModalOpenAtom } from '@/stores/galleryModal';
 
 export function useGalleryLike(imageId: string, index: number, shouldLoad = false) {

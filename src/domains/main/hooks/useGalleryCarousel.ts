@@ -1,8 +1,8 @@
 import { useSetAtom, useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { type CarouselApi } from '@/components/ui/carousel';
-import { useGalleryCarouselInfiniteScroll } from '@/domains/gallery/hooks/useGalleryCarouselInfiniteScroll';
-import { useGalleryItems } from '@/domains/gallery/hooks/useGalleryItems';
+import { useGalleryCarouselInfiniteScroll } from '@/domains/main/hooks/useGalleryCarouselInfiniteScroll';
+import { useGalleryItems } from '@/domains/main/hooks/useGalleryItems';
 import { galleryModalOpenAtom, galleryModalInitialIndexAtom } from '@/stores/galleryModal';
 
 /**

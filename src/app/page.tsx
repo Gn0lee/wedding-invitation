@@ -4,6 +4,7 @@ import { NavigationButton } from '@/components/header/NavigationButton';
 import { NavigationDrawerContent } from '@/components/NavigationDrawerContent';
 import { PageStyleWrapper } from '@/components/PageStyleWrapper';
 import { GalleryHero } from '@/domains/main/components/gallery/GalleryHero';
+import GalleryModalCarousel from '@/domains/main/components/gallery/GalleryModalCarousel';
 import { InformationSection } from '@/domains/main/components/InformationSection';
 import { IntroduceHero } from '@/domains/main/components/IntroduceHero';
 import { LocationHero } from '@/domains/main/components/LocationHero';
@@ -53,6 +54,7 @@ export default async function Home() {
         <InformationSection data={informationData} />
       </PageStyleWrapper>
       <NavigationDrawerContent />
+      <GalleryModalCarousel />
     </>
   );
 }

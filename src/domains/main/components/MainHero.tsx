@@ -11,7 +11,7 @@ import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export function MainHero() {
   const { ref, isIntersecting } = useIntersectionObserver({
-    threshold: 0.8, // 80% 노출
+    threshold: 0.7, // 70% 노출
     triggerOnce: true,
   });
 
@@ -31,7 +31,7 @@ export function MainHero() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 1.0, delay: 0.5, ease: 'easeOut' }}
+              transition={{ duration: 1.0, delay: 0, ease: 'easeOut' }}
               className="mb-6 text-2xl font-extrabold"
             >
               이진호 <strong className="text-lg font-[900]">그리고</strong> 김태운,
@@ -42,7 +42,7 @@ export function MainHero() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 1.0, delay: 1.8, ease: 'easeOut' }}
+              transition={{ duration: 1.0, delay: 1.5, ease: 'easeOut' }}
             >
               <p>서로를 바라보는 마음이 쌓여</p>
               <p>
@@ -58,7 +58,7 @@ export function MainHero() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 1.0, delay: 3.1, ease: 'easeOut' }}
+              transition={{ duration: 1.0, delay: 2.8, ease: 'easeOut' }}
             >
               <p>이제 두 사람,</p>
               <p>
@@ -74,7 +74,7 @@ export function MainHero() {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 1.0, delay: 4.4, ease: 'easeOut' }}
+              transition={{ duration: 1.0, delay: 4.1, ease: 'easeOut' }}
             >
               <p>저희의 새로운 시작에 함께해 주신다면</p>
               <p>그 마음을 오래도록 간직하겠습니다</p>
@@ -87,7 +87,7 @@ export function MainHero() {
             animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{
               duration: 0.8,
-              delay: 5.7,
+              delay: 5.4,
               ease: 'easeOut',
             }}
           >
