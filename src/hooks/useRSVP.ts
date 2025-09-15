@@ -12,11 +12,15 @@ const fetcher = async (url: string): Promise<RSVPAPIResponse> => {
 /**
  * 현재 사용자의 RSVP 응답 조회
  */
-export function useRSVP() {
-  const { data, error, isLoading, mutate } = useSWR<RSVPAPIResponse>('/api/rsvp', fetcher, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+export function useRSVP(enabled = true) {
+  const { data, error, isLoading, mutate } = useSWR<RSVPAPIResponse>(
+    enabled ? '/api/rsvp' : null,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
 
   return {
     rsvpData: data?.data || null,

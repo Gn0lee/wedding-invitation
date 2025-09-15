@@ -21,7 +21,7 @@ import { RSVPFormValues } from '@/types/rsvp';
 
 export function Form() {
   const { user, loading } = useAuth();
-  const { rsvpData, mutate, isLoading: rsvpLoading } = useRSVP();
+  const { rsvpData, mutate, isLoading: rsvpLoading } = useRSVP(user !== null);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
