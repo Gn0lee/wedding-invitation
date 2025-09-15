@@ -1,32 +1,13 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import { useEffect, useRef } from 'react';
 import Masonry from 'react-responsive-masonry';
+import { Button } from '@/components/ui/button';
 import { GalleryItem } from '@/domains/main/components/gallery/GalleryItem';
 import { useGalleryItems } from '@/domains/main/hooks/useGalleryItems';
 
 export function GalleryGrid() {
   const { items, isLoading, isValidating, hasMore, loadMore } = useGalleryItems();
-  const observerRef = useRef<HTMLDivElement>(null);
-
-  // 무한스크롤 감지
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore && !isValidating) {
-          loadMore();
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [hasMore, isValidating, loadMore]);
 
   if (isLoading) {
     return (
@@ -45,10 +26,25 @@ export function GalleryGrid() {
         ))}
       </Masonry>
 
-      {/* 무한스크롤 감지 요소 */}
-      <div ref={observerRef} className="mt-4 h-4">
-        {hasMore && <Loader2 className="size-full animate-spin text-gray-500" />}
-      </div>
+      {/* 더보기 버튼 */}
+      {hasMore && (
+        <div className="mb-2 mt-6 flex justify-center">
+          <Button
+            onClick={loadMore}
+            disabled={isValidating}
+            className="w-full border border-gray-50 bg-transparent px-8 py-3 backdrop-blur-sm hover:border-gray-50 hover:bg-gray-50/20 disabled:border-gray-50 disabled:bg-gray-50/10 disabled:text-gray-50"
+          >
+            {isValidating ? (
+              <>
+                <Loader2 className="mr-2 size-4 animate-spin" />
+                로딩 중...
+              </>
+            ) : (
+              '더보기'
+            )}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
