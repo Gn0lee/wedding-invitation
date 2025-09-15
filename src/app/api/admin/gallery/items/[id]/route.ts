@@ -136,9 +136,6 @@ export async function DELETE(
       const pathParts = url.pathname.split('/');
       const fileName = pathParts[pathParts.length - 1]; // 마지막 부분이 파일명
 
-      console.log('Original src:', itemToDelete.src);
-      console.log('Extracted fileName:', fileName);
-
       const { error: storageError } = await supabase.storage
         .from('gallery-images')
         .remove([fileName]);
