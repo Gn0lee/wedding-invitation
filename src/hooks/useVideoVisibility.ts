@@ -17,7 +17,6 @@ export function useVideoVisibility(containerRef: React.RefObject<HTMLDivElement 
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        console.log(entry.intersectionRatio);
         const isIntersecting = entry.intersectionRatio >= INTERSECTION_THRESHOLD;
         setIsVideoVisible(isIntersecting);
       },

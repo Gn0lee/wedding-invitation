@@ -1,3 +1,5 @@
+'use client';
+
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -6,10 +8,16 @@ import { HeroSection } from '@/components/hero/HeroSection';
 import { HeroTextColumn } from '@/components/hero/HeroTextColumn';
 import { HeroTitle } from '@/components/hero/HeroTitle';
 import { GalleryGrid } from '@/domains/main/components/gallery/GalleryGrid';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 export function GalleryHero() {
+  const { ref, isIntersecting } = useIntersectionObserver({
+    threshold: 0.4, // 40% 노출
+    triggerOnce: true,
+  });
+
   return (
-    <HeroSection id="gallery" className="h-dvh">
+    <HeroSection ref={ref} id="gallery" className="h-dvh">
       <HeroBackground
         image={{
           src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/3M1A0207.webp',
@@ -31,7 +39,7 @@ export function GalleryHero() {
           </HeroDescription>
         </HeroTextColumn>
         <HeroBottomContent className="mt-4 h-full min-h-0 overflow-y-auto pt-0">
-          <GalleryGrid />
+          <GalleryGrid shouldFetch={isIntersecting} />
         </HeroBottomContent>
       </HeroContainer>
     </HeroSection>

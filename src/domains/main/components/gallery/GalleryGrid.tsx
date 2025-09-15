@@ -6,8 +6,12 @@ import { Button } from '@/components/ui/button';
 import { GalleryItem } from '@/domains/main/components/gallery/GalleryItem';
 import { useGalleryItems } from '@/domains/main/hooks/useGalleryItems';
 
-export function GalleryGrid() {
-  const { items, isLoading, isValidating, hasMore, loadMore } = useGalleryItems();
+interface GalleryGridProps {
+  shouldFetch?: boolean;
+}
+
+export function GalleryGrid({ shouldFetch = false }: GalleryGridProps) {
+  const { items, isLoading, isValidating, hasMore, loadMore } = useGalleryItems(shouldFetch);
 
   if (isLoading) {
     return (

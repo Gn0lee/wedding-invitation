@@ -15,8 +15,8 @@ export function useGalleryCarousel() {
   const isOpen = useAtomValue(galleryModalOpenAtom);
   const initialIndex = useAtomValue(galleryModalInitialIndexAtom);
 
-  // 갤러리 전체 아이템과 무한 스크롤 로직
-  const { items, hasMore, isValidating, loadMore } = useGalleryItems();
+  // 갤러리 전체 아이템과 무한 스크롤 로직 - 모달이 열릴 때만 API 호출
+  const { items, hasMore, isValidating, loadMore } = useGalleryItems(isOpen);
 
   // 캐러셀 API 보관
   const [emblaApi, setEmblaApi] = useState<CarouselApi | null>(null);

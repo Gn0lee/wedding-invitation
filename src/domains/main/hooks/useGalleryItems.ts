@@ -4,22 +4,27 @@ import { fetchGalleryItems, DEFAULT_GALLERY_PARAMS } from '@/domains/main/servic
 import { GalleryItemsResponse } from '@/domains/main/types/items';
 import { gallerySortByAtom, gallerySortOrderAtom } from '@/stores/gallery';
 
-export function useGalleryItems() {
+export function useGalleryItems(shouldFetch = false) {
   // Jotai 상태 구독
   const sortBy = useAtomValue(gallerySortByAtom);
   const sortOrder = useAtomValue(gallerySortOrderAtom);
 
   const getKey = (pageIndex: number, previousPageData: GalleryItemsResponse | null) => {
-    // 첫 페이지이거나 이전 페이지에 더 많은 데이터가 있는 경우
-    if (pageIndex === 0 || (previousPageData && previousPageData.pagination.hasNext)) {
-      return {
-        page: pageIndex + 1,
-        limit: DEFAULT_GALLERY_PARAMS.limit,
-        sortBy,
-        sortOrder,
-      };
+    // shouldFetch가 false이거나 더 이상 데이터가 없으면 null 반환
+    if (
+      !shouldFetch ||
+      (pageIndex > 0 && (!previousPageData || !previousPageData.pagination.hasNext))
+    ) {
+      return null;
     }
-    return null; // 더 이상 데이터가 없음
+
+    return {
+      page: pageIndex + 1,
+      limit: DEFAULT_GALLERY_PARAMS.limit,
+      sortBy,
+      sortOrder,
+      shouldFetch, // 키에 shouldFetch 포함하여 캐시 분리
+    };
   };
 
   const { data, error, isLoading, isValidating, size, setSize, mutate } =
