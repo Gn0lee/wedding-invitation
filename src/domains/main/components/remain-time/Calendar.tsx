@@ -1,7 +1,7 @@
 'use client';
 
-import { format } from 'date-fns';
 import { ko as dateFnsKo } from 'date-fns/locale';
+import { formatInTimeZone } from 'date-fns-tz';
 import { ko } from 'react-day-picker/locale';
 import { Calendar } from '@/components/ui/calendar';
 import { utcToKoreaTime } from '@/lib/date-utils';
@@ -14,7 +14,7 @@ interface RemainTimeCalendarProps {
 export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
   // UTC 날짜를 한국 시간으로 변환
   const weddingDateObj = utcToKoreaTime(weddingDate);
-  const formattedDate = format(weddingDateObj, 'yyyy년 M월 d일 a h시', {
+  const formattedDate = formatInTimeZone(weddingDate, 'Asia/Seoul', 'yyyy년 M월 d일 a h시', {
     locale: dateFnsKo,
   });
 
@@ -22,7 +22,6 @@ export function RemainTimeCalendar({ weddingDate }: RemainTimeCalendarProps) {
     <Calendar
       mode="single"
       selected={weddingDateObj}
-      timeZone="Asia/Seoul"
       className="[--cell-size:0.75rem]"
       defaultMonth={weddingDateObj}
       locale={ko}
