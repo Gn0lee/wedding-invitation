@@ -20,7 +20,7 @@ export function GalleryHero() {
     <HeroSection ref={ref} id="gallery" className="h-dvh">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/3M1A0207.webp',
+          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/gallery_bg.webp',
           alt: '갤러리 배경',
           fill: true,
           className: 'brightness-[0.4]',
