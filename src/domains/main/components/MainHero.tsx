@@ -27,7 +27,7 @@ export function MainHero() {
       />
       <HeroContainer>
         <HeroTextColumn>
-          <HeroDescription className="text-center">
+          <HeroDescription className="mt-0 text-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -75,13 +75,14 @@ export function MainHero() {
               initial={{ opacity: 0, y: 30 }}
               animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 1.0, delay: 4.1, ease: 'easeOut' }}
+              className="leading-loose"
             >
               <p>저희의 새로운 시작에 함께해 주신다면</p>
               <p>그 마음을 오래도록 간직하겠습니다</p>
             </motion.div>
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="mt-6 text-center">
+        <HeroBottomContent className="mt-6 pt-0 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isIntersecting ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
