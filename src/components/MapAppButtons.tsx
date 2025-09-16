@@ -1,14 +1,27 @@
 'use client';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+
+import { motion, HTMLMotionProps } from 'framer-motion';
+import Image, { ImageProps } from 'next/image';
+import { ComponentPropsWithoutRef } from 'react';
 
 import KakaoMapImage from '@/assets/images/kakaomap_basic.webp';
 import NaverMapImage from '@/assets/images/naver_map.webp';
 import TmapImage from '@/assets/images/Tmap.webp';
+import { cn } from '@/lib/utils';
 
-export function MapAppButtons() {
+interface MapAppButtonsProps {
+  container?: ComponentPropsWithoutRef<'div'>;
+  image?: Omit<ImageProps, 'src' | 'alt'>;
+  anchor?: HTMLMotionProps<'a'>;
+}
+
+export function MapAppButtons({ container, image, anchor }: MapAppButtonsProps) {
+  const { className: containerClassName, ...containerProps } = container || {};
+  const { className: imageClassName, ...imageProps } = image || {};
+  const { className: anchorClassName, ...anchorProps } = anchor || {};
+
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className={cn('flex items-center gap-4', containerClassName)} {...containerProps}>
       <motion.a
         href="https://tmap.life/e1e87e54"
         target="_blank"
@@ -17,14 +30,16 @@ export function MapAppButtons() {
         whileHover={{ scale: 1.15, boxShadow: '0 0 16px #fff8' }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="overflow-hidden rounded-full"
+        className={cn('overflow-hidden rounded-full', anchorClassName)}
+        {...anchorProps}
       >
         <Image
           src={TmapImage}
           alt="티맵"
           width={36}
           height={36}
-          className="rounded-full"
+          className={cn('rounded-full', imageClassName)}
+          {...imageProps}
           priority
         />
       </motion.a>
@@ -35,15 +50,17 @@ export function MapAppButtons() {
         aria-label="네이버지도에서 보기"
         whileHover={{ scale: 1.15, boxShadow: '0 0 16px #fff8' }}
         whileTap={{ scale: 0.95 }}
+        className={cn('overflow-hidden rounded-full', anchorClassName)}
+        {...anchorProps}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="overflow-hidden rounded-full"
       >
         <Image
           src={NaverMapImage}
           alt="네이버 지도"
           width={36}
           height={36}
-          className="rounded-full"
+          className={cn('rounded-full', imageClassName)}
+          {...imageProps}
           priority
         />
       </motion.a>
@@ -55,14 +72,16 @@ export function MapAppButtons() {
         whileHover={{ scale: 1.15, boxShadow: '0 0 16px #fff8' }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="overflow-hidden rounded-full"
+        className={cn('overflow-hidden rounded-full', anchorClassName)}
+        {...anchorProps}
       >
         <Image
           src={KakaoMapImage}
           alt="카카오맵"
           width={36}
           height={36}
-          className="rounded-full"
+          className={cn('rounded-full', imageClassName)}
+          {...imageProps}
           priority
         />
       </motion.a>

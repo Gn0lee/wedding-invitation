@@ -28,14 +28,17 @@ export function LocationHero() {
       <HeroContainer>
         <HeroTextColumn>
           <HeroTitle className="text-center">오시는 길</HeroTitle>
-          <HeroDescription className="text-center font-bold">
+          <HeroDescription className="mt-4 text-center font-bold">
             <p>로얄파크컨벤션, 1층 파크홀</p>
             <p>(서울특별시 용산구 이태원로 29)</p>
           </HeroDescription>
         </HeroTextColumn>
         <HeroBottomContent className="min-h-0 pt-6">
           <div className="flex size-full flex-col gap-4">
-            <MapAppButtons />
+            <MapAppButtons
+              container={{ className: 'justify-center' }}
+              image={{ width: 44, height: 44 }}
+            />
             <div className="flex-1 overflow-y-auto">
               <Accordion type="single" collapsible className="w-full">
                 {/* 약도 */}
