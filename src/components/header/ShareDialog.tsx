@@ -1,6 +1,6 @@
 'use client';
 
-import { Share2 } from 'lucide-react';
+import { Share } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -22,7 +22,7 @@ export function ShareDialog() {
           className="size-9 text-gray-50 backdrop-blur-md hover:bg-white/10 hover:text-white [&_svg]:!size-6"
           aria-label="공유하기"
         >
-          <Share2 />
+          <Share />
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-xs">
