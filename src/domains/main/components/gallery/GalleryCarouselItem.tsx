@@ -29,13 +29,13 @@ export function GalleryCarouselItem({ item, index }: GalleryCarouselItemProps) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // 0.7 이상 노출될 때 좋아요 정보 로딩
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.7) {
+        // 0.5 이상 노출될 때 좋아요 정보 로딩
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
           setShouldLoadLike(true);
         }
       },
       {
-        threshold: 0.7,
+        threshold: 0.5,
       },
     );
 
