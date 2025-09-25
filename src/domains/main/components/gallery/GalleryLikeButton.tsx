@@ -63,7 +63,7 @@ export function GalleryLikeButton({ imageId, index, shouldLoad = false }: Galler
           <KakaoLoginButton
             buttonProps={{ className: 'w-full text-kakao-text bg-kakao hover:bg-kakao/80' }}
             innerText="카카오로 로그인"
-            next="/gallery"
+            next="/#gallery"
           />
         </DialogContent>
       </Dialog>
