@@ -95,7 +95,7 @@ export function MapImage() {
           >
             <motion.div
               ref={containerRef}
-              className="relative h-[90vh] max-h-[80vh] w-[90vw] max-w-4xl overflow-hidden rounded-lg bg-white"
+              className="relative h-[70dvh] max-h-[80dvh] w-[90dvw] max-w-4xl overflow-hidden rounded-lg bg-white"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}

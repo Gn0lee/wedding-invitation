@@ -12,7 +12,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { MapImage } from '@/domains/main/components/MapImage';
+import { MapImage } from '@/domains/main/components/location/MapImage';
 
 export function LocationHero() {
   return (
