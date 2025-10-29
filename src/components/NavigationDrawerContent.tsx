@@ -59,7 +59,7 @@ export function NavigationDrawerContent() {
       const element = document.querySelector(initialHash);
       if (element) {
         requestAnimationFrame(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: 'instant' });
         });
       }
     }
@@ -71,7 +71,7 @@ export function NavigationDrawerContent() {
     // 1. 해당 섹션으로 스크롤
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'instant' });
     }
 
     // 2. 스크롤 후 해시 변경
