@@ -2,6 +2,7 @@
 
 import { useAtomValue } from 'jotai';
 import { useRef } from 'react';
+import videoPoster from '@/assets/images/hero/video-poster.webp';
 import {
   isVideoMutedAtom,
   isVideoPlayingAtom,
@@ -41,7 +42,7 @@ export function BackgroundVideo() {
         loop
         preload="metadata"
         className="size-full object-cover brightness-50"
-        poster="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/video-capture-t0000.00seg-7591.webp"
+        poster={videoPoster.src}
       >
         <source
           src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/background_720p.vp9.webm"

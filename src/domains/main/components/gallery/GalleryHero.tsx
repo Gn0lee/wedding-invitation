@@ -1,5 +1,6 @@
 'use client';
 
+import galleryBg from '@/assets/images/hero/gallery-bg.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -20,7 +21,7 @@ export function GalleryHero() {
     <HeroSection ref={ref} id="gallery" className="h-dvh">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/gallery_bg.webp',
+          src: galleryBg,
           alt: '갤러리 배경',
           fill: true,
           className: 'brightness-[0.4]',

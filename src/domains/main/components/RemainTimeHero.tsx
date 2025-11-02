@@ -1,3 +1,4 @@
+import remainTimeBg from '@/assets/images/hero/remain-time-bg.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -18,7 +19,7 @@ export function RemainTimeHero({ weddingInfo }: RemainTimeHeroProps) {
     <HeroSection id="remain-time">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0080_1.webp',
+          src: remainTimeBg,
           alt: '남은 시간 배경',
           fill: true,
           className: 'brightness-[0.7]',

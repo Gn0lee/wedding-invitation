@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import mapBg from '@/assets/images/hero/map-bg.webp';
 import RoughMapImage from '@/assets/images/rough-map.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
@@ -20,7 +21,7 @@ export function MapHero() {
     <HeroSection className="h-dvh">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A5895.webp',
+          src: mapBg,
           alt: '찾아오시는 길 배경',
           fill: true,
           className: 'brightness-[0.7]',

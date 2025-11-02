@@ -1,3 +1,4 @@
+import rsvpBg from '@/assets/images/hero/rsvp-bg.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -12,7 +13,7 @@ export function RSVPSection() {
     <HeroSection id="rsvp">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A5133.webp',
+          src: rsvpBg,
           alt: '참석 여부 배경',
           fill: true,
           className: 'brightness-[0.6]',

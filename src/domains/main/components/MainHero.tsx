@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import mainHeroBg from '@/assets/images/hero/main-bg.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -19,7 +20,7 @@ export function MainHero() {
     <HeroSection id="main" ref={ref}>
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2346.webp',
+          src: mainHeroBg,
           alt: 'Main Hero',
           fill: true,
           className: 'brightness-[0.5]',

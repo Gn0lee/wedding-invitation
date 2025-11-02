@@ -1,3 +1,4 @@
+import locationBg from '@/assets/images/hero/location-bg.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -19,7 +20,7 @@ export function LocationHero() {
     <HeroSection id="location" className="h-dvh">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2466.webp',
+          src: locationBg,
           alt: '위치 배경',
           fill: true,
           className: 'brightness-[0.6]',

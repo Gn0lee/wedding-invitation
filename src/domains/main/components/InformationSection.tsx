@@ -1,3 +1,4 @@
+import informationBg from '@/assets/images/hero/information-bg.webp';
 import { HeroBackground } from '@/components/hero/HeroBackground';
 import { HeroBottomContent } from '@/components/hero/HeroBottomContent';
 import { HeroContainer } from '@/components/hero/HeroContainer';
@@ -19,7 +20,7 @@ export function InformationSection({ data }: InformationSectionProps) {
     <HeroSection id="information" className="h-dvh">
       <HeroBackground
         image={{
-          src: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/DSCF0079.webp',
+          src: informationBg,
           alt: '안내사항 배경',
           fill: true,
           className: 'brightness-[0.5]',
