@@ -1,7 +1,24 @@
 import type { NextConfig } from 'next';
 
+// Image Optimization 최적화 상수
+const IMAGE_CACHE_TTL_SECONDS = 2678400; // 31일 (60 * 60 * 24 * 31)
+
 const nextConfig: NextConfig = {
   images: {
+    // 캐시 최대화 (31일)
+    minimumCacheTTL: IMAGE_CACHE_TTL_SECONDS,
+
+    // 모바일 청첩장 최적화: 썸네일 크기 (width 지정 시 사용)
+    // Masonry 2열 레이아웃 + Retina 디스플레이 고려
+    imageSizes: [384, 512],
+
+    // 모바일 청첩장 최적화: 모달 풀스크린 크기 (fill 사용 시)
+    // 주 사용자: 모바일 디바이스 (640px), 큰 모바일/소형 태블릿 (750px)
+    deviceSizes: [640, 750],
+
+    // WebP만 사용 (AVIF 제거로 transformation 50% 감소)
+    formats: ['image/webp'],
+
     remotePatterns:
       process.env.NODE_ENV === 'development'
         ? [
@@ -14,7 +31,7 @@ const nextConfig: NextConfig = {
             },
           ]
         : [
-            // 프로덕션 모드: Supabase Storage만 허용
+            // 프로덕션 모드: Supabase Storage 갤러리 이미지만 최적화
             {
               protocol: 'https',
               hostname:
