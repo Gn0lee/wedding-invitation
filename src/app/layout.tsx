@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import clsx from 'clsx';
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
@@ -126,6 +128,8 @@ export default function RootLayout({
       <body className={clsx(bmJua.variable, nanumRound.variable, 'antialiased', 'font-nanumRound')}>
         <SWRProvider>{children}</SWRProvider>
         <Toaster position="top-center" richColors />
+        {isProduction && <Analytics />}
+        {isProduction && <SpeedInsights />}
       </body>
     </html>
   );
