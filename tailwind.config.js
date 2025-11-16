@@ -90,5 +90,21 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    // 스크롤 최적화 유틸리티 (안드로이드 카카오 인앱 브라우저 대응)
+    function ({ addUtilities }) {
+      addUtilities({
+        '.scroll-optimized': {
+          /* iOS 부드러운 스크롤 */
+          '-webkit-overflow-scrolling': 'touch',
+          /* GPU 가속 활성화 (안드로이드 끊김 해결의 핵심) */
+          'will-change': 'transform',
+          transform: 'translateZ(0)',
+          /* 스크롤 성능 최적화 */
+          'backface-visibility': 'hidden',
+        },
+      });
+    },
+  ],
 };

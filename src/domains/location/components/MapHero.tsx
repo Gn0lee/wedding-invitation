@@ -33,7 +33,7 @@ export function MapHero() {
           <HeroTitle>찾아오시는 길</HeroTitle>
           <HeroDescription>로얄파크컨벤션으로 오시는 방법을 안내해드립니다.</HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="min-h-0 overflow-y-auto pt-8">
+        <HeroBottomContent className="min-h-0 overflow-y-auto pt-8 scroll-optimized">
           <Accordion type="single" collapsible className="w-full">
             {/* 약도 */}
             <AccordionItem value="map" className="border-b border-gray-200/20">

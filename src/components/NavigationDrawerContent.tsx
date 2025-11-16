@@ -89,7 +89,7 @@ export function NavigationDrawerContent() {
           <DrawerTitle className="font-bmJua text-xl">메뉴</DrawerTitle>
           <DrawerDescription>원하시는 섹션을 클릭하면 바로 이동합니다.</DrawerDescription>
         </DrawerHeader>
-        <nav className="overflow-y-auto px-4 pb-4">
+        <nav className="overflow-y-auto px-4 pb-4 scroll-optimized">
           <ul className="space-y-4">
             {sections.map((section) => (
               <li key={section.id}>

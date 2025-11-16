@@ -26,7 +26,7 @@ export function InformationSection({ data }: InformationSectionProps) {
           className: 'brightness-[0.5]',
         }}
       />
-      <HeroContainer>
+      <HeroContainer className="pb-6">
         <HeroTextColumn>
           <HeroTitle className="text-center">안내사항</HeroTitle>
           <HeroDescription className="text-center">
@@ -35,7 +35,7 @@ export function InformationSection({ data }: InformationSectionProps) {
             <p>유용한 정보를 확인하세요</p>
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="min-h-0 overflow-y-auto pt-8">
+        <HeroBottomContent className="min-h-0 overflow-y-auto pt-8 scroll-optimized">
           <InformationContent data={finalData} />
         </HeroBottomContent>
       </HeroContainer>

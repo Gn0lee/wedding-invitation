@@ -39,7 +39,7 @@ export function GalleryHero() {
             <p>지금 만나보세요</p>
           </HeroDescription>
         </HeroTextColumn>
-        <HeroBottomContent className="mt-4 h-full min-h-0 overflow-y-auto pt-0">
+        <HeroBottomContent className="mt-4 h-full min-h-0 overflow-y-auto pt-0 scroll-optimized">
           <GalleryGrid shouldFetch={isIntersecting} />
         </HeroBottomContent>
       </HeroContainer>

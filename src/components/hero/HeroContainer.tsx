@@ -7,7 +7,7 @@ interface HeroContainerProps extends React.ComponentProps<'div'> {
 
 export function HeroContainer({ children, className, ...props }: HeroContainerProps) {
   return (
-    <div className={cn('z-10 flex size-full flex-col px-4 pb-6 pt-2', className)} {...props}>
+    <div className={cn('z-10 flex size-full flex-col px-4 pb-8 pt-2', className)} {...props}>
       {children}
     </div>
   );

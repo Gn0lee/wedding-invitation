@@ -40,7 +40,7 @@ export function LocationHero() {
               container={{ className: 'justify-center' }}
               image={{ width: 44, height: 44 }}
             />
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto scroll-optimized">
               <Accordion type="single" collapsible className="w-full">
                 {/* 약도 */}
                 <AccordionItem value="map" className="border-b border-gray-200/20">
