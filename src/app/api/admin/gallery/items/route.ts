@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
       .from('gallery-images')
       .upload(fileName, buffer, {
         contentType: file.type,
-        cacheControl: '3600',
+        cacheControl: '31536000', // 1년 캐싱 (egress 비용 절감)
       });
 
     if (uploadError) {

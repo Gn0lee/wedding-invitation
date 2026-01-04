@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
     images: [
       {
-        url: 'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2346%20(1).webp',
+        url: '/images/og-image.webp',
         width: 1920,
         height: 960,
         alt: '이진호 김태운 결혼식 청첩장',
@@ -62,9 +62,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '태운 ♥ 진호의 결혼식에 초대합니다',
     description: '26.01.25 16:00 로얄파크컨벤션 파크홀',
-    images: [
-      'https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/040A2346%20(1).webp',
-    ],
+    images: ['/images/og-image.webp'],
   },
   robots: {
     index: true,

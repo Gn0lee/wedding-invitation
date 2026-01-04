@@ -44,14 +44,8 @@ export function BackgroundVideo() {
         className="size-full object-cover brightness-50"
         poster={videoPoster.src}
       >
-        <source
-          src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/background_720p.vp9.webm"
-          type="video/webm; codecs=vp9"
-        />
-        <source
-          src="https://phhlmbcnhhuenmslkawd.supabase.co/storage/v1/object/public/static/background_720p.mp4"
-          type="video/mp4"
-        />
+        <source src="/videos/background_720p.vp9.webm" type="video/webm; codecs=vp9" />
+        <source src="/videos/background_720p.mp4" type="video/mp4" />
       </video>
     </div>
   );
